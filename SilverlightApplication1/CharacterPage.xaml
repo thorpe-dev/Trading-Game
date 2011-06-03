@@ -1,0 +1,14 @@
+﻿<navigation:Page x:Class="SilverlightApplication1.CharacterPage" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           mc:Ignorable="d"
+           xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+           d:DesignWidth="640" d:DesignHeight="480"
+           Title="Character creation" Name="CharacterForm">
+    <Grid x:Name="LayoutRoot">
+        <Button Content="Create character" Height="75" HorizontalAlignment="Left" Margin="233,314,0,0" Name="button1" VerticalAlignment="Top" Width="220" />
+        <TextBlock Height="227" HorizontalAlignment="Left" Margin="221,38,0,0" Name="CharacterBox" Text="" VerticalAlignment="Top" Width="193" />
+    </Grid>
+</navigation:Page>

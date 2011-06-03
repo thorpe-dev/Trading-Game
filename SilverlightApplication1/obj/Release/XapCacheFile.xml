@@ -1,0 +1,8 @@
+﻿<xapCache source="C:\Users\David\Documents\Visual Studio 2010\Projects\SilverlightApplication1\SilverlightApplication1\Bin\Release\SilverlightApplication1.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="31/05/2011 21:43:38">
+  <file source="C:\Users\David\Documents\Visual Studio 2010\Projects\SilverlightApplication1\SilverlightApplication1\obj\Release\SilverlightApplication1.dll" archivePath="SilverlightApplication1.dll" lastWriteTime="31/05/2011 21:43:38" />
+  <file source="C:\Program Files\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Data.Input.dll" archivePath="System.Windows.Controls.Data.Input.dll" lastWriteTime="26/08/2010 02:17:48" />
+  <file source="C:\Program Files\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Navigation.dll" archivePath="System.Windows.Controls.Navigation.dll" lastWriteTime="26/08/2010 02:17:48" />
+  <file source="C:\Program Files\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Xml.Linq.dll" archivePath="System.Xml.Linq.dll" lastWriteTime="26/08/2010 02:17:48" />
+  <file source="C:\Program Files\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll" archivePath="System.ComponentModel.DataAnnotations.dll" lastWriteTime="26/08/2010 02:17:48" />
+  <file source="C:\Users\David\Documents\Visual Studio 2010\Projects\SilverlightApplication1\SilverlightApplication1\Bin\Release\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="31/05/2011 21:43:38" />
+</xapCache>
