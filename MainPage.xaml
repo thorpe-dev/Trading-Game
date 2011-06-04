@@ -7,6 +7,7 @@
     d:DesignHeight="300" d:DesignWidth="400">
 
     <Grid x:Name="LayoutRoot" Background="White">
+        
 
     </Grid>
 </UserControl>
