@@ -7,8 +7,9 @@
            xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
            d:DesignWidth="640" d:DesignHeight="480"
            Title="Character creation" Name="CharacterForm">
-    <Grid x:Name="LayoutRoot">
-        <Button Content="Create character" Height="75" HorizontalAlignment="Left" Margin="233,314,0,0" Name="button1" VerticalAlignment="Top" Width="220" />
-        <TextBlock Height="227" HorizontalAlignment="Left" Margin="221,38,0,0" Name="CharacterBox" Text="" VerticalAlignment="Top" Width="193" />
+    <Grid x:Name="LayoutRoot" Background="#FF524E4E">
+        <Button Content="Create character" Height="75" HorizontalAlignment="Left" Margin="408,393,0,0" Name="createCharButton" VerticalAlignment="Top" Width="220" Click="create_Click" />
+        <TextBlock Height="227" HorizontalAlignment="Left" Margin="24,168,0,0" Name="CharacterBox" Text="" VerticalAlignment="Top" Width="200" />
+        <Image Height="150" HorizontalAlignment="Left" Margin="24,12,0,0" Name="char1Image" Stretch="Fill" VerticalAlignment="Top" Width="200" Source="/SilverlightApplication1;component/robot.png" />
     </Grid>
 </navigation:Page>

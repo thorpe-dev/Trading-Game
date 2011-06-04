@@ -17,7 +17,6 @@
 				. $values["classid"] . "</classid><lvl>" . $values["lvl"] . "</lvl><exptonext>" . $values["exptonext"] . "</exptonext><strength>"
 				. $values["strength"] . "</strength><agility>" . $values["agility"] . "</agility><intelligence>" . $values["intelligence"] .
 				"</intelligence></character></success>";
-		
 	}
 	else
 	{

@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
 using System.Xml.Linq;
+using System.Windows.Browser;
 
 namespace SilverlightApplication1
 {
@@ -56,33 +57,7 @@ namespace SilverlightApplication1
 
         private void registerButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                HttpConnection.httpLongPoll(new Uri("reverseAjax.php", UriKind.Relative), transferDone, 2);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
 
-        private void transferDone(Object sender, DownloadStringCompletedEventArgs e)
-        {
-            try
-            {
-                if (e.Error == null)
-                {
-                    registerButton.Content = e.Result;
-                }
-                else
-                {
-                    MessageBox.Show("ERROR: " + e.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
 
     }
