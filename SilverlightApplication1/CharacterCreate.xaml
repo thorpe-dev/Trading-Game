@@ -23,6 +23,6 @@
         <TextBlock Height="200" HorizontalAlignment="Left" Margin="12,199,0,0" Name="statText" Text="" VerticalAlignment="Top" Width="207" />
         <ComboBox Height="20" HorizontalAlignment="Left" Margin="275,42,0,0" Name="classSelect" VerticalAlignment="Top" Width="169" ItemsSource="{Binding Mode=OneWay, Path=classes, Source={StaticResource StringClasses}}" SelectionChanged="classSelect_SelectionChanged" />
         <sdk:Label Content="Class:" Height="20" HorizontalAlignment="Left" Margin="232,44,0,0" Name="classLabel" VerticalAlignment="Top" Width="40" />
-        <TextBlock Height="208" HorizontalAlignment="Right" Margin="0,150,12,0" Name="descBlock" Text="" VerticalAlignment="Top" Width="441" />
+        <TextBlock Height="208" HorizontalAlignment="Right" Margin="0,150,12,0" Name="descBlock" Text="" VerticalAlignment="Top" Width="441"></TextBlock>
     </Grid>
 </controls:ChildWindow>

@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using System.Xml.Linq;
 using System.Windows.Browser;
+using System.Security.Cryptography;
 
 namespace SilverlightApplication1
 {
@@ -31,6 +32,11 @@ namespace SilverlightApplication1
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            SHA256 hasher = new SHA256Managed();
+            hasher.Initialize();
+            byte[] bytes = System.Text.Encoding.Unicode.GetBytes(userInput.Text);
+            byte[] hash = hasher.ComputeHash(bytes);
+            MessageBox.Show(new String(System.Text.Encoding.Unicode.GetChars(hash)));
             string uploadString = String.Format("username={0}&password={1}", userInput.Text, passwordBox.Password);
             HttpConnection.httpPost(new Uri("login.php", UriKind.Relative), uploadString, new UploadStringCompletedEventHandler(dataComplete));
         }
