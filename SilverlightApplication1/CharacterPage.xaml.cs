@@ -32,9 +32,9 @@ namespace SilverlightApplication1
 
         private void initialiseClasses()
         {
-            ClassSet.createClass(ClassType.Warrior, new Class(new StatModifier(20, 15, 10), new StatModifier(3, 2, 1), "Im a Warrior"));
-            ClassSet.createClass(ClassType.Mage, new Class(new StatModifier(10, 10, 25), new StatModifier(1, 1, 4), "Im a Mage"));
-            ClassSet.createClass(ClassType.Rogue, new Class(new StatModifier(15, 20, 5), new StatModifier(2, 3, 1), "Im a Rogue"));
+            ClassSet.createClass(ClassType.Warrior, new Class(new StatModifier(20, 15, 10), new StatModifier(3, 2, 1), ClassType.Warrior, "Im a Warrior"));
+            ClassSet.createClass(ClassType.Mage, new Class(new StatModifier(10, 10, 25), new StatModifier(1, 1, 4), ClassType.Mage, "Im a Mage"));
+            ClassSet.createClass(ClassType.Rogue, new Class(new StatModifier(15, 20, 5), new StatModifier(2, 3, 1), ClassType.Rogue, "Im a Rogue"));
         }
 
         private void transferComplete(Object sender, DownloadStringCompletedEventArgs e)
@@ -47,20 +47,28 @@ namespace SilverlightApplication1
                     try
                     {
                         var characters = from character in doc.Descendants("character")
-                                         select new Character()
-                                         {
-                                             name = (string)character.Element("name"),
-                                             classid = (ClassType)((int)character.Element("classid")),
-                                             lvl = (int)character.Element("lvl"),
-                                             exptonext = (int)character.Element("exptonext"),
-                                             strength = (int)character.Element("strength"),
-                                             agility = (int)character.Element("agility"),
-                                             intelligence = (int)character.Element("intelligence")
-                                         };
-                        Character c = characters.First();
-                        string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nStrength:{3} \nAgility:{4} \nIntelligence:{5}",
-                          c.name, c.classid.ToString(), c.lvl, c.strength, c.agility, c.intelligence);
-                        CharacterBox.Text = details;
+                                         select new Character(
+                                             (string)character.Element("name"),
+                                             ClassSet.getClass((ClassType)((int)character.Element("classid"))),
+                                             (int)character.Element("lvl"),
+                                             (int)character.Element("exptonext"),
+                                             (int)character.Element("maxhealth"),
+                                             (int)character.Element("currenthealth"),
+                                             (int)character.Element("maxmana"),
+                                             (int)character.Element("currentmana"),
+                                             (int)character.Element("strength"),
+                                             (int)character.Element("agility"),
+                                             (int)character.Element("intelligence")
+                                             );
+                        if (characters.LongCount() > 0)
+                        {
+                            Character c = characters.First();
+                            string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\n" +
+                                                            "Strength:{5} \nAgility:{6} \nIntelligence:{7}",
+                                                            c.name, c.type.ToString(), c.level, c.maxHealth,
+                                                            c.maxMana, c.strength, c.agility, c.intelligence);
+                            CharacterBox.Text = details;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -81,18 +89,19 @@ namespace SilverlightApplication1
         private void create_Click(object sender, RoutedEventArgs e)
         {
             CharacterCreate createForm = new CharacterCreate();
+            createForm.Closed += new EventHandler(updateCharPane);
             createForm.Show();
         }
-    }
 
-    public class Character
-    {
-        public string name;
-        public ClassType classid;
-        public int lvl;
-        public int exptonext;
-        public int strength;
-        public int agility;
-        public int intelligence;
+        private void updateCharPane(Object sender, EventArgs e)
+        {
+            CharacterCreate createForm = (CharacterCreate)sender;
+            Character c = createForm.createdChar;
+            string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\n" +
+                                                            "Strength:{5} \nAgility:{6} \nIntelligence:{7}",
+                                                            c.name, c.type.ToString(), c.level, c.maxHealth,
+                                                            c.maxMana, c.strength, c.agility, c.intelligence);
+            CharacterBox.Text = details;
+        }
     }
 }

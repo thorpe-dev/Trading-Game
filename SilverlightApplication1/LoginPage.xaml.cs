@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -32,13 +33,18 @@ namespace SilverlightApplication1
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            String hash = hashString(passwordBox.Password);
+            string uploadString = String.Format("username={0}&password={1}", userInput.Text, hash);
+            HttpConnection.httpPost(new Uri("login.php", UriKind.Relative), uploadString, new UploadStringCompletedEventHandler(dataComplete));
+        }
+
+        public static String hashString(String text)
+        {
             SHA256 hasher = new SHA256Managed();
             hasher.Initialize();
-            byte[] bytes = System.Text.Encoding.Unicode.GetBytes(userInput.Text);
+            byte[] bytes = Encoding.Unicode.GetBytes(text);
             byte[] hash = hasher.ComputeHash(bytes);
-            MessageBox.Show(new String(System.Text.Encoding.Unicode.GetChars(hash)));
-            string uploadString = String.Format("username={0}&password={1}", userInput.Text, passwordBox.Password);
-            HttpConnection.httpPost(new Uri("login.php", UriKind.Relative), uploadString, new UploadStringCompletedEventHandler(dataComplete));
+            return BitConverter.ToString(hash).Replace("-", String.Empty);
         }
 
         private void dataComplete(Object sender, UploadStringCompletedEventArgs e)

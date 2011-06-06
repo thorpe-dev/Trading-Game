@@ -45,7 +45,7 @@ namespace SilverlightApplication1
 
     public class NoSuchClassException : Exception
     {
-        public NoSuchClassException() {}
+        public NoSuchClassException() { }
         public NoSuchClassException(string msg) { }
     }
 
@@ -53,12 +53,14 @@ namespace SilverlightApplication1
     {
         private StatModifier initialModifier;
         private StatModifier levelModifier;
+        private ClassType _type;
         private string _description;
 
-        public Class(StatModifier initialModifier, StatModifier levelModifier, string description)
+        public Class(StatModifier initialModifier, StatModifier levelModifier, ClassType ctype, string description)
         {
             this.initialModifier = initialModifier;
             this.levelModifier = levelModifier;
+            _type = ctype;
             _description = description;
         }
 
@@ -75,6 +77,14 @@ namespace SilverlightApplication1
             get
             {
                 return initialModifier;
+            }
+        }
+
+        public ClassType type
+        {
+            get
+            {
+                return _type;
             }
         }
 
@@ -95,11 +105,7 @@ namespace SilverlightApplication1
 
     public class StringClasses
     {
-        public string[] classes
-        {
-            get;
-            set;
-        }
+        public string[] classes { get; set; }
 
         public StringClasses()
         {

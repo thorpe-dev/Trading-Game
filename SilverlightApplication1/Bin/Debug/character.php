@@ -14,7 +14,9 @@
 	{
 		$values = pg_fetch_array($result, 0, PGSQL_ASSOC);
 		$xml = "<success><character><characterid>" . $values["characterid"] . "</characterid><name>" . $values["name"] . "</name><classid>"
-				. $values["classid"] . "</classid><lvl>" . $values["lvl"] . "</lvl><exptonext>" . $values["exptonext"] . "</exptonext><strength>"
+				. $values["classid"] . "</classid><lvl>" . $values["lvl"] . "</lvl><exptonext>" . $values["exptonext"] . "</exptonext><maxhealth>"
+				. $values["maxhealth"] . "</maxhealth><currenthealth>" . $values["currenthealth"] . "</currenthealth><maxmana>" 
+				. $values["maxmana"] . "</maxmana><currentmana>" . $values["currentmana"] . "</currentmana><strength>"
 				. $values["strength"] . "</strength><agility>" . $values["agility"] . "</agility><intelligence>" . $values["intelligence"] .
 				"</intelligence></character></success>";
 	}
