@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using System.Windows.Browser;
 using System.Threading;
 using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace SilverlightApplication1
 {
@@ -32,9 +33,12 @@ namespace SilverlightApplication1
 
         private void initialiseClasses()
         {
-            ClassSet.createClass(ClassType.Warrior, new Class(new StatModifier(20, 15, 10), new StatModifier(3, 2, 1), ClassType.Warrior, "Im a Warrior"));
-            ClassSet.createClass(ClassType.Mage, new Class(new StatModifier(10, 10, 25), new StatModifier(1, 1, 4), ClassType.Mage, "Im a Mage"));
-            ClassSet.createClass(ClassType.Rogue, new Class(new StatModifier(15, 20, 5), new StatModifier(2, 3, 1), ClassType.Rogue, "Im a Rogue"));
+            ClassSet.createClass(ClassType.Warrior, new Class(new StatModifier(20, 15, 10), new StatModifier(3, 2, 1), ClassType.Warrior,
+                                                                "Im a Warrior", new Uri("robot.png", UriKind.Relative)));
+            ClassSet.createClass(ClassType.Mage, new Class(new StatModifier(10, 10, 25), new StatModifier(1, 1, 4), ClassType.Mage,
+                                                                "Im a Mage", new Uri("failsprite.png", UriKind.Relative)));
+            ClassSet.createClass(ClassType.Rogue, new Class(new StatModifier(15, 20, 5), new StatModifier(2, 3, 1), ClassType.Rogue,
+                                                                   "Im a Rogue", new Uri("clam.png", UriKind.Relative)));
         }
 
         private void transferComplete(Object sender, DownloadStringCompletedEventArgs e)
@@ -68,9 +72,15 @@ namespace SilverlightApplication1
                                                             c.name, c.type.ToString(), c.level, c.maxHealth,
                                                             c.maxMana, c.strength, c.agility, c.intelligence);
                             CharacterBox.Text = details;
+                            Class _class = c.charClass;
+                            charImage.Source = new BitmapImage(_class.imageSrc);
                             Character.currentCharacter = c;
-                            createCharButton.IsEnabled = false;
                             playCharButton.IsEnabled = true;
+                            deleteCharButton.IsEnabled = true;
+                        }
+                        else
+                        {
+                            createCharButton.IsEnabled = true;
                         }
                     }
                     catch (Exception ex)
@@ -106,8 +116,11 @@ namespace SilverlightApplication1
                                                             c.maxMana, c.strength, c.agility, c.intelligence);
             CharacterBox.Text = details;
             Character.currentCharacter = c;
+            Class _class = c.charClass;
+            charImage.Source = new BitmapImage(_class.imageSrc);
             createCharButton.IsEnabled = false;
             playCharButton.IsEnabled = true;
+            deleteCharButton.IsEnabled = true;
         }
 
         private void playCharButton_Click(object sender, RoutedEventArgs e)
@@ -129,6 +142,36 @@ namespace SilverlightApplication1
                 else
                 {
                     MessageBox.Show((string)doc.Element("error"));
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error: " + e.Error.ToString());
+            }
+        }
+
+        private void deleteCharButton_Click(object sender, RoutedEventArgs e)
+        {
+            HttpConnection.httpGet(new Uri("deleteCharacter.php", UriKind.Relative), deleteCharComplete);
+        }
+
+        private void deleteCharComplete(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                XDocument doc = XDocument.Parse(e.Result);
+                if (doc.Element("error") == null)
+                {
+                    Character.currentCharacter = null;
+                    charImage.Source = null;
+                    CharacterBox.Text = "";
+                    deleteCharButton.IsEnabled = false;
+                    playCharButton.IsEnabled = false;
+                    createCharButton.IsEnabled = true;
+                }
+                else
+                {
+                    MessageBox.Show("Error: " + (string)doc.Element("error"));
                 }
             }
             else

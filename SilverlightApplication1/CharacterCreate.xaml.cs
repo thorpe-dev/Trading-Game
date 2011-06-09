@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using System.Windows.Media.Imaging;
 
 namespace SilverlightApplication1
 {
@@ -51,6 +52,7 @@ namespace SilverlightApplication1
             descBlock.Text = c.description;
             string statString = String.Format("Strength: {0}\nAgility: {1}\nIntelligence: {2}", stats.strength, stats.agility,
                                                stats.intelligence);
+            classImage.Source = new BitmapImage(c.imageSrc);
             statText.Text = statString;
         }
 

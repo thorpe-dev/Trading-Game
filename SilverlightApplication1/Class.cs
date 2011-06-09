@@ -54,14 +54,16 @@ namespace SilverlightApplication1
         private StatModifier initialModifier;
         private StatModifier levelModifier;
         private ClassType _type;
+        private Uri imageSource;
         private string _description;
 
-        public Class(StatModifier initialModifier, StatModifier levelModifier, ClassType ctype, string description)
+        public Class(StatModifier initialModifier, StatModifier levelModifier, ClassType ctype, string description, Uri imageSource)
         {
             this.initialModifier = initialModifier;
             this.levelModifier = levelModifier;
             _type = ctype;
             _description = description;
+            this.imageSource = imageSource;
         }
 
         public StatModifier levelMod
@@ -93,6 +95,14 @@ namespace SilverlightApplication1
             get
             {
                 return _description;
+            }
+        }
+
+        public Uri imageSrc
+        {
+            get
+            {
+                return imageSource;
             }
         }
     }
