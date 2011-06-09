@@ -68,6 +68,9 @@ namespace SilverlightApplication1
                                                             c.name, c.type.ToString(), c.level, c.maxHealth,
                                                             c.maxMana, c.strength, c.agility, c.intelligence);
                             CharacterBox.Text = details;
+                            Character.currentCharacter = c;
+                            createCharButton.IsEnabled = false;
+                            playCharButton.IsEnabled = true;
                         }
                     }
                     catch (Exception ex)
@@ -102,6 +105,36 @@ namespace SilverlightApplication1
                                                             c.name, c.type.ToString(), c.level, c.maxHealth,
                                                             c.maxMana, c.strength, c.agility, c.intelligence);
             CharacterBox.Text = details;
+            Character.currentCharacter = c;
+            createCharButton.IsEnabled = false;
+            playCharButton.IsEnabled = true;
+        }
+
+        private void playCharButton_Click(object sender, RoutedEventArgs e)
+        {
+            HttpConnection.httpGet(new Uri("enterWorld.php", UriKind.Relative), characterLoaded);
+        }
+
+        private void characterLoaded(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                XDocument doc = XDocument.Parse(e.Result);
+                if (doc.Element("error") == null)
+                {
+                    Location l = new Location(LocationType.HomeHub);
+                    Location.currentLocation = l;
+                    MessageBox.Show("Entering location: " + l.place.ToString());
+                }
+                else
+                {
+                    MessageBox.Show((string)doc.Element("error"));
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error: " + e.Error.ToString());
+            }
         }
     }
 }

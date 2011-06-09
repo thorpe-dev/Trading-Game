@@ -13,6 +13,8 @@ namespace SilverlightApplication1
 {
     public class Location
     {
+        public static Location currentLocation { get; set; }
+
         public int xcoord { get; set; }
         public int ycoord { get; set; }
         public LocationType place { get; set; }
