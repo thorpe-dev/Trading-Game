@@ -56,14 +56,17 @@ namespace SilverlightApplication1
         private ClassType _type;
         private Uri imageSource;
         private string _description;
+        public IDictionary<string, Ability> abilities;
 
-        public Class(StatModifier initialModifier, StatModifier levelModifier, ClassType ctype, string description, Uri imageSource)
+        public Class(StatModifier initialModifier, StatModifier levelModifier, ClassType ctype, string description, Uri imageSource,
+                        IDictionary<string, Ability>_abilities)
         {
             this.initialModifier = initialModifier;
             this.levelModifier = levelModifier;
             _type = ctype;
             _description = description;
             this.imageSource = imageSource;
+            abilities = _abilities;
         }
 
         public StatModifier levelMod

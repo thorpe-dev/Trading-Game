@@ -84,6 +84,7 @@
       <DependentUpon>CharacterCreate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Class.cs" />
+    <Compile Include="Ability.cs" />
     <Compile Include="HttpConnection.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -133,13 +134,19 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="robot.png" />
+    <Resource Include="Images\robot.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="failsprite.png" />
+    <Resource Include="Images\failsprite.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="clam.png" />
+    <Resource Include="Images\clam.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fireball.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\energyarrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

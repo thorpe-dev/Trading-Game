@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 
 namespace SilverlightApplication1
 {
@@ -30,9 +31,11 @@ namespace SilverlightApplication1
         public int agility { get; set; }
         public int intelligence { get; set; }
         public ClassType type { get; set; }
+        public IDictionary<string, Ability> abilities;
 
         public Character(string _name, Class _class, int _level, int _expToNext, int _maxHealth, int _currentHealth, 
-                            int _maxMana, int _currentMana, int _strength, int _agility, int _intelligence)
+                            int _maxMana, int _currentMana, int _strength, int _agility, int _intelligence,
+                                IDictionary<string, Ability> _abilities)
         {
             name = _name;
             charClass = _class;
@@ -46,15 +49,16 @@ namespace SilverlightApplication1
             agility = _agility;
             intelligence = _intelligence;
             type = _class.type;
+            abilities = _abilities;
         }
 
-        public static Character createNewCharacter(string _name, Class _class)
+        public static Character createNewCharacter(string _name, Class _class, IDictionary<string, Ability> _abilities)
         {
             StatModifier mod = _class.initialMod;
             int _maxHealth = calculateMaxHealth(mod.strength);
             int _maxMana = calculateMaxMana(mod.intelligence);
             return new Character(_name, _class, 1, calculateExpToNextLevel(1), _maxHealth, _maxHealth, _maxMana, 
-                                    _maxMana, mod.strength, mod.agility, mod.intelligence);
+                                    _maxMana, mod.strength, mod.agility, mod.intelligence, _abilities);
         }
 
         public void submitCharacter(UploadStringCompletedEventHandler characterUploaded)

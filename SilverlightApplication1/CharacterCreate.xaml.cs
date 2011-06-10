@@ -17,6 +17,8 @@ namespace SilverlightApplication1
     public partial class CharacterCreate : ChildWindow
     {
         private Character _createdChar;
+        private IDictionary<string, Ability> selectedAbilities;
+        private int abilitiesToSelect;
 
         public Character createdChar
         {
@@ -29,13 +31,29 @@ namespace SilverlightApplication1
         public CharacterCreate()
         {
             InitializeComponent();
+            selectedAbilities = new Dictionary<string, Ability>();
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            Class selectedClass = ClassSet.getClass((ClassType)Enum.Parse(typeof(ClassType), (string)classSelect.SelectedItem, false));
             string name = nameBox.Text;
-            Character newChar = Character.createNewCharacter(name, selectedClass);
+            if (name.Equals(""))
+            {
+                MessageBox.Show("Please enter a character name");
+                return;
+            }
+            if (classSelect.SelectedItem.Equals(null))
+            {
+                MessageBox.Show("Please select a class");
+                return;
+            }
+            if (abilitiesToSelect != 0)
+            {
+                MessageBox.Show("Please select " + Ability.initialAbilityLimit + " abilities");
+                return;
+            }
+            Class selectedClass = ClassSet.getClass((ClassType)Enum.Parse(typeof(ClassType), (string)classSelect.SelectedItem, false));
+            Character newChar = Character.createNewCharacter(name, selectedClass, selectedAbilities);
             newChar.submitCharacter(characterTransferComplete);
             _createdChar = newChar;
         }
@@ -47,6 +65,7 @@ namespace SilverlightApplication1
 
         private void classSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            abilityGrid.Children.Clear();
             Class c = ClassSet.getClass((ClassType)Enum.Parse(typeof(ClassType), (string)classSelect.SelectedItem, false));
             StatModifier stats = c.initialMod;
             descBlock.Text = c.description;
@@ -54,6 +73,51 @@ namespace SilverlightApplication1
                                                stats.intelligence);
             classImage.Source = new BitmapImage(c.imageSrc);
             statText.Text = statString;
+            int n = 0;
+            foreach (Ability a in c.abilities.Values)
+            {
+                ColumnDefinition column = new ColumnDefinition();
+                column.Width = new GridLength(25);
+                abilityGrid.ColumnDefinitions.Add(column);
+                Image icon = new Image();
+                icon.Tag = a;
+                icon.Source = new BitmapImage(a.icon);
+                icon.Opacity = 0.6;
+                icon.MouseLeftButtonDown += new MouseButtonEventHandler(selectAbility);
+                ToolTip t = new ToolTip();
+                t.Background = new SolidColorBrush(Colors.Brown);
+                t.Content = a.name + ":\n" + a.description;
+                ToolTipService.SetToolTip(icon, t);
+                Grid.SetRow(icon, 0);
+                Grid.SetColumn(icon, n);
+                abilityGrid.Children.Add(icon);
+                n++;
+            }
+            abilitiesToSelect = Ability.initialAbilityLimit;
+            choicesLabel.Content = abilitiesToSelect.ToString();
+        }
+
+        private void selectAbility(Object sender, MouseEventArgs e)
+        {
+            Image icon = sender as Image;
+
+            if (icon.Opacity != 1)
+            {
+                if (abilitiesToSelect <= Ability.initialAbilityLimit)
+                {
+                    abilitiesToSelect--;
+                    icon.Opacity = 1;
+                    Ability a = icon.Tag as Ability;
+                    selectedAbilities.Add(a.name, a);
+                }
+            }
+            else
+            {
+                abilitiesToSelect++;
+                icon.Opacity = 0.6;
+                selectedAbilities.Remove(((Ability)icon.Tag).name);
+            }
+            choicesLabel.Content = abilitiesToSelect.ToString();
         }
 
         private void characterTransferComplete(Object sender, UploadStringCompletedEventArgs e)

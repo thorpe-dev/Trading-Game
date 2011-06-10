@@ -22,6 +22,7 @@ namespace SilverlightApplication1
         {
             InitializeComponent();
             frame = MainFrame;
+            Ability.populateAllAbility();
         }
     }
 }

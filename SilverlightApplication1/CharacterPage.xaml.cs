@@ -33,12 +33,26 @@ namespace SilverlightApplication1
 
         private void initialiseClasses()
         {
+            IDictionary<string, Ability> warriorAbilities = new Dictionary<string, Ability>();
+            warriorAbilities.Add("Maim", Ability.fetchAbility("Maim"));
             ClassSet.createClass(ClassType.Warrior, new Class(new StatModifier(20, 15, 10), new StatModifier(3, 2, 1), ClassType.Warrior,
-                                                                "Im a Warrior", new Uri("robot.png", UriKind.Relative)));
+                                                                "Im a Warrior", new Uri("Images/robot.png", UriKind.Relative),
+                                                                warriorAbilities));
+
+
+            IDictionary<string, Ability> mageAbilities = new Dictionary<string, Ability>();
+            mageAbilities.Add("Fireball", Ability.fetchAbility("Fireball"));
+            mageAbilities.Add("Energy arrow", Ability.fetchAbility("Energy arrow"));
             ClassSet.createClass(ClassType.Mage, new Class(new StatModifier(10, 10, 25), new StatModifier(1, 1, 4), ClassType.Mage,
-                                                                "Im a Mage", new Uri("failsprite.png", UriKind.Relative)));
+                                                                "Im a Mage", new Uri("Images/failsprite.png", UriKind.Relative),
+                                                                mageAbilities));
+
+
+            IDictionary<string, Ability> rogueAbilities = new Dictionary<string, Ability>();
+            rogueAbilities.Add("Attack", Ability.fetchAbility("Attack"));
             ClassSet.createClass(ClassType.Rogue, new Class(new StatModifier(15, 20, 5), new StatModifier(2, 3, 1), ClassType.Rogue,
-                                                                   "Im a Rogue", new Uri("clam.png", UriKind.Relative)));
+                                                                "Im a Rogue", new Uri("Images/clam.png", UriKind.Relative),
+                                                                 rogueAbilities));
         }
 
         private void transferComplete(Object sender, DownloadStringCompletedEventArgs e)
@@ -62,7 +76,8 @@ namespace SilverlightApplication1
                                              (int)character.Element("currentmana"),
                                              (int)character.Element("strength"),
                                              (int)character.Element("agility"),
-                                             (int)character.Element("intelligence")
+                                             (int)character.Element("intelligence"),
+                                             new Dictionary<string, Ability>()
                                              );
                         if (characters.LongCount() > 0)
                         {
@@ -109,18 +124,21 @@ namespace SilverlightApplication1
         private void updateCharPane(Object sender, EventArgs e)
         {
             CharacterCreate createForm = (CharacterCreate)sender;
-            Character c = createForm.createdChar;
-            string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\n" +
-                                                            "Strength:{5} \nAgility:{6} \nIntelligence:{7}",
-                                                            c.name, c.type.ToString(), c.level, c.maxHealth,
-                                                            c.maxMana, c.strength, c.agility, c.intelligence);
-            CharacterBox.Text = details;
-            Character.currentCharacter = c;
-            Class _class = c.charClass;
-            charImage.Source = new BitmapImage(_class.imageSrc);
-            createCharButton.IsEnabled = false;
-            playCharButton.IsEnabled = true;
-            deleteCharButton.IsEnabled = true;
+            if ((bool)createForm.DialogResult)
+            {
+                Character c = createForm.createdChar;
+                string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\n" +
+                                                                "Strength:{5} \nAgility:{6} \nIntelligence:{7}",
+                                                                c.name, c.type.ToString(), c.level, c.maxHealth,
+                                                                c.maxMana, c.strength, c.agility, c.intelligence);
+                CharacterBox.Text = details;
+                Character.currentCharacter = c;
+                Class _class = c.charClass;
+                charImage.Source = new BitmapImage(_class.imageSrc);
+                createCharButton.IsEnabled = false;
+                playCharButton.IsEnabled = true;
+                deleteCharButton.IsEnabled = true;
+            }
         }
 
         private void playCharButton_Click(object sender, RoutedEventArgs e)
