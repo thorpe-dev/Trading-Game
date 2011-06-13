@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Main_Game.LoginScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="255" d:DesignWidth="309" xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input" Name="loginPage">
+
+    <Grid x:Name="LayoutRoot" Height="152" Width="239">
+        <dataInput:Label Height="17" HorizontalAlignment="Left" Margin="3,0,0,105" Name="lbl_username" VerticalAlignment="Bottom" Width="70" Content="Username:" />
+        <dataInput:Label Content="Password:" Height="17" HorizontalAlignment="Left" Margin="8,62,0,0" Name="lbl_password" VerticalAlignment="Top" Width="70" />
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="75,26,0,0" Name="txt_username" VerticalAlignment="Top" Width="137" TabIndex="1" />
+        <Button Content="Login" Height="28" HorizontalAlignment="Left" Margin="39,103,0,0" Name="btn_login" VerticalAlignment="Top" Width="68" Click="LoginButton_Click" TabIndex="3" />
+        <Button Content="Register" Height="28" HorizontalAlignment="Left" Margin="127,103,0,0" Name="btn_register" VerticalAlignment="Top" Width="68" Click="btn_register_Click" TabIndex="4" />
+        <PasswordBox Height="25" HorizontalAlignment="Left" Margin="74,58,0,0" Name="txt_password" VerticalAlignment="Top" Width="138" TabIndex="2" />
+    </Grid>
+</UserControl>
