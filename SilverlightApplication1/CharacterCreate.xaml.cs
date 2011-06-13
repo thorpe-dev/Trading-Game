@@ -127,6 +127,7 @@ namespace SilverlightApplication1
                 XDocument doc = XDocument.Parse(e.Result);
                 if (doc.Element("error") == null)
                 {
+                    selectedAbilities.Clear();
                     this.DialogResult = true;
                 }
                 else

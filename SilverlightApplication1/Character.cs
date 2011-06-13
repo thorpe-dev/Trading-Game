@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -31,7 +32,7 @@ namespace SilverlightApplication1
         public int agility { get; set; }
         public int intelligence { get; set; }
         public ClassType type { get; set; }
-        public IDictionary<string, Ability> abilities;
+        public IDictionary<string, Ability> abilities { get; set; }
 
         public Character(string _name, Class _class, int _level, int _expToNext, int _maxHealth, int _currentHealth, 
                             int _maxMana, int _currentMana, int _strength, int _agility, int _intelligence,
@@ -49,7 +50,7 @@ namespace SilverlightApplication1
             agility = _agility;
             intelligence = _intelligence;
             type = _class.type;
-            abilities = _abilities;
+            abilities = new Dictionary<string, Ability>(_abilities);
         }
 
         public static Character createNewCharacter(string _name, Class _class, IDictionary<string, Ability> _abilities)
@@ -67,7 +68,20 @@ namespace SilverlightApplication1
                                                     "maxmana={4}&currentmana={4}&strength={5}&agility={6}&intelligence={7}",
                                                     name, (int)type, expToNext, maxHealth,
                                                     maxMana, strength, agility, intelligence);
+            charFormatString += formatAbilities(abilities);
             HttpConnection.httpPost(new Uri("characterCreate.php", UriKind.Relative), charFormatString, characterUploaded);
+        }
+
+        private string formatAbilities(IDictionary<string, Ability> abilityList)
+        {
+            Ability[] abilityArray = abilityList.Values.ToArray();
+            string formatString = "";
+            for (int i = 0; i < abilityArray.LongCount(); i++)
+            {
+                //string formatability = abilityArray[i].name.Replace(' ', '%');
+                formatString += "&ability" + i + "=" + abilityArray[i].name;
+            }
+            return formatString;
         }
 
         public static int calculateMaxHealth(int _strength)

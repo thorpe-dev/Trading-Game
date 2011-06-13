@@ -77,21 +77,48 @@ namespace SilverlightApplication1
                                              (int)character.Element("strength"),
                                              (int)character.Element("agility"),
                                              (int)character.Element("intelligence"),
-                                             new Dictionary<string, Ability>()
+                                             parseAbilities(character.Element("abilities"))
                                              );
                         if (characters.LongCount() > 0)
                         {
                             Character c = characters.First();
-                            string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\n" +
+                            /*string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\n" +
                                                             "Strength:{5} \nAgility:{6} \nIntelligence:{7}",
                                                             c.name, c.type.ToString(), c.level, c.maxHealth,
                                                             c.maxMana, c.strength, c.agility, c.intelligence);
                             CharacterBox.Text = details;
+                            Ability[] abilities = c.abilities.Values.ToArray();
+                            for (int i = 0; i < 5; i++)
+                            {
+                                ColumnDefinition col = new ColumnDefinition();
+                                col.Width = new GridLength(25);
+                                abilityGrid.ColumnDefinitions.Add(col);
+                            }
+                            for (int i = 0; i <= (abilities.LongCount()-1)/5; i++)
+                            {
+                                RowDefinition row = new RowDefinition();
+                                row.Height = new GridLength(25);
+                                abilityGrid.RowDefinitions.Add(row);
+                            }
+                            for (int i = 0; i < abilities.LongCount(); i++)
+                            {
+                                Ability a = abilities[i];
+                                Image icon = new Image();
+                                icon.Source = new BitmapImage(a.icon);
+                                ToolTip t = new ToolTip();
+                                t.Background = new SolidColorBrush(Colors.Brown);
+                                t.Content = a.name + ":\n" + a.description;
+                                ToolTipService.SetToolTip(icon, t);
+                                Grid.SetRow(icon, i / 5);
+                                Grid.SetColumn(icon, i % 5);
+                                abilityGrid.Children.Add(icon);
+                            }
                             Class _class = c.charClass;
                             charImage.Source = new BitmapImage(_class.imageSrc);
                             Character.currentCharacter = c;
                             playCharButton.IsEnabled = true;
-                            deleteCharButton.IsEnabled = true;
+                            deleteCharButton.IsEnabled = true;*/
+                            updateCharPane(c);
                         }
                         else
                         {
@@ -114,6 +141,17 @@ namespace SilverlightApplication1
             }
         }
 
+        private IDictionary<string, Ability> parseAbilities(XElement abilities)
+        {
+            IEnumerable<XElement> abilitySet = abilities.Elements("ability");
+            IDictionary<string, Ability> abilityDictionary = new Dictionary<string, Ability>();
+            foreach (XElement elem in abilitySet)
+            {
+                abilityDictionary.Add((string)elem, Ability.fetchAbility((string)elem));
+            }
+            return abilityDictionary;
+        }
+
         private void create_Click(object sender, RoutedEventArgs e)
         {
             CharacterCreate createForm = new CharacterCreate();
@@ -127,7 +165,7 @@ namespace SilverlightApplication1
             if ((bool)createForm.DialogResult)
             {
                 Character c = createForm.createdChar;
-                string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\n" +
+                /*string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\n" +
                                                                 "Strength:{5} \nAgility:{6} \nIntelligence:{7}",
                                                                 c.name, c.type.ToString(), c.level, c.maxHealth,
                                                                 c.maxMana, c.strength, c.agility, c.intelligence);
@@ -137,8 +175,49 @@ namespace SilverlightApplication1
                 charImage.Source = new BitmapImage(_class.imageSrc);
                 createCharButton.IsEnabled = false;
                 playCharButton.IsEnabled = true;
-                deleteCharButton.IsEnabled = true;
+                deleteCharButton.IsEnabled = true;*/
+                updateCharPane(c);
             }
+        }
+        private void updateCharPane(Character c)
+        {
+            string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\n" +
+                                            "Strength:{5} \nAgility:{6} \nIntelligence:{7}",
+                                            c.name, c.type.ToString(), c.level, c.maxHealth,
+                                            c.maxMana, c.strength, c.agility, c.intelligence);
+            CharacterBox.Text = details;
+            Ability[] abilities = c.abilities.Values.ToArray();
+            for (int i = 0; i < 5; i++)
+            {
+                ColumnDefinition col = new ColumnDefinition();
+                col.Width = new GridLength(25);
+                abilityGrid.ColumnDefinitions.Add(col);
+            }
+            for (int i = 0; i <= (abilities.LongCount() - 1) / 5; i++)
+            {
+                RowDefinition row = new RowDefinition();
+                row.Height = new GridLength(25);
+                abilityGrid.RowDefinitions.Add(row);
+            }
+            for (int i = 0; i < abilities.LongCount(); i++)
+            {
+                Ability a = abilities[i];
+                Image icon = new Image();
+                icon.Source = new BitmapImage(a.icon);
+                ToolTip t = new ToolTip();
+                t.Background = new SolidColorBrush(Colors.Brown);
+                t.Content = a.name + ":\n" + a.description;
+                ToolTipService.SetToolTip(icon, t);
+                Grid.SetRow(icon, i / 5);
+                Grid.SetColumn(icon, i % 5);
+                abilityGrid.Children.Add(icon);
+            }
+            Class _class = c.charClass;
+            charImage.Source = new BitmapImage(_class.imageSrc);
+            Character.currentCharacter = c;
+            createCharButton.IsEnabled = false;
+            playCharButton.IsEnabled = true;
+            deleteCharButton.IsEnabled = true;
         }
 
         private void playCharButton_Click(object sender, RoutedEventArgs e)
@@ -183,6 +262,7 @@ namespace SilverlightApplication1
                     Character.currentCharacter = null;
                     charImage.Source = null;
                     CharacterBox.Text = "";
+                    abilityGrid.Children.Clear();
                     deleteCharButton.IsEnabled = false;
                     playCharButton.IsEnabled = false;
                     createCharButton.IsEnabled = true;

@@ -9,9 +9,12 @@
            Title="Character creation" Name="CharacterForm" xmlns:my="clr-namespace:SilverlightApplication1" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     <Grid x:Name="LayoutRoot" Background="#FF524E4E">
         <Button Content="Create character" Height="75" HorizontalAlignment="Left" Margin="408,393,0,0" Name="createCharButton" VerticalAlignment="Top" Width="220" Click="create_Click" IsEnabled="False" />
-        <TextBlock Height="227" HorizontalAlignment="Left" Margin="24,168,0,0" Name="CharacterBox" Text="" VerticalAlignment="Top" Width="200" />
+        <TextBlock Height="137" HorizontalAlignment="Left" Margin="24,168,0,0" Name="CharacterBox" Text="" VerticalAlignment="Top" Width="200" />
         <Image Height="150" HorizontalAlignment="Left" Margin="24,12,0,0" Name="charImage" Stretch="Fill" VerticalAlignment="Top" Width="200" />
         <Button Content="Enter world" Height="59" HorizontalAlignment="Left" Margin="24,409,0,0" Name="playCharButton" VerticalAlignment="Top" Width="200" Click="playCharButton_Click" IsEnabled="False" />
         <Button Content="Delete character" HorizontalAlignment="Right" Margin="0,12,12,0" Name="deleteCharButton" Width="220" IsEnabled="False" Click="deleteCharButton_Click" Height="77" VerticalAlignment="Top" />
+        <ScrollViewer Height="84" HorizontalAlignment="Left" Margin="24,311,0,0" Name="abilityViewer" VerticalAlignment="Top" Width="200" VerticalScrollBarVisibility="Auto">
+            <Grid Name="abilityGrid"></Grid>
+        </ScrollViewer>
     </Grid>
 </navigation:Page>

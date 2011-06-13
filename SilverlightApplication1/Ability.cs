@@ -15,7 +15,7 @@ namespace SilverlightApplication1
 
     public class Ability
     {
-        public const int initialAbilityLimit = 3;
+        public const int initialAbilityLimit = 2;
 
         public static IDictionary<string, Ability> allAbilities = new Dictionary<string, Ability>();
         public string name { get; set; }
