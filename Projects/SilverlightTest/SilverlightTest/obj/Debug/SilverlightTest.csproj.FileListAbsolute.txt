@@ -1,0 +1,12 @@
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\obj\Debug\ResolveAssemblyReference.cache
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\obj\Debug\App.g.cs
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\obj\Debug\MainPage.g.cs
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\obj\Debug\SilverlightTest.g.resources
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\Bin\Debug\SilverlightTest.dll
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\Bin\Debug\SilverlightTest.pdb
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\Bin\Debug\AppManifest.xaml
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\Bin\Debug\SilverlightTest.xap
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\Bin\Debug\SilverlightTestTestPage.html
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\obj\Debug\SilverlightTest.dll
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\obj\Debug\SilverlightTest.pdb
+c:\users\andy\documents\visual studio 2010\Projects\SilverlightTest\SilverlightTest\obj\Debug\XapCacheFile.xml
