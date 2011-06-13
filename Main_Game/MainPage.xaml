@@ -7,5 +7,9 @@
     d:DesignHeight="500" d:DesignWidth="1000" Loaded="main_Loaded">
 
     <Grid x:Name="LayoutRoot" Background="White">
+        <Grid Height="463" HorizontalAlignment="Left" Name="mainContent" VerticalAlignment="Top" Width="1000">
+        </Grid>
+        <Grid Height="37" HorizontalAlignment="Left" Name="settingBar" VerticalAlignment="Top" Width="1000" Margin="0,463,0,0">
+        </Grid>
     </Grid>
 </UserControl>

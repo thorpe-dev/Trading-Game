@@ -52,7 +52,8 @@ namespace Main_Game
                 }
                 else
                 {
-                    ScreenManager.SetScreen(new CharacterScreen());                    
+                    ScreenManager.SetScreen(new CharacterScreen());
+                    ScreenManager.SetSettingBar(new settingBar());
                 }
             }
             else

@@ -188,7 +188,6 @@ namespace Main_Game
                     Location l = new Location(LocationType.HomeHub);
                     Location.currentLocation = l;
                     MessageBox.Show("Entering location: " + l.place.ToString());
-                    ScreenManager.SetScreen(new City(500 + 4 * 32, 300 + 6 * 32));
                 }
                 else
                 {
