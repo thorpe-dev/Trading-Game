@@ -18,5 +18,6 @@
         <ScrollViewer Height="92" HorizontalAlignment="Left" Margin="24,311,0,0" Name="abilityViewer" VerticalAlignment="Top" Width="209" VerticalScrollBarVisibility="Auto">
             <Grid Name="abilityGrid"></Grid>
         </ScrollViewer>
+        <sdk:Label Height="123" HorizontalAlignment="Left" Margin="312,144,0,0" Name="inventoryLabel" VerticalAlignment="Top" Width="192" Content=""/>
     </Grid>
 </UserControl>

@@ -17,6 +17,7 @@ namespace Main_Game
     {
         public const int BASEHEALTH = 0;
         public const int BASEMANA = 0;
+        public const int INVENTORYSIZE = 16;
         public static Character currentCharacter { get; set; }
 
 
@@ -28,15 +29,18 @@ namespace Main_Game
         public int currentHealth { get; set; }
         public int maxMana { get; set; }
         public int currentMana { get; set; }
+        public int money { get; set; }
         public int strength { get; set; }
         public int agility { get; set; }
         public int intelligence { get; set; }
         public ClassType type { get; set; }
         public IDictionary<string, Ability> abilities { get; set; }
+        public ICollection<ItemStack> inventory { get; set; }
+        public Weapon weapon { get; set; }
 
         public Character(string _name, Class _class, int _level, int _expToNext, int _maxHealth, int _currentHealth, 
-                            int _maxMana, int _currentMana, int _strength, int _agility, int _intelligence,
-                                IDictionary<string, Ability> _abilities)
+                            int _maxMana, int _currentMana, int _money, int _strength, int _agility, int _intelligence,
+                                IDictionary<string, Ability> _abilities, ICollection<ItemStack> _inventory)
         {
             name = _name;
             charClass = _class;
@@ -46,11 +50,13 @@ namespace Main_Game
             currentHealth = _currentHealth;
             maxMana = _maxMana;
             currentMana = _currentMana;
+            money = _money;
             strength = _strength;
             agility = _agility;
             intelligence = _intelligence;
             type = _class.type;
             abilities = new Dictionary<string, Ability>(_abilities);
+            inventory = new List<ItemStack>(_inventory);
         }
 
         public static Character createNewCharacter(string _name, Class _class, IDictionary<string, Ability> _abilities)
@@ -59,7 +65,15 @@ namespace Main_Game
             int _maxHealth = calculateMaxHealth(mod.strength);
             int _maxMana = calculateMaxMana(mod.intelligence);
             return new Character(_name, _class, 1, calculateExpToNextLevel(1), _maxHealth, _maxHealth, _maxMana, 
-                                    _maxMana, mod.strength, mod.agility, mod.intelligence, _abilities);
+                                    _maxMana, 100, mod.strength, mod.agility, mod.intelligence, _abilities, initialItems());
+        }
+
+        private static ICollection<ItemStack> initialItems()
+        {
+            ICollection<ItemStack> startingInventory = new List<ItemStack>((int)ItemStack.MAXSTACKSIZE);
+            Consumable minorHealthPot = (Consumable) ItemSet.retrieveItem("minor health potion");
+            startingInventory.Add(new ItemStack(minorHealthPot, 3));
+            return startingInventory;
         }
 
         public void submitCharacter(UploadStringCompletedEventHandler characterUploaded)
@@ -68,7 +82,7 @@ namespace Main_Game
                                                     "maxmana={4}&currentmana={4}&strength={5}&agility={6}&intelligence={7}",
                                                     name, (int)type, expToNext, maxHealth,
                                                     maxMana, strength, agility, intelligence);
-            charFormatString += formatAbilities(abilities);
+            charFormatString += formatAbilities(abilities) + formatItems(inventory);
             HttpConnection.httpPost(new Uri("characterCreate.php", UriKind.Relative), charFormatString, characterUploaded);
         }
 
@@ -79,6 +93,17 @@ namespace Main_Game
             for (int i = 0; i < abilityArray.LongCount(); i++)
             {
                 formatString += "&ability" + i + "=" + abilityArray[i].name;
+            }
+            return formatString;
+        }
+
+        private string formatItems(ICollection<ItemStack> inventory)
+        {
+            ItemStack[] itemArray = inventory.ToArray();
+            string formatString = "";
+            for (int i = 0; i < itemArray.LongCount(); i++)
+            {
+                formatString += "&itemname" + i + "=" + itemArray[i].item.name + "&itemcount" + i + "=" + itemArray[i].stackSize;
             }
             return formatString;
         }

@@ -91,6 +91,7 @@
       <DependentUpon>City.xaml</DependentUpon>
     </Compile>
     <Compile Include="Class.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="HttpConnection.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="LoginScreen.xaml.cs">

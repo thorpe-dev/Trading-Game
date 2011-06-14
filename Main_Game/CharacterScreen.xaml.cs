@@ -23,6 +23,7 @@ namespace Main_Game
         {
             InitializeComponent();
             Ability.populateAllAbility();
+            ItemSet.constructItemBase();
             initialiseClasses();
             HttpConnection.httpGet(new Uri("character.php", UriKind.Relative), new DownloadStringCompletedEventHandler(transferComplete));
         }
@@ -72,10 +73,12 @@ namespace Main_Game
                                              (int)character.Element("currenthealth"),
                                              (int)character.Element("maxmana"),
                                              (int)character.Element("currentmana"),
+                                             (int)character.Element("money"),
                                              (int)character.Element("strength"),
                                              (int)character.Element("agility"),
                                              (int)character.Element("intelligence"),
-                                             parseAbilities(character.Element("abilities"))
+                                             parseAbilities(character.Element("abilities")),
+                                             parseInventory(character.Element("inventory"))
                                              );
                         if (characters.LongCount() > 0)
                         {
@@ -114,6 +117,19 @@ namespace Main_Game
             return abilityDictionary;
         }
 
+        private ICollection<ItemStack> parseInventory(XElement inventoryElements)
+        {
+            IEnumerable<XElement> itemSet = inventoryElements.Elements("item");
+            ICollection<ItemStack> inventory = new List<ItemStack>();
+            foreach (XElement elem in itemSet)
+            {
+                Item item = ItemSet.retrieveItem((string)elem.Element("name"));
+                uint amount = (uint)elem.Element("amount");
+                inventory.Add(new ItemStack(item, amount));
+            }
+            return inventory;
+        }
+
         private void create_Click(object sender, RoutedEventArgs e)
         {
             CharacterCreate createForm = new CharacterCreate();
@@ -134,10 +150,10 @@ namespace Main_Game
         private void updateCharPane(Character c)
         {
             
-            string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\n" +
-                                            "Strength:{5} \nAgility:{6} \nIntelligence:{7}",
+            string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\nMoney:{5}\n" +
+                                            "Strength:{6} \nAgility:{7} \nIntelligence:{8}",
                                             c.name, c.type.ToString(), c.level, c.maxHealth,
-                                            c.maxMana, c.strength, c.agility, c.intelligence);
+                                            c.maxMana, c.money, c.strength, c.agility, c.intelligence);
             CharacterBox.Text = details;
             Ability[] abilities = c.abilities.Values.ToArray();
             for (int i = 0; i < 5; i++)
@@ -165,6 +181,13 @@ namespace Main_Game
                 Grid.SetColumn(icon, i % 5);
                 abilityGrid.Children.Add(icon);
             }
+            ItemStack[] inventory = c.inventory.ToArray();
+            string inventoryString = "";
+            for (int i = 0; i < inventory.LongCount(); i++)
+            {
+                inventoryString += inventory[i].item.name + ": " + inventory[i].stackSize + "\n";
+            }
+            inventoryLabel.Content = inventoryString;
             Class _class = c.charClass;
             charImage.Source = new BitmapImage(_class.imageSrc);
             Character.currentCharacter = c;
