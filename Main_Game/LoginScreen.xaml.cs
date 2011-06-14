@@ -68,5 +68,12 @@ namespace Main_Game
             r.Show();
         }
 
+        private void btn_skip_Click(object sender, RoutedEventArgs e)
+        {
+            Tavern tTavern = new Tavern();
+            ScreenManager.SetScreen(tTavern);
+            tTavern.Focus();
+        }
+
     }
 }
