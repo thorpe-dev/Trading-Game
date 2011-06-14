@@ -12,23 +12,23 @@
             <ColumnDefinition Width="79*" />
         </Grid.ColumnDefinitions>
         <TextBox Height="5" HorizontalAlignment="Left" Margin="433,21,0,0" Name="txt_key" VerticalAlignment="Top" Width="7" Visibility="Visible" />
-        <Image Height="128" HorizontalAlignment="Left" Margin="266,266,0,0" Name="map22" Source="/Games;component/Images/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
-        <Image Height="128" HorizontalAlignment="Left" Margin="472,272,0,0" Name="img_light_base" Opacity="1" Source="/Games;component/Images/PlayerLightRadius.png" Stretch="Fill" VerticalAlignment="Top" Width="128" />
-        <Image Height="128" HorizontalAlignment="Left" Margin="472,138,0,0" Name="img_light_radius" Stretch="Fill" VerticalAlignment="Top" Width="128" Source="/Games;component/Images/PlayerLightRadius.png" Opacity="1" />
-        <Image Height="128" HorizontalAlignment="Left" Margin="10,10,0,0" Name="map00" Source="/Games;component/Images/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
-        <Image Height="128" HorizontalAlignment="Left" Margin="138,10,0,0" Name="map01" Source="/Games;component/Images/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
-        <Image Height="128" HorizontalAlignment="Left" Margin="266,10,0,0" Name="map02" Source="/Games;component/Images/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
-        <Image Height="128" HorizontalAlignment="Left" Margin="10,138,0,0" Name="map10" Source="/Games;component/Images/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
-        <Image Height="128" HorizontalAlignment="Left" Margin="138,138,0,0" Name="map11" Source="/Games;component/Images/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
-        <Image Height="128" HorizontalAlignment="Left" Margin="266,138,0,0" Name="map12" Source="/Games;component/Images/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
-        <Image Height="128" HorizontalAlignment="Left" Margin="10,266,0,0" Name="map20" Source="/Games;component/Images/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
-        <Image Height="128" HorizontalAlignment="Left" Margin="138,266,0,0" Name="map21" Source="/Games;component/Images/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
+        <Image Height="128" HorizontalAlignment="Left" Margin="266,266,0,0" Name="map22" Source="/Games;component/Images/Dungeon/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
+        <Image Height="128" HorizontalAlignment="Left" Margin="472,272,0,0" Name="img_light_base" Opacity="1" Source="/Games;component/Images/Dungeon/PlayerLightRadius.png" Stretch="Fill" VerticalAlignment="Top" Width="128" />
+        <Image Height="128" HorizontalAlignment="Left" Margin="472,138,0,0" Name="img_light_radius" Stretch="Fill" VerticalAlignment="Top" Width="128" Source="/Games;component/Images/Dungeon/PlayerLightRadius.png" Opacity="1" />
+        <Image Height="128" HorizontalAlignment="Left" Margin="10,10,0,0" Name="map00" Source="/Games;component/Images/Dungeon/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
+        <Image Height="128" HorizontalAlignment="Left" Margin="138,10,0,0" Name="map01" Source="/Games;component/Images/Dungeon/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
+        <Image Height="128" HorizontalAlignment="Left" Margin="266,10,0,0" Name="map02" Source="/Games;component/Images/Dungeon/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
+        <Image Height="128" HorizontalAlignment="Left" Margin="10,138,0,0" Name="map10" Source="/Games;component/Images/Dungeon/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
+        <Image Height="128" HorizontalAlignment="Left" Margin="138,138,0,0" Name="map11" Source="/Games;component/Images/Dungeon/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
+        <Image Height="128" HorizontalAlignment="Left" Margin="266,138,0,0" Name="map12" Source="/Games;component/Images/Dungeon/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
+        <Image Height="128" HorizontalAlignment="Left" Margin="10,266,0,0" Name="map20" Source="/Games;component/Images/Dungeon/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
+        <Image Height="128" HorizontalAlignment="Left" Margin="138,266,0,0" Name="map21" Source="/Games;component/Images/Dungeon/SewerBlank.png" Stretch="Fill" VerticalAlignment="Top" Width="128" Opacity="0.75" />
         <Button Content="&lt;-" Height="25" HorizontalAlignment="Left" Margin="155,440,0,0" Name="btn_left" VerticalAlignment="Top" Width="28" Click="btn_left_Click" IsTabStop="False" />
         <Button Content="V" Height="25" HorizontalAlignment="Left" Margin="189,440,0,0" Name="btn_down" VerticalAlignment="Top" Width="28" Click="btn_down_Click" IsTabStop="False" />
         <Button Content="-&gt;" Height="25" HorizontalAlignment="Left" Margin="223,440,0,0" Name="btn_right" VerticalAlignment="Top" Width="28" Click="btn_right_Click" IsTabStop="False" />
         <Button Content="^" Height="25" HorizontalAlignment="Left" Margin="189,409,0,0" Name="btn_up" VerticalAlignment="Top" Width="28" Click="btn_up_Click" IsTabStop="False" />
-        <Image Height="16" HorizontalAlignment="Left" Margin="194,194,0,0" Name="img_player" Stretch="Fill" VerticalAlignment="Top" Width="16" Source="/Games;component/Images/player.png" OpacityMask="White" Opacity="1" />
-        <Image Height="16" Margin="411,10,0,0" Name="img_placeholder" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Left" Width="16" Source="/Games;component/Images/Exit.png" />
+        <Image Height="16" HorizontalAlignment="Left" Margin="194,194,0,0" Name="img_player" Stretch="Fill" VerticalAlignment="Top" Width="16" Source="/Games;component/Images/Dungeon/player.png" OpacityMask="White" Opacity="1" />
+        <Image Height="16" Margin="411,10,0,0" Name="img_placeholder" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Left" Width="16" Source="/Games;component/Images/Dungeon/Exit.png" />
         <Rectangle Height="47" HorizontalAlignment="Left" Margin="446,41,0,0" Name="rec_map_border" Stroke="#FFC86400" StrokeThickness="1" VerticalAlignment="Top" Width="52" />
         <Rectangle Height="47" HorizontalAlignment="Left" Margin="504,41,0,0" Name="rec_minimap_border" Stroke="#FFC86400" StrokeThickness="1" VerticalAlignment="Top" Width="52" />
         <Button Content="Exit" Height="25" HorizontalAlignment="Left" Margin="290,421,0,0" Name="btn_exit" VerticalAlignment="Top" Width="28" IsEnabled="False" />

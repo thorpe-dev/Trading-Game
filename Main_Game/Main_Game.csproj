@@ -107,6 +107,9 @@
     <Compile Include="Shop.xaml.cs">
       <DependentUpon>Shop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="sideBar.xaml.cs">
+      <DependentUpon>sideBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SupportClasses\Ability.cs" />
     <Compile Include="SupportClasses\AttackMove.cs" />
     <Compile Include="SupportClasses\Battle.cs" />
@@ -167,6 +170,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Shop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="sideBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
