@@ -1,0 +1,15 @@
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\Bin\Release\Main_Game.dll
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\Bin\Release\Main_Game.pdb
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\Bin\Release\AppManifest.xaml
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\Bin\Release\Main_Game.xap
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\Bin\Release\Main_GameTestPage.html
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\obj\Release\ResolveAssemblyReference.cache
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\obj\Release\App.g.i.cs
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\obj\Release\Bar.g.i.cs
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\obj\Release\City.g.i.cs
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\obj\Release\MainPage.g.i.cs
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\obj\Release\Shop.g.i.cs
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\obj\Release\Main_Game.g.resources
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\obj\Release\Main_Game.dll
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\obj\Release\Main_Game.pdb
+c:\users\chris\documents\visual studio 2010\Projects\Main_Game\Main_Game\obj\Release\XapCacheFile.xml
