@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Games.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="636" d:DesignWidth="723" xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation" Loaded="UserControl_Loaded" IsTabStop="True">
+
+    <Grid x:Name="LayoutRoot" Background="White" Height="596" Width="651">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="38*" />
+            <ColumnDefinition Width="206*" />
+            <ColumnDefinition Width="355*" />
+        </Grid.ColumnDefinitions>
+        <navigation:Frame Height="596" HorizontalAlignment="Left" Name="frame_main" VerticalAlignment="Top" Width="651" Content="&quot;Main Frame&quot;" Grid.ColumnSpan="3" Source="/Tavern.xaml" />
+    </Grid>
+</UserControl>

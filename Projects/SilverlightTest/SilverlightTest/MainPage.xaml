@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="SilverlightTest.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="449" d:DesignWidth="596">
+
+    <Grid x:Name="LayoutRoot" Background="Black">
+        <Image Height="353" HorizontalAlignment="Left" Margin="19,16,0,0" Name="img_elder_sign" Stretch="Fill" VerticalAlignment="Top" Width="344" Source="/SilverlightTest;component/Images/ElderSign.jpg" ImageFailed="img_elder_sign_ImageFailed" />
+        <Button Content="The Stars Are Right" Height="26" HorizontalAlignment="Left" Margin="106,375,0,0" Name="but_stars" VerticalAlignment="Top" Width="163" Click="but_stars_Click" />
+    </Grid>
+</UserControl>
