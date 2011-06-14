@@ -11,25 +11,18 @@ using System.Windows.Shapes;
 
 namespace Trading_Project
 {
-    abstract class Move
+    public class D20
     {
-        protected String p_name;
+        Random rnd;
 
-        protected Effect move_effect;
-
-        public String name { get { return p_name; } }
-
-
-        public Move(String name, uint hr, float stm, float dm, float spm)
+        public D20()
         {
-            this.p_name = name;
+            rnd = new Random();
         }
 
-        public uint attack(Character attacker, Character defender)
+        public int roll()
         {
-
-            return 0;
+            return rnd.Next(1, 20);
         }
-
     }
 }

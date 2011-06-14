@@ -14,5 +14,12 @@
         <Button Content="Search" Height="29" HorizontalAlignment="Left" Margin="12,181,0,0" Name="btn_search" VerticalAlignment="Top" Width="103" Click="btn_search_Click" Visibility="Visible" />
         <TextBox Height="172" HorizontalAlignment="Left" Margin="392,185,0,0" Name="txt_test" VerticalAlignment="Top" Width="210" TextWrapping="Wrap" Text="Players" />
         <ScrollViewer Height="150" HorizontalAlignment="Left" Margin="135,12,0,0" Name="scv_players" VerticalAlignment="Top" Width="250" Background="#1E000000" UseLayoutRounding="False" />
+        <dataInput:Label Height="26" HorizontalAlignment="Left" Margin="398,9,0,0" Name="lbl_debug" VerticalAlignment="Top" Width="74" Content="DEBUG:" />
+        <dataInput:Label Height="18" HorizontalAlignment="Left" Margin="402,34,0,0" Name="lbl_char_id" VerticalAlignment="Top" Width="57" Content="Char ID:" />
+        <TextBox Height="20" HorizontalAlignment="Left" Margin="465,32,0,0" Name="txt_id" VerticalAlignment="Top" Width="42" Text="1" TextAlignment="Right" />
+        <dataInput:Label Content="Dungeon:" Height="18" HorizontalAlignment="Left" Margin="402,61,0,0" Name="lbl_dungeon" VerticalAlignment="Top" Width="57" />
+        <TextBox Height="20" HorizontalAlignment="Left" Margin="465,59,0,0" Name="txt_dungeon" Text="1" TextAlignment="Right" VerticalAlignment="Top" Width="42" />
+        <CheckBox Content="First Player" Height="27" HorizontalAlignment="Left" Margin="402,84,0,0" Name="chk_fp" VerticalAlignment="Top" Width="106" IsChecked="True" Checked="chk_fp_Checked" Unchecked="chk_fp_Unchecked" />
+        <CheckBox Content="Only Player" Height="27" HorizontalAlignment="Left" IsChecked="True" Margin="402,107,0,0" Name="chk_op" VerticalAlignment="Top" Width="106" Checked="chk_op_Checked" Unchecked="chk_op_Unchecked" />
     </Grid>
 </UserControl>

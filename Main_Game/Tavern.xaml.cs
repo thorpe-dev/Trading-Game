@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using System.Windows.Browser;
 
 namespace Main_Game
 {
@@ -18,9 +19,25 @@ namespace Main_Game
         Player[] players;
         Grid grd_players;
         List<int> invites = new List<int>();
+        bool first = true;
+        bool only = true;
 
         public Tavern()
         {
+            string cookie = HtmlPage.Document.Cookies;
+            MessageBox.Show(cookie);
+            char[] cookiearray = cookie.ToCharArray();
+            for (int i = 0; i < cookiearray.Length; i++)
+            {
+
+            }
+
+            /*
+            // Update the player's location
+            Uri path = new Uri("enter_tavern.php", UriKind.Relative);
+            string parameters = String.Format("charnum={0}", );
+            HttpConnection.httpPost(path, parameters, start_poll_tavern);
+            */
             InitializeComponent();
             grd_players = new Grid();
             ColumnDefinition new_def = new ColumnDefinition();
@@ -38,14 +55,6 @@ namespace Main_Game
             grd_players.Height = 100;
             grd_players.Width = 200;
             scv_players.Content = grd_players;
-        }
-
-        public UIElement Element { get { return this; } }
-
-/*        // Executes when the user navigates to this page.
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            
             /*
             // Test shit...
             players = new Player[1];
@@ -69,12 +78,19 @@ namespace Main_Game
             Grid.SetColumn(player1btn, 1);
             grd_players.Children.Add(player1btn);
             players[0].invite = player1btn;
-            //grd_players.Children.Clear();
+            //grd_players.Children.Clear();*/
         }
-        */
+
+        public UIElement Element { get { return this; } }
+
+            
+      
         private void btn_mission_Click(object sender, RoutedEventArgs e)
         {
-            ScreenManager.SetScreen(new MapScreen());
+            ScreenManager.SetScreen(new MapScreen(Int32.Parse(txt_id.Text),
+                                                  Int32.Parse(txt_dungeon.Text),
+                                                  (first),
+                                                  (only)));
         }
 
         public void lobby(object sender, DownloadStringCompletedEventArgs e)
@@ -188,6 +204,26 @@ namespace Main_Game
         private void btn_clear_list_Click(object sender, RoutedEventArgs e)
         {
             txt_test.Text = "";
+        }
+
+        private void chk_fp_Checked(object sender, RoutedEventArgs e)
+        {
+            first = true;
+        }
+
+        private void chk_op_Checked(object sender, RoutedEventArgs e)
+        {
+            only = true;
+        }
+
+        private void chk_op_Unchecked(object sender, RoutedEventArgs e)
+        {
+            only = false;
+        }
+
+        private void chk_fp_Unchecked(object sender, RoutedEventArgs e)
+        {
+            first = false;
         }
 
     }

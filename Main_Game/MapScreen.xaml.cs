@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
+using System.Threading;
 
 
 namespace Main_Game
@@ -25,8 +26,8 @@ namespace Main_Game
         // Light level of dungeon
         Double light_level = 0.5;
         // Boolean to check if this player should generate the dungeon and if it should be sent
-        int charid = 2;
-        bool first_player = false;
+        int charid = 1;
+        bool first_player = true;
         bool only_player = false;
         // Number of squares per row/column in the dungeon (+2 because of borders)
         int dungeon_dimensions = 15;
@@ -60,10 +61,17 @@ namespace Main_Game
         Image[][] encounters;
         // A random number generator
         Random rnd = new Random();
+        // Can the player move yet
+        Storyboard slow;
+        bool move_allowed = true;
 
 
-        public MapScreen()
+        public MapScreen(int charac, int dungeon, bool first, bool only)
         {
+            this.charid = charac;
+            this.instance = dungeon;
+            this.first_player = first;
+            this.only_player = only;
             InitializeComponent();
             fill_tilesets();
             create_minimap();
@@ -161,7 +169,6 @@ namespace Main_Game
                 // * Set theme
                 // ********************************************************************
                 // Once the instance is found and the dungeon is constructed, fetch it
-                this.instance = 7;
                 Uri path = new Uri("dungeon_get_square.php", UriKind.Relative);
                 string parameters = String.Format("instance={0}", this.instance);
                 HttpConnection.httpPost(path, parameters, dungeon_recieved);
@@ -176,10 +183,16 @@ namespace Main_Game
             img_light_radius.Margin = new Thickness(138, 138, 0, 0);
             img_light_base.Margin = new Thickness(138, 138, 0, 0);
             img_light_base.Source = get_image(dungeon_theme.exit_piece);
-            // Set up the key detector
-            txt_key.KeyDown += new KeyEventHandler(key_pressed);
-            // Focus on the key detector
-            txt_key.Focus();
+
+            // Storyboard for slowing players down
+            slow = new Storyboard();
+            slow.Duration = new Duration(new TimeSpan(2500000));
+            slow.Completed += enable_move;
+        }
+
+        public void enable_move(object sender, EventArgs e)
+        {
+            move_allowed = true;
         }
 
         public UIElement Element { get { return this; } }
@@ -198,7 +211,7 @@ namespace Main_Game
             Uri path = new Uri("dungeon_get_positions.php", UriKind.Relative);
             try
             {
-                HttpConnection.httpLongPoll(path, update_player_locations, 2);
+                HttpConnection.httpLongPoll(path, update_player_locations, 1);
             }
             catch (Exception ex)
             {
@@ -208,8 +221,6 @@ namespace Main_Game
 
         private void update_player_locations(object sender, DownloadStringCompletedEventArgs e)
         {
-            // Update the players location
-            enter_dungeon();
             if (e.Error == null)
             {
                 XDocument doc = XDocument.Parse(e.Result);
@@ -233,12 +244,19 @@ namespace Main_Game
                         this.players[i] = new int[dungeon_dimensions];
                     }
                     // Put in all new player locations
+                    txt_pos.Text = "";
                     for (int i = 0; i < map_squares.Length; i++)
                     {
+                        txt_pos.Text = txt_pos.Text + Environment.NewLine + "Dun: " + map_squares[i].content +
+                            " ID: " + map_squares[i].shape + " Pos: (" + map_squares[i].x + "," +
+                            map_squares[i].y + ")";
                         if (map_squares[i].content == this.instance
                             && map_squares[i].shape != this.charid)
+                        {
                             players[(map_squares[i].x)][(map_squares[i].y)] = 1;
+                        }
                     }
+                    handle_events();
                 }
             }
             else
@@ -933,29 +951,25 @@ namespace Main_Game
             }
         }
 
-        private void key_pressed(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Up) btn_up_Click(null, null);
-            else if (e.Key == Key.Down) btn_down_Click(null, null);
-            else if (e.Key == Key.Left) btn_left_Click(null, null);
-            else if (e.Key == Key.Right) btn_right_Click(null, null);
-        }
-
         private void btn_up_Click(object sender, RoutedEventArgs e)
         {
             if (events[player_row][player_col] >= 3)
                 handle_events();
             if (can_move_north(map[player_row][player_col])
-                && events[player_row][player_col] < 3)
+                && events[player_row][player_col] < 3 && move_allowed)
             {
                 player_row--;
                 update_current_values();
                 update_map(current_view);
                 handle_events();
                 update_location(player_row, player_col);
+                // Update the players location
+                enter_dungeon();
+                move_allowed = false;
+                slow.Begin();
             }
             // Focus on the key detector
-            txt_key.Focus();
+            Mission.Focus();
         }
 
         private void btn_down_Click(object sender, RoutedEventArgs e)
@@ -963,16 +977,20 @@ namespace Main_Game
             if (events[player_row][player_col] >= 3)
                 handle_events();
             if (can_move_south(map[player_row][player_col])
-                && events[player_row][player_col] < 3)
+                && events[player_row][player_col] < 3 && move_allowed)
             {
                 player_row++;
                 update_current_values();
                 update_map(current_view);
                 handle_events();
                 update_location(player_row, player_col);
+                // Update the players location
+                enter_dungeon();
+                move_allowed = false;
+                slow.Begin();
             }
             // Focus on the key detector
-            txt_key.Focus();
+            Mission.Focus();
         }
 
         private void btn_left_Click(object sender, RoutedEventArgs e)
@@ -980,16 +998,20 @@ namespace Main_Game
             if (events[player_row][player_col] >= 3)
                 handle_events();
             if (can_move_west(map[player_row][player_col])
-                && events[player_row][player_col] < 3)
+                && events[player_row][player_col] < 3 && move_allowed)
             {
                 player_col--;
                 update_current_values();
                 update_map(current_view);
                 handle_events();
                 update_location(player_row, player_col);
+                // Update the players location
+                enter_dungeon();
+                move_allowed = false;
+                slow.Begin();
             }
             // Focus on the key detector
-            txt_key.Focus();
+            Mission.Focus();
         }
 
         private void btn_right_Click(object sender, RoutedEventArgs e)
@@ -997,16 +1019,29 @@ namespace Main_Game
             if (events[player_row][player_col] >= 3)
                 handle_events();
             if (can_move_east(map[player_row][player_col])
-                && events[player_row][player_col] < 3)
+                && events[player_row][player_col] < 3 && move_allowed)
             {
                 player_col++;
                 update_current_values();
                 update_map(current_view);
                 handle_events();
                 update_location(player_row, player_col);
+                // Update the players location
+                enter_dungeon();
+                move_allowed = false;
+                slow.Begin();
             }
             // Focus on the key detector
-            txt_key.Focus();
+            Mission.Focus();
+            Thread.Sleep(1);
+        }
+
+        private void Mission_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Up) btn_up_Click(null, null);
+            else if (e.Key == Key.Down) btn_down_Click(null, null);
+            else if (e.Key == Key.Left) btn_left_Click(null, null);
+            else if (e.Key == Key.Right) btn_right_Click(null, null);
         }
 
     }
