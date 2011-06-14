@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Main_Game.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="500" d:DesignWidth="1000" Loaded="main_Loaded">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid Height="463" HorizontalAlignment="Left" Name="mainContent" VerticalAlignment="Top" Width="1000">
+        </Grid>
+        <Grid Height="37" HorizontalAlignment="Left" Name="settingBar" VerticalAlignment="Top" Width="1000" Margin="0,463,0,0">
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Main_Game.Tavern"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+     mc:Ignorable="d"
+    d:DesignWidth="640" d:DesignHeight="480"
+    xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input" 
+    xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data">
+
+    <Grid x:Name="LayoutRoot">
+        <Button Content="Go To Mission!" Height="32" HorizontalAlignment="Left" Margin="12,12,0,0" Name="btn_mission" VerticalAlignment="Top" Width="101" Click="btn_mission_Click" />
+        <Button Content="Clear List" Height="29" HorizontalAlignment="Left" Margin="12,50,0,0" Name="btn_clear_list" VerticalAlignment="Top" Width="103" Click="btn_clear_list_Click" />
+        <Button Content="Search" Height="29" HorizontalAlignment="Left" Margin="12,181,0,0" Name="btn_search" VerticalAlignment="Top" Width="103" Click="btn_search_Click" Visibility="Visible" />
+        <TextBox Height="172" HorizontalAlignment="Left" Margin="392,185,0,0" Name="txt_test" VerticalAlignment="Top" Width="210" TextWrapping="Wrap" Text="Players" />
+        <ScrollViewer Height="150" HorizontalAlignment="Left" Margin="135,12,0,0" Name="scv_players" VerticalAlignment="Top" Width="250" Background="#1E000000" UseLayoutRounding="False" />
+    </Grid>
+</UserControl>
