@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main_Game", "Main_Game\Main_Game.csproj", "{A0B0BCEE-2FF0-4F03-AE7F-2C4EEFEB33BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightApplication1", "..\..\Merge\Dave\SilverlightApplication1\SilverlightApplication1.csproj", "{7F68D716-41C5-43A7-BB24-0E97589E2C09}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +13,6 @@ Global
 		{A0B0BCEE-2FF0-4F03-AE7F-2C4EEFEB33BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0B0BCEE-2FF0-4F03-AE7F-2C4EEFEB33BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0B0BCEE-2FF0-4F03-AE7F-2C4EEFEB33BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F68D716-41C5-43A7-BB24-0E97589E2C09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F68D716-41C5-43A7-BB24-0E97589E2C09}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F68D716-41C5-43A7-BB24-0E97589E2C09}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F68D716-41C5-43A7-BB24-0E97589E2C09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
