@@ -33,9 +33,9 @@ namespace Main_Game
             e.Handled = true;
             if (Canvas.GetTop(mainChar) == 300 - 2*step && Canvas.GetLeft(mainChar) == 500 - 4*step)
             {
-                Shop tShop = new Shop();
-                ScreenManager.SetScreen(tShop);
-                tShop.Focus();
+                Tavern tTavern = new Tavern();
+                ScreenManager.SetScreen(tTavern);
+                tTavern.Focus();
 
             }
             else if (Canvas.GetTop(mainChar) == 300 + 5*step && Canvas.GetLeft(mainChar) == 500 + 4*step)
