@@ -8,15 +8,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.Math;
 
 namespace Trading_Project
 {
     public class AttackMove:Move
     {
         protected float p_attackbonus;
-
-        protected Effect move_effect;
 
         public float attackbonus { get { return p_attackbonus; } }
 
@@ -37,7 +34,9 @@ namespace Trading_Project
             else
             {
                 defender.applyEffect(move_effect);
-                damage = (uint)Math.Floor(p_attackbonus * (float)attacker.strength * attacker.effect.strength_mod);
+                damage = (uint)Math.Floor(p_attackbonus * (float)attacker.strength);
+                if (hit == 20)
+                    damage *= 2;
 
                 return damage;
             }

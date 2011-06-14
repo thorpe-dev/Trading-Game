@@ -28,5 +28,12 @@ namespace Trading_Project
         {
             
         }
+
+        public override Move getMove()
+        {
+            Random rnd = new Random();
+
+            return this.moves[rnd.Next(0, this.moves.Count)];
+        }
     }
 }

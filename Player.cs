@@ -26,10 +26,17 @@ namespace Trading_Project
             preferredMoves = new Move[4];
         }
 
-        public override void Die(Character c)
+        public override void die(Character c)
         {
             //send XP increase to server - right now winning a battle increases exp by 1 each time
             c.exp += 1;
+        }
+
+        public override Move getMove()
+        {
+            Random rnd = new Random();
+
+            return this.preferredMoves[rnd.Next(0, this.preferredMoves.Length)];
         }
     }
 }

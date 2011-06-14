@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace Trading_Project
 {
-    abstract class Move
+    public abstract class Move
     {
         protected String p_name;
 
@@ -23,13 +23,10 @@ namespace Trading_Project
         public Move(String name, uint hr, float stm, float dm, float spm)
         {
             this.p_name = name;
+            this.move_effect = new Effect();
         }
 
-        public uint attack(Character attacker, Character defender)
-        {
-
-            return 0;
-        }
+        public abstract uint attack(Character attacker, Character defender);
 
     }
 }

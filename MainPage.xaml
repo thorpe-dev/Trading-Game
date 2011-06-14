@@ -9,7 +9,5 @@
     <!-- yes -->
 
     <Grid x:Name="LayoutRoot" Background="White">
-        
-
     </Grid>
 </UserControl>
