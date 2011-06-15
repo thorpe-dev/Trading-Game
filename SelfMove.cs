@@ -22,7 +22,8 @@ namespace Trading_Project
 
         public override uint attack(Character attacker, Character defender)
         {
-            attacker.applyEffect(move_effect);
+            if (this.mana_cost < attacker.mana)
+                attacker.applyEffect(move_effect);
 
             /* Will always return the same value */
             return 0;

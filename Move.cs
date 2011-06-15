@@ -17,6 +17,10 @@ namespace Trading_Project
 
         protected Effect move_effect;
 
+        protected uint p_mana_cost;
+
+        public uint mana_cost { get { return p_mana_cost; } }
+
         public String name { get { return p_name; } }
 
 

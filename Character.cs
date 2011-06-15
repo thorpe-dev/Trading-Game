@@ -25,6 +25,9 @@ namespace Trading_Project
         protected uint p_strength;
         protected uint p_dexterity;
         protected uint p_speed;
+        protected uint p_intelligence;
+
+        protected uint p_mana;
 
         protected uint p_exp;
 
@@ -38,27 +41,21 @@ namespace Trading_Project
 
         public uint health { get { return p_health; } set { p_health = value; } }
 
-        public uint strength 
+        public uint strength { get { return (uint)Math.Floor((float)p_strength * p_effect.strength_mod); } }
+        public uint dexterity { get { return (uint)Math.Floor((float)p_dexterity * p_effect.dexterity_mod); } }
+        public uint speed { get { return (uint)Math.Floor((float)p_speed * p_effect.speed_mod); } }
+        public uint intelligence { get { return (uint)Math.Floor((float)p_speed * p_effect.intelligence_mod); } }
+
+        public uint mana
         {
             get
-            { 
-                return (uint)Math.Floor((float)p_strength * p_effect.strength_mod); 
-            } 
-        }
-        public uint dexterity 
-        { 
-            get 
-            { 
-                return (uint)Math.Floor((float)p_dexterity * p_effect.dexterity_mod); 
-            } 
-        }
-
-        public uint speed 
-        {
-            get 
-            { 
-                return (uint)Math.Floor((float)p_speed * p_effect.speed_mod); 
-            } 
+            {
+                return p_mana;
+            }
+            set
+            {
+                p_mana = value;
+            }
         }
 
         public uint exp 

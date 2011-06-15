@@ -8,6 +8,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Trading_Project
 {
@@ -17,10 +19,10 @@ namespace Trading_Project
         protected Character char_2;
 
 
-        public Battle(Character p1, Character p2)
+        public Battle(Player p1, Dictionary<String, NPC> dictionary)
         {
-            char_1 = p1;
-            char_2 = p2;
+            this.char_1 = p1;
+            this.char_2 = generateNPC(dictionary);
 
         }
 
@@ -66,6 +68,18 @@ namespace Trading_Project
         {
             // Handle the end of the battle here
             // Update health and XP on server here
+        }
+
+        public NPC generateNPC(Dictionary<String, NPC> dict)
+        {
+            Random rnd = new Random();
+
+            NPC[] array = new NPC[dict.Count];
+
+            array = dict.Values.ToArray();
+
+
+            return array[rnd.Next(0,array.Length)];
         }
     }
 }

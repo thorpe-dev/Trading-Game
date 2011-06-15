@@ -11,41 +11,27 @@ using System.Windows.Shapes;
 
 namespace Trading_Project
 {
-    public class AttackMove:Move
+    public class MagicAttack:AttackMove
     {
-        protected float p_attackbonus;
-
-        public float attackbonus { get { return p_attackbonus; } }
-
-
-        public AttackMove(String name, float attack_bonus, uint hr, float stm, float dm, float spm)
-            : base(name,hr,stm,dm,spm)
-        {
-            this.p_attackbonus = attack_bonus;
-        }
+        public MagicAttack(String name, float attack_bonus, uint hr, float stm, float dm, float spm)
+            : base(name, attack_bonus, hr, stm, dm, spm) { }
 
         public override uint attack(Character attacker, Character defender)
         {
-            
             int hit = attacker.dice.roll();
             uint damage = 0;
-
-            
 
             if (hit == 1 || (this.mana_cost > attacker.mana))
                 return damage;
             else
             {
                 defender.applyEffect(move_effect);
-                damage = (uint)Math.Floor(p_attackbonus * (float)attacker.strength);
+                damage = (uint)Math.Floor(p_attackbonus * (float)attacker.intelligence);
                 if (hit == 20)
                     damage *= 2;
 
                 return damage;
             }
-            
         }
-
     }
 }
-

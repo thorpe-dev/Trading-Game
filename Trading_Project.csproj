@@ -115,6 +115,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="D20.cs" />
     <Compile Include="Effect.cs" />
+    <Compile Include="MagicAttack.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -123,6 +124,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelfMove.cs" />
+    <Compile Include="Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

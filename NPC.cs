@@ -15,8 +15,11 @@ namespace Trading_Project
     {
         protected String p_NPC_type;
 
+        protected float odds_of_appearance;
+
 
         public String NPC_type { get { return p_NPC_type; } }
+        public float odds { get { return odds_of_appearance; } }
 
 
         public NPC(String type):base()
