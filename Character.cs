@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Trading_Project
 {
-    abstract class Character
+    public abstract class Character
     {
         /* Each character has a die */
 
@@ -25,6 +25,9 @@ namespace Trading_Project
         protected uint p_strength;
         protected uint p_dexterity;
         protected uint p_speed;
+        protected uint p_intelligence;
+
+        protected uint p_mana;
 
         protected uint p_exp;
 
@@ -36,12 +39,36 @@ namespace Trading_Project
 
         /* Fields used for constructors  */
 
-        public uint health { get { return p_health; } }
+        public uint health { get { return p_health; } set { p_health = value; } }
 
-        public uint strength { get { return p_strength; } }
-        public uint dexterity { get { return p_dexterity; } }
-        public uint speed { get { return p_speed; } }
-        public uint exp { get { return p_exp; } set { p_exp = value; } }
+        public uint strength { get { return (uint)Math.Floor((float)p_strength * p_effect.strength_mod); } }
+        public uint dexterity { get { return (uint)Math.Floor((float)p_dexterity * p_effect.dexterity_mod); } }
+        public uint speed { get { return (uint)Math.Floor((float)p_speed * p_effect.speed_mod); } }
+        public uint intelligence { get { return (uint)Math.Floor((float)p_speed * p_effect.intelligence_mod); } }
+
+        public uint mana
+        {
+            get
+            {
+                return p_mana;
+            }
+            set
+            {
+                p_mana = value;
+            }
+        }
+
+        public uint exp 
+        { 
+            get 
+            { 
+                return p_exp; 
+            }
+            set
+            {
+                p_exp = value;
+            }
+        }
 
         public Effect effect { get { return p_effect; } }
 
@@ -62,7 +89,8 @@ namespace Trading_Project
         {
             uint damage = move.attack(this, enemy);
             if ((int)(this.health - damage) <= 0)
-                enemy.die(this);
+                enemy.health = 0;
+            this.health -= damage;
         }
 
         public void applyEffect(Effect effect)
@@ -71,13 +99,12 @@ namespace Trading_Project
             this.p_effect.dexterity_mod *= effect.dexterity_mod;
             this.p_effect.speed_mod *= effect.speed_mod;
 
-            this.p_effect.health_restore += effect.health_restore;
+            this.p_health += effect.health_restore;
 
         }
 
-        public abstract void die(Character c)
-        {
+        public abstract void die(Character c);
 
-        }
+        public abstract Move getMove();
     }
 }

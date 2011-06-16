@@ -15,8 +15,11 @@ namespace Trading_Project
     {
         protected String p_NPC_type;
 
+        protected float odds_of_appearance;
+
 
         public String NPC_type { get { return p_NPC_type; } }
+        public float odds { get { return odds_of_appearance; } }
 
 
         public NPC(String type):base()
@@ -27,6 +30,13 @@ namespace Trading_Project
         public override void die(Character c)
         {
             
+        }
+
+        public override Move getMove()
+        {
+            Random rnd = new Random();
+
+            return this.moves[rnd.Next(0, this.moves.Count)];
         }
     }
 }

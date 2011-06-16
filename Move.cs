@@ -11,11 +11,15 @@ using System.Windows.Shapes;
 
 namespace Trading_Project
 {
-    abstract class Move
+    public abstract class Move
     {
         protected String p_name;
 
         protected Effect move_effect;
+
+        protected uint p_mana_cost;
+
+        public uint mana_cost { get { return p_mana_cost; } }
 
         public String name { get { return p_name; } }
 
@@ -23,13 +27,10 @@ namespace Trading_Project
         public Move(String name, uint hr, float stm, float dm, float spm)
         {
             this.p_name = name;
+            this.move_effect = new Effect();
         }
 
-        public uint attack(Character attacker, Character defender)
-        {
-
-            return 0;
-        }
+        public abstract uint attack(Character attacker, Character defender);
 
     }
 }

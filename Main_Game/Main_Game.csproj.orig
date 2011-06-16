@@ -79,9 +79,14 @@
     <Compile Include="Bar.xaml.cs">
       <DependentUpon>Bar.xaml</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="BattleScreen.xaml.cs">
       <DependentUpon>BattleScreen.xaml</DependentUpon>
     </Compile>
+=======
+    <Compile Include="Battle.cs" />
+    <Compile Include="Character.cs" />
+>>>>>>> 5e02075f72ffaec085dd8d5a3241a7356e85959a
     <Compile Include="CharacterCreate.xaml.cs">
       <DependentUpon>CharacterCreate.xaml</DependentUpon>
     </Compile>
@@ -91,9 +96,15 @@
     <Compile Include="City.xaml.cs">
       <DependentUpon>City.xaml</DependentUpon>
     </Compile>
+<<<<<<< HEAD
+=======
+    <Compile Include="Class.cs" />
     <Compile Include="D20.cs" />
     <Compile Include="Effect.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="HttpConnection.cs" />
+    <Compile Include="Location.cs" />
+>>>>>>> 5e02075f72ffaec085dd8d5a3241a7356e85959a
     <Compile Include="LoginScreen.xaml.cs">
       <DependentUpon>LoginScreen.xaml</DependentUpon>
     </Compile>
