@@ -147,12 +147,14 @@ namespace Main_Game
         private int _strength;
         private int _agility;
         private int _intelligence;
+        private int _speed;
 
-        public StatModifier(int strength, int agility, int intelligence)
+        public StatModifier(int strength, int agility, int intelligence, int speed)
         {
             this._strength = strength;
             this._agility = agility;
             this._intelligence = intelligence;
+            this._speed = speed;
         }
 
         public int strength
@@ -176,6 +178,14 @@ namespace Main_Game
             get
             {
                 return _intelligence;
+            }
+        }
+
+        public int speed
+        {
+            get
+            {
+                return _speed;
             }
         }
     }
