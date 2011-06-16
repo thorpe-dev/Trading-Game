@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="SilverlightApplication1.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400" xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input">
+
+    <Grid x:Name="LayoutRoot" Background="White" Height="130" Width="248">
+        <TextBox Height="29" HorizontalAlignment="Left" Margin="82,12,0,0" Name="txt_name" VerticalAlignment="Top" Width="143" />
+        <dataInput:Label Height="16" HorizontalAlignment="Left" Margin="28,25,0,0" Name="lbl_name" VerticalAlignment="Top" Width="48" Content="Name:" />
+        <dataInput:Label Content="Password:" Height="29" HorizontalAlignment="Left" Margin="9,56,0,0" Name="lbl_password" VerticalAlignment="Top" Width="67" />
+        <Button Content="Login" Height="26" HorizontalAlignment="Left" Margin="82,92,0,0" Name="btn_submit" VerticalAlignment="Top" Width="74" Click="btn_submit_Click" />
+        <PasswordBox Height="29" HorizontalAlignment="Left" Margin="82,47,0,0" Name="txt_password" VerticalAlignment="Top" Width="143" />
+    </Grid>
+</UserControl>

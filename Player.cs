@@ -14,7 +14,29 @@ namespace Trading_Project
 {
     public class Player:Character
     {
-        public String name;
-        protected List<Move> preferredMoves;
+        protected String p_name;
+
+        public String name { get { return p_name; } }
+        protected Move[] preferredMoves;
+
+
+        public Player(String name):base()
+        {
+            this.p_name = name;
+            preferredMoves = new Move[4];
+        }
+
+        public override void die(Character c)
+        {
+            //send XP increase to server - right now winning a battle increases exp by 1 each time
+            c.exp += 1;
+        }
+
+        public override Move getMove()
+        {
+            Random rnd = new Random();
+
+            return this.preferredMoves[rnd.Next(0, this.preferredMoves.Length)];
+        }
     }
 }

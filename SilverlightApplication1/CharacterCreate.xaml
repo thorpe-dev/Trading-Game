@@ -1,0 +1,36 @@
+﻿<controls:ChildWindow x:Class="SilverlightApplication1.CharacterCreate"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="700" Height="450" 
+           Title="Character creation" 
+           xmlns:my="clr-namespace:SilverlightApplication1" 
+           xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" Background="#FF363232">
+    <controls:ChildWindow.Resources>
+        <my:StringClasses x:Key="StringClasses"/>
+    </controls:ChildWindow.Resources>
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,388,0,0" />
+        <Button x:Name="CreateButton" Content="Create" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Left" Margin="514,388,0,0" />
+        <Image HorizontalAlignment="Left" Margin="12,12,0,218" Name="classImage" Stretch="Fill" Width="182"/>
+        <sdk:Label Height="20" HorizontalAlignment="Left" Margin="229,14,0,0" Name="nameLabel" VerticalAlignment="Top" Width="40" Content="Name:" />
+        <TextBox Height="22" HorizontalAlignment="Left" Margin="275,12,0,0" Name="nameBox" VerticalAlignment="Top" Width="169" Padding="2,0,2,1" />
+        <TextBlock Height="200" HorizontalAlignment="Left" Margin="12,199,0,0" Name="statText" Text="" VerticalAlignment="Top" Width="207" />
+        <ComboBox Height="20" HorizontalAlignment="Left" Margin="275,42,0,0" Name="classSelect" VerticalAlignment="Top" Width="169" ItemsSource="{Binding Mode=OneWay, Path=classes, Source={StaticResource StringClasses}}" SelectionChanged="classSelect_SelectionChanged" />
+        <sdk:Label Content="Class:" Height="20" HorizontalAlignment="Left" Margin="232,44,0,0" Name="classLabel" VerticalAlignment="Top" Width="40" />
+        <TextBlock Height="151" HorizontalAlignment="Right" Margin="0,150,12,0" Name="descBlock" Text="" VerticalAlignment="Top" Width="441"></TextBlock>
+        <Grid Height="48" HorizontalAlignment="Left" Margin="225,334,0,0" Name="abilityGrid" VerticalAlignment="Top" Width="441">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="65" />
+            </Grid.RowDefinitions>
+        </Grid>
+        <sdk:Label Height="19" HorizontalAlignment="Left" Margin="232,318,0,0" Name="abilitySelectLabel" VerticalAlignment="Top" Width="128" Content="Ability selection:" />
+        <sdk:Label Height="17" HorizontalAlignment="Left" Margin="505,317,0,0" Name="choiceRemainLabel" VerticalAlignment="Top" Width="109" Content="Choices remaining:" />
+        <sdk:Label Height="22" HorizontalAlignment="Left" Margin="617,316,0,0" Name="choicesLabel" VerticalAlignment="Top" Width="28" Content=""/>
+    </Grid>
+</controls:ChildWindow>
