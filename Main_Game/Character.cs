@@ -20,7 +20,6 @@ namespace Main_Game
         public const int INVENTORYSIZE = 16;
         public static Character currentCharacter { get; set; }
 
-
         public string name { get; set; }
         public Class charClass { get; set; }
         public int level { get; set; }
@@ -37,10 +36,16 @@ namespace Main_Game
         public IDictionary<string, Ability> abilities { get; set; }
         public ICollection<ItemStack> inventory { get; set; }
         public Weapon weapon { get; set; }
+        public Armour chest { get; set; }
+        public Armour helm { get; set; }
+        public Armour gloves { get; set; }
+        public Armour boots { get; set; }
+        public Armour legs { get; set; }
 
         public Character(string _name, Class _class, int _level, int _expToNext, int _maxHealth, int _currentHealth, 
                             int _maxMana, int _currentMana, int _money, int _strength, int _agility, int _intelligence,
-                                IDictionary<string, Ability> _abilities, ICollection<ItemStack> _inventory)
+                                IDictionary<string, Ability> _abilities, ICollection<ItemStack> _inventory, Weapon _weapon,
+                                Armour _chest, Armour _helm, Armour _gloves, Armour _boots, Armour _legs)
         {
             name = _name;
             charClass = _class;
@@ -57,6 +62,12 @@ namespace Main_Game
             type = _class.type;
             abilities = new Dictionary<string, Ability>(_abilities);
             inventory = new List<ItemStack>(_inventory);
+            weapon = _weapon;
+            chest = _chest;
+            helm = _helm;
+            gloves = _gloves;
+            boots = _boots;
+            legs = _legs;     
         }
 
         public static Character createNewCharacter(string _name, Class _class, IDictionary<string, Ability> _abilities)
@@ -65,13 +76,19 @@ namespace Main_Game
             int _maxHealth = calculateMaxHealth(mod.strength);
             int _maxMana = calculateMaxMana(mod.intelligence);
             return new Character(_name, _class, 1, calculateExpToNextLevel(1), _maxHealth, _maxHealth, _maxMana, 
-                                    _maxMana, 100, mod.strength, mod.agility, mod.intelligence, _abilities, initialItems());
+                                    _maxMana, 100, mod.strength, mod.agility, mod.intelligence, _abilities, initialItems(), 
+                                    _class.startingWeapon,
+                                    _class.startingChest,
+                                    _class.startingHelm,
+                                    _class.startingGloves,
+                                    _class.startingBoots,
+                                    _class.startingLegs);
         }
 
         private static ICollection<ItemStack> initialItems()
         {
             ICollection<ItemStack> startingInventory = new List<ItemStack>((int)ItemStack.MAXSTACKSIZE);
-            Consumable minorHealthPot = (Consumable) ItemSet.retrieveItem("minor health potion");
+            Consumable minorHealthPot = (Consumable) ItemSet.retrieveItem(1);
             startingInventory.Add(new ItemStack(minorHealthPot, 3));
             return startingInventory;
         }
@@ -79,10 +96,11 @@ namespace Main_Game
         public void submitCharacter(UploadStringCompletedEventHandler characterUploaded)
         {
             string charFormatString = String.Format("name={0}&classid={1}&lvl=1&exptonext={2}&maxhealth={3}&currenthealth={3}&" +
-                                                    "maxmana={4}&currentmana={4}&strength={5}&agility={6}&intelligence={7}",
+                                                    "maxmana={4}&currentmana={4}&money={5}&strength={6}&agility={7}&intelligence={8}",
                                                     name, (int)type, expToNext, maxHealth,
-                                                    maxMana, strength, agility, intelligence);
-            charFormatString += formatAbilities(abilities) + formatItems(inventory);
+                                                    maxMana, money, strength, agility, intelligence);
+            charFormatString += formatAbilities(abilities) + formatItems(inventory) + formatWeapon() + formatChest() + formatHelm()
+                                + formatGloves() + formatBoots() + formatLegs();
             HttpConnection.httpPost(new Uri("characterCreate.php", UriKind.Relative), charFormatString, characterUploaded);
         }
 
@@ -103,9 +121,39 @@ namespace Main_Game
             string formatString = "";
             for (int i = 0; i < itemArray.LongCount(); i++)
             {
-                formatString += "&itemname" + i + "=" + itemArray[i].item.name + "&itemcount" + i + "=" + itemArray[i].stackSize;
+                formatString += "&itemid" + i + "=" + itemArray[i].item.id + "&itemcount" + i + "=" + itemArray[i].stackSize;
             }
             return formatString;
+        }
+
+        private string formatWeapon()
+        {
+            return "&weaponid=" + weapon.id + "&weaponlevel=" + weapon.level;
+        }
+
+        private string formatChest()
+        {
+            return "&chestid=" + chest.id + "&chestlevel=" + chest.level; 
+        }
+
+        private string formatHelm()
+        {
+            return "&helmid=" + helm.id + "&helmlevel=" + helm.level;
+        }
+
+        private string formatGloves()
+        {
+            return "&glovesid=" + gloves.id + "&gloveslevel=" + gloves.level;
+        }
+
+        private string formatBoots()
+        {
+            return "&bootsid=" + boots.id + "&bootslevel=" + boots.level;
+        }
+
+        private string formatLegs()
+        {
+            return "&legsid=" + legs.id + "&legslevel=" + legs.level;
         }
 
         public static int calculateMaxHealth(int _strength)
@@ -122,7 +170,6 @@ namespace Main_Game
         {
             return level * 100;
         }
-
 
     }
 }

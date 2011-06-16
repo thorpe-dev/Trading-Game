@@ -36,7 +36,12 @@ namespace Main_Game
             warriorAbilities.Add("Maim", Ability.fetchAbility("Maim"));
             ClassSet.createClass(ClassType.Warrior, new Class(new StatModifier(20, 15, 10), new StatModifier(3, 2, 1), ClassType.Warrior,
                                                                 "Im a Warrior", new Uri("Images/robot.png", UriKind.Relative),
-                                                                warriorAbilities));
+                                                                warriorAbilities, ItemSet.retrieveItem(100) as Weapon,
+                                                                ItemSet.retrieveItem(300) as Armour,
+                                                                ItemSet.retrieveItem(200) as Armour,
+                                                                ItemSet.retrieveItem(400) as Armour,
+                                                                ItemSet.retrieveItem(500) as Armour,
+                                                                ItemSet.retrieveItem(600) as Armour));
 
 
             IDictionary<string, Ability> mageAbilities = new Dictionary<string, Ability>();
@@ -44,18 +49,29 @@ namespace Main_Game
             mageAbilities.Add("Energy arrow", Ability.fetchAbility("Energy arrow"));
             ClassSet.createClass(ClassType.Mage, new Class(new StatModifier(10, 10, 25), new StatModifier(1, 1, 4), ClassType.Mage,
                                                                 "Im a Mage", new Uri("Images/failsprite.png", UriKind.Relative),
-                                                                mageAbilities));
+                                                                mageAbilities, ItemSet.retrieveItem(101) as Weapon,
+                                                                ItemSet.retrieveItem(300) as Armour,
+                                                                ItemSet.retrieveItem(200) as Armour,
+                                                                ItemSet.retrieveItem(400) as Armour,
+                                                                ItemSet.retrieveItem(500) as Armour,
+                                                                ItemSet.retrieveItem(600) as Armour));
 
 
             IDictionary<string, Ability> rogueAbilities = new Dictionary<string, Ability>();
             rogueAbilities.Add("Attack", Ability.fetchAbility("Attack"));
             ClassSet.createClass(ClassType.Rogue, new Class(new StatModifier(15, 20, 5), new StatModifier(2, 3, 1), ClassType.Rogue,
                                                                 "Im a Rogue", new Uri("Images/clam.png", UriKind.Relative),
-                                                                 rogueAbilities));
+                                                                 rogueAbilities, ItemSet.retrieveItem(102) as Weapon,
+                                                                 ItemSet.retrieveItem(300) as Armour,
+                                                                 ItemSet.retrieveItem(200) as Armour,
+                                                                 ItemSet.retrieveItem(400) as Armour,
+                                                                 ItemSet.retrieveItem(500) as Armour,
+                                                                 ItemSet.retrieveItem(600) as Armour));
         }
 
         private void transferComplete(Object sender, DownloadStringCompletedEventArgs e)
         {
+            MessageBox.Show(e.Result);
             if (e.Error == null)
             {
                 XDocument doc = XDocument.Parse(e.Result);
@@ -78,7 +94,13 @@ namespace Main_Game
                                              (int)character.Element("agility"),
                                              (int)character.Element("intelligence"),
                                              parseAbilities(character.Element("abilities")),
-                                             parseInventory(character.Element("inventory"))
+                                             parseInventory(character.Element("inventory")),
+                                             parseWeapon(character.Element("weapon")),
+                                             parseArmour(character.Element("chest")),
+                                             parseArmour(character.Element("helm")),
+                                             parseArmour(character.Element("gloves")),
+                                             parseArmour(character.Element("boots")),
+                                             parseArmour(character.Element("legs"))
                                              );
                         if (characters.LongCount() > 0)
                         {
@@ -119,15 +141,43 @@ namespace Main_Game
 
         private ICollection<ItemStack> parseInventory(XElement inventoryElements)
         {
-            IEnumerable<XElement> itemSet = inventoryElements.Elements("item");
-            ICollection<ItemStack> inventory = new List<ItemStack>();
-            foreach (XElement elem in itemSet)
+            if (inventoryElements.Element("item") != null)
             {
-                Item item = ItemSet.retrieveItem((string)elem.Element("name"));
-                uint amount = (uint)elem.Element("amount");
-                inventory.Add(new ItemStack(item, amount));
+                IEnumerable<XElement> itemSet = inventoryElements.Elements("item");
+                ICollection<ItemStack> inventory = new List<ItemStack>();
+                foreach (XElement elem in itemSet)
+                {
+                    Item item = ItemSet.retrieveItem((int)elem.Element("id"));
+                    uint amount = (uint)elem.Element("amount");
+                    inventory.Add(new ItemStack(item, amount));
+                }
+                return inventory;
             }
-            return inventory;
+            return new List<ItemStack>();
+        }
+
+        private Weapon parseWeapon(XElement weaponElements)
+        {
+            if (weaponElements != null)
+            {
+                int weaponId = (int)weaponElements.Element("id");
+                int weaponLevel = (int)weaponElements.Element("level");
+                Weapon weapon = ItemSet.retrieveItem(weaponId) as Weapon;
+                return new Weapon(weaponId, weapon.name, weapon.description, weapon.value, weapon.type, weaponLevel);
+            }
+            return null;
+        }
+
+        private Armour parseArmour(XElement armourElements)
+        {
+            if (armourElements != null)
+            {
+                int armourId = (int)armourElements.Element("id");
+                int armourLevel = (int)armourElements.Element("level");
+                Armour armour = ItemSet.retrieveItem(armourId) as Armour;
+                return new Armour(armourId, armour.name, armour.description, armour.value, armour.type, armour.stats, armourLevel);
+            }
+            return null;
         }
 
         private void create_Click(object sender, RoutedEventArgs e)
@@ -187,7 +237,12 @@ namespace Main_Game
             {
                 inventoryString += inventory[i].item.name + ": " + inventory[i].stackSize + "\n";
             }
-            inventoryLabel.Content = inventoryString;
+            inventoryLabel.Content = inventoryString + "\n" + c.weapon.name + "\n" + 
+                                                                    c.chest.name + "\n" +
+                                                                    c.helm.name + "\n" +
+                                                                    c.gloves.name + "\n" +
+                                                                    c.boots.name + "\n" +
+                                                                    c.legs.name + " equipped";
             Class _class = c.charClass;
             charImage.Source = new BitmapImage(_class.imageSrc);
             Character.currentCharacter = c;
@@ -242,6 +297,7 @@ namespace Main_Game
                     charImage.Source = null;
                     CharacterBox.Text = "";
                     abilityGrid.Children.Clear();
+                    inventoryLabel.Content = "";
                     deleteCharButton.IsEnabled = false;
                     playCharButton.IsEnabled = false;
                     createCharButton.IsEnabled = true;

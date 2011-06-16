@@ -59,6 +59,11 @@ namespace Main_Game
             }
         }
 
+        private static void stopPolling()
+        {
+            timer.Stop();
+        }
+
         private static void tickRequest(Object state, EventArgs sender)
         {
             try

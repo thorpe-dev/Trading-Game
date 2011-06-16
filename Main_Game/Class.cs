@@ -56,10 +56,17 @@ namespace Main_Game
         private ClassType _type;
         private Uri imageSource;
         private string _description;
+        public Weapon startingWeapon { get; set; }
+        public Armour startingHelm { get; set; }
+        public Armour startingChest { get; set; }
+        public Armour startingGloves { get; set; }
+        public Armour startingBoots { get; set; }
+        public Armour startingLegs { get; set; }
         public IDictionary<string, Ability> abilities;
 
         public Class(StatModifier initialModifier, StatModifier levelModifier, ClassType ctype, string description, Uri imageSource,
-                        IDictionary<string, Ability>_abilities)
+                        IDictionary<string, Ability> _abilities, Weapon _startingWeapon, Armour _startingHelm, Armour _startingChest,
+                        Armour _startingGloves, Armour _startingBoots, Armour _startingLegs)
         {
             this.initialModifier = initialModifier;
             this.levelModifier = levelModifier;
@@ -67,6 +74,12 @@ namespace Main_Game
             _description = description;
             this.imageSource = imageSource;
             abilities = _abilities;
+            startingWeapon = _startingWeapon;
+            startingHelm = _startingHelm;
+            startingChest = _startingChest;
+            startingGloves = _startingGloves;
+            startingBoots = _startingBoots;
+            startingLegs = _startingLegs;
         }
 
         public StatModifier levelMod
