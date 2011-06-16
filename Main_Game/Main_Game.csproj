@@ -79,6 +79,9 @@
     <Compile Include="Bar.xaml.cs">
       <DependentUpon>Bar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BattleScreen.xaml.cs">
+      <DependentUpon>BattleScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CharacterCreate.xaml.cs">
       <DependentUpon>CharacterCreate.xaml</DependentUpon>
     </Compile>
@@ -134,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="Bar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BattleScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -359,7 +366,26 @@
   <ItemGroup>
     <Resource Include="Images\Dungeon\treasure.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Items\rune-long.png" />
+    <Resource Include="Images\Items\rune-lsword.png" />
+    <Resource Include="Images\Items\addy-baxe.png" />
+    <Resource Include="Images\Items\addy-mace.png" />
+    <Resource Include="Images\Items\addy-scim.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Character\Gothitelle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Items\armour.png" />
+    <Resource Include="Images\Items\boots.png" />
+    <Resource Include="Images\Items\gloves.png" />
+    <Resource Include="Images\Items\head.png" />
+    <Resource Include="Images\Items\weapon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Items\legs.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

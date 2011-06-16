@@ -53,7 +53,6 @@ namespace Main_Game
                 else
                 {
                     ScreenManager.SetScreen(new CharacterScreen());
-                    ScreenManager.SetSettingBar(new settingBar());
                 }
             }
             else
@@ -70,9 +69,11 @@ namespace Main_Game
 
         private void btn_skip_Click(object sender, RoutedEventArgs e)
         {
-            Tavern tTavern = new Tavern();
-            ScreenManager.SetScreen(tTavern);
-            tTavern.Focus();
+            BattleScreen tBattleScreen = new BattleScreen();
+            ScreenManager.SetScreen(tBattleScreen);
+            ScreenManager.SetSettingBar(new settingBar());
+            ScreenManager.SetSideBar(new sideBar());
+            tBattleScreen.Focus();
         }
 
     }

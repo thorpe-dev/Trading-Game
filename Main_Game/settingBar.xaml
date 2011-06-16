@@ -6,6 +6,6 @@
     mc:Ignorable="d"
     >
     <Grid Name="bottomBar" Background="Sienna">
-        <Button Content="Logout" Height="30" HorizontalAlignment="Left" Name="logoutBtn" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Logout" Height="30" HorizontalAlignment="Left" Name="logoutBtn" VerticalAlignment="Top" Width="120" Click="logoutBtn_Click" />
     </Grid>
 </UserControl>

@@ -13,14 +13,14 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
         
         <Grid Name="mainContent" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">
         </Grid>
-        <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="settingBar" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+        <Grid Name="settingBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
         </Grid>
-        <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="sideBar"    Grid.Row="0" Grid.Column="1">
+        <Grid Name="sideBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="1">
         </Grid>
     </Grid>
 </UserControl>

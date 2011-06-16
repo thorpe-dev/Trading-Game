@@ -1044,6 +1044,10 @@ namespace Main_Game
             else if (e.Key == Key.Right) btn_right_Click(null, null);
         }
 
+        private void btn_exit_Click(object sender, RoutedEventArgs e)
+        {
+            ScreenManager.SetScreen(new Tavern());
+        }
     }
 
     public class DungeonTheme

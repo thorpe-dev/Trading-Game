@@ -22,8 +22,6 @@ namespace Main_Game
 
         public void SetScreen(IScreen screen)
         {
-           /* this.LayoutRoot.Children.Clear();
-            this.LayoutRoot.Children.Add(screen.Element);*/
             mainContent.Children.Clear();
             mainContent.Children.Add(screen.Element);
         }
@@ -31,21 +29,21 @@ namespace Main_Game
         public void SetSettingBar(IScreen screen)
         {
             settingBar.Children.Clear();
-            settingBar.Children.Add(screen.Element);
+            if (screen != null)
+                settingBar.Children.Add(screen.Element);
         }
 
         public void SetSideBar(IScreen screen)
         {
             sideBar.Children.Clear();
-            sideBar.Children.Add(screen.Element);
+            if (screen != null)
+                sideBar.Children.Add(screen.Element);
         }
 
         private void main_Loaded(object sender, RoutedEventArgs e)
         {
             ScreenManager.SetHost(this);
             ScreenManager.SetScreen(new LoginScreen());
-            ScreenManager.SetSettingBar(new settingBar());
-            ScreenManager.SetSideBar(new sideBar());
         }
 
     }

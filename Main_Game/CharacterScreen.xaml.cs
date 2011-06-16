@@ -178,6 +178,8 @@ namespace Main_Game
             HttpConnection.httpGet(new Uri("enterWorld.php", UriKind.Relative), characterLoaded);
             City tCity = new City(500, 300);
             ScreenManager.SetScreen(tCity);
+            ScreenManager.SetSettingBar(new settingBar());
+            ScreenManager.SetSideBar(new sideBar());
             tCity.Focus();
         }
 

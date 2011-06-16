@@ -5,7 +5,188 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     >
-    <Grid Name="bottomBar" Background="Sienna">
-        <Button Content="Dunno" Height="30" HorizontalAlignment="Left" Name="logoutBtn" VerticalAlignment="Top" Width="120"/>
-    </Grid>
+    
+    
+    <Grid Name="grdSideBar" Background="Sienna" MinHeight="500" Width="300">        
+        
+        <!--Character name, icon, HP/Magic-->
+        
+        <Grid Name="grdCharPanel" Width="300" Height="100" VerticalAlignment="Top" Margin="0,8,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Name="txtCharName"  Grid.ColumnSpan="3" Text="Jigglypuff" Margin="10,5,0,0" />
+            <Border Name="brdCharIcon" Background="White" BorderBrush="Black" BorderThickness="2" Height="70" Width="70"
+                    Grid.Row="1" Grid.Column="0" Grid.RowSpan="4">
+                <Image Name="imgCharIcon" Source="Images/Character/Gothitelle.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Name="txtHealth" Grid.Row="1"  Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Health"/>
+            <TextBlock Name="txtMagic" Grid.Row="3"  Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Magic"/>
+            
+            <ProgressBar Name="prgCharHealth" Background="White" Foreground="Red" Grid.Row="1"  Grid.Column="2"/>
+            <ProgressBar Name="prgCharMagic" Background="White" Foreground="Blue" Grid.Row="3"  Grid.Column="2"/>
+
+            <TextBlock Name="txtHealthCurrent" 
+                       Grid.Row="1"  Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Name="txtHealthSlash" Text="/" 
+                       Grid.Row="1"  Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Name="txtHealthMax" 
+                       Grid.Row="1"  Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Name="txtMagicCurrent"
+                       Grid.Row="3"  Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Name="txtMagicSlash" Text="/"
+                       Grid.Row="3"  Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Name="txtMagicMax" 
+                       Grid.Row="3"  Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+        
+        <!--Middle switchable block-->
+        
+        <Grid Name="grdCharEquipStats" Width="270" Height="188" HorizontalAlignment="Center" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="158" />                
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+
+            <ToggleButton Name="btnEquip" Content="Equip" Checked="btnEquip_Checked"
+                          Grid.Row="0" Grid.Column="0"  Width="50" HorizontalAlignment="Right" />
+            <ToggleButton Name="btnStats" Content="Future" Checked="btnStats_Checked"
+                          Grid.Row="0" Grid.Column="1" Width="50" HorizontalAlignment="Left" />
+            
+            <!--Equipment-->    
+            
+            <Rectangle Name="recEquipBG"  Fill="SlateGray" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       Width="158"  Height="300" Opacity="0.5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+                <Border HorizontalAlignment="Center" Name="brdEquipped" BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column ="0" Grid.ColumnSpan="2">
+                    <Grid Name="grdEquipped" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="48"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="48"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="48"/>
+                        </Grid.ColumnDefinitions>
+            
+                        <Image Source="Images/Items/weapon.png" Height="48" Width="48" 
+                               Grid.Row="2"  Grid.Column="0" />
+                        <Image Source="Images/Items/head.png" Height="48" Width="48" 
+                               Grid.Row="0"  Grid.Column="2" />
+                        <Image Source="Images/Items/armour.png" Height="48" Width="48" 
+                               Grid.Row="2"  Grid.Column="2" />
+                        <Image Source="Images/Items/legs.png" Height="48" Width="48" 
+                               Grid.Row="4"  Grid.Column="2" />
+                        <Image Source="Images/Items/boots.png" Height="48" Width="48" 
+                               Grid.Row="4"  Grid.Column="4" />
+                        <Image Source="Images/Items/gloves.png" Height="48" Width="48" 
+                               Grid.Row="4"  Grid.Column="0" />
+
+                    <Button Grid.Row="0" Grid.Column="2" Click="btnEquipment_Click" Opacity="0"/>
+
+                    <Button Grid.Row="2" Grid.Column="0" Click="btnEquipment_Click" Opacity="0"/>
+                    <Button Grid.Row="2" Grid.Column="2" Click="btnEquipment_Click" Opacity="0"/>
+
+                    <Button Grid.Row="4" Grid.Column="0" Click="btnEquipment_Click" Opacity="0"/>
+                    <Button Grid.Row="4" Grid.Column="2" Click="btnEquipment_Click" Opacity="0"/>
+                    <Button Grid.Row="4" Grid.Column="4" Click="btnEquipment_Click" Opacity="0"/>
+
+                </Grid>
+                </Border>
+            
+            
+                <!--Stats-->
+            <StackPanel Name="panStats" Grid.Row="1" Grid.Column="2">
+                <TextBlock Height="40" Text="Strength"/>
+                <TextBlock Height="40" Text="Agility"/>
+                <TextBlock Height="40" Text="Intelligence"/>
+                <TextBlock Height="40" Text="Speed"/>
+            </StackPanel>
+            <StackPanel Name="panStatValues" Grid.Row="1" Grid.Column="3">
+                <TextBlock Height="40" Name="txtStrengthVal" Text="0"/>
+                <TextBlock Height="40" Name="txtAgilityVal" Text="0"/>
+                <TextBlock Height="40" Name="txtIntVal" Text="0"/>
+                <TextBlock Height="40" Name="txtSpeedVal" Text="0"/>                
+            </StackPanel>
+            
+
+
+        </Grid>
+            
+        <!--Inventory-->
+        
+        <Border BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,15">
+            <Grid Name="grdInventory" Background="LightSalmon">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="32"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="Images/Items/addy-baxe.png" Grid.Column="3" Grid.Row="2" />
+                <Image Source="Images/Items/addy-mace.png" Grid.Column="0" Grid.Row="0" />
+                <Image Source="Images/Items/rune-long.png" Grid.Column="2" Grid.Row="3" /> 
+                
+                <Button Grid.Row="0" Grid.Column="0" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="0" Grid.Column="1" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="0" Grid.Column="2" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="0" Grid.Column="3" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="0" Grid.Column="4" Click="btnInventory_Click" Opacity="0"/>
+
+                <Button Grid.Row="1" Grid.Column="0" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="1" Grid.Column="1" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="1" Grid.Column="2" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="1" Grid.Column="3" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="1" Grid.Column="4" Click="btnInventory_Click" Opacity="0"/>
+
+                <Button Grid.Row="2" Grid.Column="0" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="2" Grid.Column="1" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="2" Grid.Column="2" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="2" Grid.Column="3" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="2" Grid.Column="4" Click="btnInventory_Click" Opacity="0"/>
+
+                <Button Grid.Row="3" Grid.Column="0" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="3" Grid.Column="1" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="3" Grid.Column="2" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="3" Grid.Column="3" Click="btnInventory_Click" Opacity="0"/>
+                <Button Grid.Row="3" Grid.Column="4" Click="btnInventory_Click" Opacity="0"/>
+
+            </Grid>
+        </Border>
+        
+        
+        </Grid>
 </UserControl>

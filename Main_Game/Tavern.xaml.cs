@@ -87,10 +87,12 @@ namespace Main_Game
       
         private void btn_mission_Click(object sender, RoutedEventArgs e)
         {
-            ScreenManager.SetScreen(new MapScreen(Int32.Parse(txt_id.Text),
+            MapScreen tDungeon = new MapScreen(Int32.Parse(txt_id.Text),
                                                   Int32.Parse(txt_dungeon.Text),
                                                   (first),
-                                                  (only)));
+                                                  (only));
+            ScreenManager.SetScreen(tDungeon);
+            tDungeon.Focus();
         }
 
         public void lobby(object sender, DownloadStringCompletedEventArgs e)
