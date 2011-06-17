@@ -167,19 +167,22 @@ namespace Main_Game
             int _maxMana = calculateMaxMana(mod.intelligence);
             return new Character(_name, _class, 1, calculateExpToNextLevel(1), _maxHealth, _maxHealth, _maxMana, 
                                     _maxMana, 100, mod.strength, mod.agility, mod.intelligence, mod.speed, _abilities, initialItems(), 
-                                    _class.startingWeapon,
-                                    _class.startingChest,
-                                    _class.startingHelm,
-                                    _class.startingGloves,
-                                    _class.startingBoots,
-                                    _class.startingLegs);
+                                    new Weapon(_class.startingWeapon.id, _class.startingWeapon, 1),
+                                    new Armour(_class.startingChest.id, _class.startingChest, 1),
+                                    new Armour(_class.startingHelm.id, _class.startingHelm, 1),
+                                    new Armour (_class.startingGloves.id, _class.startingGloves, 1),
+                                    new Armour (_class.startingBoots.id, _class.startingBoots, 1),
+                                    new Armour (_class.startingLegs.id, _class.startingLegs, 1));
         }
 
         private static ICollection<ItemStack> initialItems()
         {
             ICollection<ItemStack> startingInventory = new List<ItemStack>((int)ItemStack.MAXSTACKSIZE);
             Consumable minorHealthPot = (Consumable) ItemSet.retrieveItem(1);
+            Item i = ItemSet.retrieveItem(100);
+            Weapon w = new Weapon(i.id, i as Weapon, 1);
             startingInventory.Add(new ItemStack(minorHealthPot, 3));
+            startingInventory.Add(new ItemStack(w, 1));
             return startingInventory;
         }
 
@@ -192,6 +195,7 @@ namespace Main_Game
                                                     maxMana, money, strength, agility, intelligence, speed);
             charFormatString += formatAbilities(abilities) + formatItems(inventory) + formatWeapon() + formatChest() + formatHelm()
                                 + formatGloves() + formatBoots() + formatLegs();
+            MessageBox.Show(charFormatString);
             HttpConnection.httpPost(new Uri("characterCreate.php", UriKind.Relative), charFormatString, characterUploaded);
         }
 
@@ -213,6 +217,16 @@ namespace Main_Game
             for (int i = 0; i < itemArray.LongCount(); i++)
             {
                 formatString += "&itemid" + i + "=" + itemArray[i].item.id + "&itemcount" + i + "=" + itemArray[i].stackSize;
+                if (itemArray[i].item is Armour)
+                {
+                    Armour a = itemArray[i].item as Armour;
+                    formatString += "&itemlevel" + i + "=" + a.level;
+                }
+                else if (itemArray[i].item is Weapon)
+                {
+                    Weapon w = itemArray[i].item as Weapon;
+                    formatString += "&itemlevel" + i + "=" + w.level;
+                }
             }
             return formatString;
         }

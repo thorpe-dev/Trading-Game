@@ -71,6 +71,7 @@ namespace Main_Game
 
         private void transferComplete(Object sender, DownloadStringCompletedEventArgs e)
         {
+            MessageBox.Show(e.Result);
             if (e.Error == null)
             {
                 XDocument doc = XDocument.Parse(e.Result);
@@ -149,7 +150,23 @@ namespace Main_Game
                 {
                     Item item = ItemSet.retrieveItem((int)elem.Element("id"));
                     uint amount = (uint)elem.Element("amount");
-                    inventory.Add(new ItemStack(item, amount));
+                    if (elem.Element("level") != null)
+                    {
+                        if (item is Weapon)
+                        {
+                            Weapon w = item as Weapon;
+                            inventory.Add(new ItemStack(new Weapon(w.id, w, (int)elem.Element("level"))));
+                        }
+                        else
+                        {
+                            Armour a = item as Armour;
+                            inventory.Add(new ItemStack(new Armour(a.id, a, (int)elem.Element("level"))));
+                        }
+                    }
+                    else
+                    {
+                        inventory.Add(new ItemStack(item, amount));
+                    }
                 }
                 return inventory;
             }
