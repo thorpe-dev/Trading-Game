@@ -65,6 +65,8 @@ namespace Main_Game
         public int moneyDrop {get;set;}
         public Uri icon { get; set; }
 
+        public static IDictionary<string, Creep> creepDictionary = new Dictionary<string, Creep>();
+
         public Creep(string _name, int _strength, int _agility, int _intelligence, int _speed, int _maxHealth, int _currentHealth,
                         int _maxMana, int _currentMana, IDictionary<string, Ability> _abilities, ICollection<Item> _lootTable,
                         int _moneyDrop, Uri _icon)
@@ -84,6 +86,16 @@ namespace Main_Game
             lootTable = new List<Item>(_lootTable);
             moneyDrop = _moneyDrop;
             dice = new D20();
+        }
+
+        public static void populateCreeps()
+        {
+            IDictionary<string, Ability> abilitySet = new Dictionary<string, Ability>();
+            Ability a = Ability.fetchAbility("Attack");
+            abilitySet.Add("Attack", a);
+            ICollection<Item> lootSet = new List<Item>();
+            lootSet.Add(ItemSet.retrieveItem(1));
+            Creep c = new Creep("Troll", 30, 10, 0, 10, 300, 300, 50, 50, abilitySet, lootSet, 100, new Uri("troll"));
         }
 
         public override Ability getAbility()

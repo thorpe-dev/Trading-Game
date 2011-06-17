@@ -552,6 +552,7 @@ namespace Main_Game
 
     public class Equipment
     {
+        public const int NUMBEROFLEVELS = 3;
         public static string[] equipmentPrefixes = { "Damaged ", "", "Superior " };
     }
 
