@@ -8,64 +8,128 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Trading_Project
+namespace Main_Game
 {
     public class Battle
     {
-        protected Character2Battle char_1;
-        protected Character2Battle char_2;
+        public bool playersTurn { get; set; }
+
+        protected Character char_1;
+        protected Creep char_2;
 
 
-        public Battle(Character2Battle p1, Character2Battle p2)
+        public Battle(Character p1, Dictionary<String, Creep> dictionary)
         {
-            char_1 = p1;
-            char_2 = p2;
+            this.char_1 = p1;
+            this.char_2 = generateCreep(dictionary);
+            playersTurn = false;
 
         }
 
-        public void startBattle()
+        public void beginTurn()
         {
-            if (this.char_1.dice.roll() * this.char_1.speed * this.char_1.effect.speed_mod <
-                this.char_2.dice.roll() * this.char_2.speed * this.char_2.effect.speed_mod)
+            if (char_1.dice.roll() * char_1.speed * char_1.buffs.speed_mod <
+                char_2.dice.roll() * char_2.speed * char_1.buffs.speed_mod)
             {
-                this.char_2.Attack(char_2.getMove(), char_1);
-                if (char_1.health == 0)
+                this.char_2.Attack(char_2.getAbility(), char_1);
+                if (char_1.currentHealth == 0)
+                {
                     endBattle();
+                    return;
+                }
+                beginTurn();
             }
             else
             {
-                this.char_1.Attack(char_1.getMove(), char_2);
-                if (char_2.health == 0)
-                    endBattle();
+                playersTurn = true;
             }
 
-            continueBattle();
         }
 
-        public void continueBattle()
+        public void playerAttack(Ability attack)
         {
-            if (this.char_1.dice.roll() * this.char_1.speed * this.char_1.effect.speed_mod <
-                this.char_2.dice.roll() * this.char_2.speed * this.char_2.effect.speed_mod)
+            char_1.Attack(attack, char_2);
+            if (char_2.currentHealth == 0)
             {
-                this.char_2.Attack(char_2.getMove(), char_1);
-                if (char_1.health == 0)
-                    endBattle();
+                endBattle();
+                return;
             }
-            else
-            {
-                this.char_1.Attack(char_1.getMove(), char_2);
-                if (char_2.health == 0)
-                    endBattle();
-            }
-
-            continueBattle();
+            beginTurn();
         }
 
         public void endBattle()
         {
-            // Handle the end of the battle here
-            // Update health and XP on server here
+            if (char_1.currentHealth == 0)
+            {
+                //Player has lost
+                return;
+            }
+            else
+            {
+                int progress = char_1.expToNext - char_2.expValue;
+                if (progress <= 0)
+                {
+                    char_1.levelUp();
+                    char_1.expToNext += progress;
+                }
+                else
+                {
+                    char_1.expToNext -= progress;
+                }
+                Random rnd = new Random();
+                int lootTableSize = char_2.lootTable.Count;
+                int lootRand = rnd.Next(1, ((int)Math.Sqrt(lootTableSize) + lootTableSize) / 2);
+                int n = lootTableSize;
+                int i = 0;
+                while (n < lootRand)
+                {
+                    n += (n - 1);
+                    i++;
+                }
+                Item loot = char_2.lootTable.ToArray()[i];
+                if (loot is Armour)
+                {
+                    lootRand = rnd.Next(1, ((int)Math.Sqrt(Equipment.NUMBEROFLEVELS) + Equipment.NUMBEROFLEVELS) / 2);
+                    int j = Equipment.NUMBEROFLEVELS;
+                    int k = 0;
+                    while (j < lootRand)
+                    {
+                        j += (j - 1);
+                        k++;
+                    }
+                    loot = new Armour(loot.id, loot as Armour, k);
+                }
+                else if (loot is Weapon)
+                {
+                    lootRand = rnd.Next(1, ((int)Math.Sqrt(Equipment.NUMBEROFLEVELS) + Equipment.NUMBEROFLEVELS) / 2);
+                    int j = Equipment.NUMBEROFLEVELS;
+                    int k = 0;
+                    while (j < lootRand)
+                    {
+                        j += (j - 1);
+                        k++;
+                    }
+                    loot = new Weapon(loot.id, loot as Weapon, k);
+                }
+                //Setup loot screen
+                char_1.resetStats();
+                char_1.money += char_2.expValue;
+            }
+        }
+
+        public Creep generateCreep(Dictionary<String, Creep> dict)
+        {
+            Random rnd = new Random();
+
+            Creep[] array = new Creep[dict.Count];
+
+            array = dict.Values.ToArray();
+
+
+            return array[rnd.Next(0, array.Length)];
         }
     }
 }

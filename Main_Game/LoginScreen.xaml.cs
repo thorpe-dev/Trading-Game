@@ -70,7 +70,8 @@ namespace Main_Game
         private void btn_skip_Click(object sender, RoutedEventArgs e)
         {
             BattleScreen tBattleScreen = new BattleScreen();
-            ScreenManager.SetScreen(tBattleScreen);
+            CharacterScreen tCharScreen = new CharacterScreen();
+            ScreenManager.SetScreen(tCharScreen);
             ScreenManager.SetSettingBar(new settingBar());
             ScreenManager.SetSideBar(new sideBar());
             tBattleScreen.Focus();

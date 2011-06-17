@@ -91,9 +91,10 @@
     <Compile Include="City.xaml.cs">
       <DependentUpon>City.xaml</DependentUpon>
     </Compile>
-    <Compile Include="D20.cs" />
-    <Compile Include="Effect.cs" />
-    <Compile Include="Item.cs" />
+    <Compile Include="SupportClasses\Battle.cs" />
+    <Compile Include="SupportClasses\D20.cs" />
+    <Compile Include="SupportClasses\Effect.cs" />
+    <Compile Include="SupportClasses\Item.cs" />
     <Compile Include="LoginScreen.xaml.cs">
       <DependentUpon>LoginScreen.xaml</DependentUpon>
     </Compile>
@@ -117,19 +118,10 @@
       <DependentUpon>sideBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="SupportClasses\Ability.cs" />
-    <Compile Include="SupportClasses\AttackMove.cs" />
-    <Compile Include="SupportClasses\Battle.cs" />
     <Compile Include="SupportClasses\Character.cs" />
-    <Compile Include="SupportClasses\Character2Battle.cs" />
     <Compile Include="SupportClasses\Class.cs" />
-    <Compile Include="SupportClasses\D20.cs" />
-    <Compile Include="SupportClasses\Effect.cs" />
     <Compile Include="SupportClasses\HttpConnection.cs" />
     <Compile Include="SupportClasses\Location.cs" />
-    <Compile Include="SupportClasses\Move.cs" />
-    <Compile Include="SupportClasses\NPC.cs" />
-    <Compile Include="SupportClasses\Player.cs" />
-    <Compile Include="SupportClasses\SelfMove.cs" />
     <Compile Include="Tavern.xaml.cs">
       <DependentUpon>Tavern.xaml</DependentUpon>
     </Compile>

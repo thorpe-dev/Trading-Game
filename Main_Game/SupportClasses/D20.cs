@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace Trading_Project
+namespace Main_Game
 {
     public class D20
     {

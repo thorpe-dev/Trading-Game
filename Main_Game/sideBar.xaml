@@ -69,10 +69,10 @@
                 <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
 
-            <ToggleButton Name="btnEquip" Content="Equip" Checked="btnEquip_Checked"
+            <!--<ToggleButton Name="btnEquip" Content="Equip" Checked="btnEquip_Checked"
                           Grid.Row="0" Grid.Column="0"  Width="50" HorizontalAlignment="Right" />
             <ToggleButton Name="btnStats" Content="Future" Checked="btnStats_Checked"
-                          Grid.Row="0" Grid.Column="1" Width="50" HorizontalAlignment="Left" />
+                          Grid.Row="0" Grid.Column="1" Width="50" HorizontalAlignment="Left" />-->
             
             <!--Equipment-->    
             
@@ -95,27 +95,27 @@
                             <ColumnDefinition Width="48"/>
                         </Grid.ColumnDefinitions>
             
-                        <Image Source="Images/Items/weapon.png" Height="48" Width="48" 
+                    <Image Name="imgWeapon" Source="Images/Gothitelle.png" Height="48" Width="48" 
                                Grid.Row="2"  Grid.Column="0" />
-                        <Image Source="Images/Items/head.png" Height="48" Width="48" 
-                               Grid.Row="0"  Grid.Column="2" />
-                        <Image Source="Images/Items/armour.png" Height="48" Width="48" 
-                               Grid.Row="2"  Grid.Column="2" />
-                        <Image Source="Images/Items/legs.png" Height="48" Width="48" 
-                               Grid.Row="4"  Grid.Column="2" />
-                        <Image Source="Images/Items/boots.png" Height="48" Width="48" 
-                               Grid.Row="4"  Grid.Column="4" />
-                        <Image Source="Images/Items/gloves.png" Height="48" Width="48" 
+                    <Image Name="imgHelmet" Source="Images/Items/head.png" Height="48" Width="48" 
+                               Grid.Row="0"  Grid.Column="2"/>
+                    <Image Name="imgChest" Source="Images/Items/armour.png" Height="48" Width="48" 
+                               Grid.Row="2"  Grid.Column="2"/>
+                    <Image Name="imgLegs" Source="Images/Items/legs.png" Height="48" Width="48" 
+                               Grid.Row="4"  Grid.Column="2"/>
+                    <Image Name="imgBoots" Source="Images/Items/boots.png" Height="48" Width="48" 
+                               Grid.Row="4"  Grid.Column="4"/>
+                    <Image Name="imgGloves" Source="Images/Items/gloves.png" Height="48" Width="48" 
                                Grid.Row="4"  Grid.Column="0" />
 
-                    <Button Grid.Row="0" Grid.Column="2" Click="btnEquipment_Click" Opacity="0"/>
+                        <Button Grid.Row="0" Grid.Column="2" Click="btnEquipment_Click" Tag="helm" Opacity="0"/>
 
-                    <Button Grid.Row="2" Grid.Column="0" Click="btnEquipment_Click" Opacity="0"/>
-                    <Button Grid.Row="2" Grid.Column="2" Click="btnEquipment_Click" Opacity="0"/>
+                    <Button Grid.Row="2" Grid.Column="0" Click="btnEquipment_Click" Tag="weapon" Opacity="0"/>
+                    <Button Grid.Row="2" Grid.Column="2" Click="btnEquipment_Click" Tag="chest" Opacity="0"/>
 
-                    <Button Grid.Row="4" Grid.Column="0" Click="btnEquipment_Click" Opacity="0"/>
-                    <Button Grid.Row="4" Grid.Column="2" Click="btnEquipment_Click" Opacity="0"/>
-                    <Button Grid.Row="4" Grid.Column="4" Click="btnEquipment_Click" Opacity="0"/>
+                    <Button Grid.Row="4" Grid.Column="0" Click="btnEquipment_Click" Tag="gloves" Opacity="0"/>
+                    <Button Grid.Row="4" Grid.Column="2" Click="btnEquipment_Click" Tag="legs" Opacity="0"/>
+                    <Button Grid.Row="4" Grid.Column="4" Click="btnEquipment_Click" Tag="boots" Opacity="0"/>
 
                 </Grid>
                 </Border>
@@ -156,10 +156,32 @@
                     <ColumnDefinition Width="32"/>
                     <ColumnDefinition Width="32"/>
                 </Grid.ColumnDefinitions>
-                <Image Source="Images/Items/addy-baxe.png" Grid.Column="3" Grid.Row="2" />
-                <Image Source="Images/Items/addy-mace.png" Grid.Column="0" Grid.Row="0" />
-                <Image Source="Images/Items/rune-long.png" Grid.Column="2" Grid.Row="3" /> 
-                
+
+                <Image Grid.Row="0" Grid.Column="0" />
+                <Image Grid.Row="0" Grid.Column="1" />
+                <Image Grid.Row="0" Grid.Column="2" />
+                <Image Grid.Row="0" Grid.Column="3" />
+                <Image Grid.Row="0" Grid.Column="4" />
+
+                <Image Grid.Row="1" Grid.Column="0" />
+                <Image Grid.Row="1" Grid.Column="1" />
+                <Image Grid.Row="1" Grid.Column="2" />
+                <Image Grid.Row="1" Grid.Column="3" />
+                <Image Grid.Row="1" Grid.Column="4" />
+
+                <Image Grid.Row="2" Grid.Column="0" />
+                <Image Grid.Row="2" Grid.Column="1" />
+                <Image Grid.Row="2" Grid.Column="2" />
+                <Image Grid.Row="2" Grid.Column="3" />
+                <Image Grid.Row="2" Grid.Column="4" />
+
+                <Image Grid.Row="3" Grid.Column="0" />
+                <Image Grid.Row="3" Grid.Column="1" />
+                <Image Grid.Row="3" Grid.Column="2" />
+                <Image Grid.Row="3" Grid.Column="3" />
+                <Image Grid.Row="3" Grid.Column="4" />
+
+
                 <Button Grid.Row="0" Grid.Column="0" Click="btnInventory_Click" Opacity="0"/>
                 <Button Grid.Row="0" Grid.Column="1" Click="btnInventory_Click" Opacity="0"/>
                 <Button Grid.Row="0" Grid.Column="2" Click="btnInventory_Click" Opacity="0"/>
