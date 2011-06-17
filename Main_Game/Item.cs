@@ -39,35 +39,35 @@ namespace Main_Game
             {
                 string prefix = Consumable.consumablePrefixes[i-1];
                 healthPot = new Consumable((int)i, prefix + "healing potion", "Regenerates health", Consumable.healthPotionBaseValue * i,
-                                ConsumableType.health, (int)(Consumable.healthPotionBaseRegen * i));
+                                ConsumableType.health, (int)(Consumable.healthPotionBaseRegen * i), new Uri("uri in here"));
                 ItemSet.addItem(healthPot);
                 manaPot = new Consumable((int)(i + Consumable.consumablePrefixes.LongCount()), prefix + "mana potion", 
                                 "Regenerates mana", Consumable.manaPotionBaseValue * i,
-                                ConsumableType.mana, (int)(Consumable.manaPotionBaseRegen * i));
+                                ConsumableType.mana, (int)(Consumable.manaPotionBaseRegen * i), new Uri("uri in here"));
                 ItemSet.addItem(manaPot);
             }
             Weapon.populateWeaponTypeEffects();
-            Weapon w = new Weapon(101, "Magic stick", "A magical staff", 50, WeaponType.STAFF, 1);
+            Weapon w = new Weapon(101, "Magic stick", "A magical staff", 50, WeaponType.STAFF, 1, new Uri("uri in here"));
             ItemSet.addItem(w);
-            w = new Weapon(100, "Broadsword", "Large two handed sword", 50, WeaponType.TWOHANDEDSWORD, 1);
+            w = new Weapon(100, "Broadsword", "Large two handed sword", 50, WeaponType.TWOHANDEDSWORD, 1, new Uri("uri in here"));
             ItemSet.addItem(w);
-            w = new Weapon(102, "Shortsword", "A short blade", 50, WeaponType.ONEHANDEDSWORD, 1);
+            w = new Weapon(102, "Shortsword", "A short blade", 50, WeaponType.ONEHANDEDSWORD, 1, new Uri("uri in here"));
             ItemSet.addItem(w);
             Armour a = new Armour(200, "Long robe", "A cotton robe", 50, ArmourType.CHEST,
-                                   new EquipmentEffect(0, 0, 10, 0,  0, 50), 1);
+                                   new EquipmentEffect(0, 0, 10, 0, 0, 50), 1, new Uri("uri in here"));
             ItemSet.addItem(a);
             a = new Armour(300, "Soft hood", "A nice hood", 30, ArmourType.HELM,
-                                   new EquipmentEffect(-2, 0, 5, 0, 0, 20), 1);
+                                   new EquipmentEffect(-2, 0, 5, 0, 0, 20), 1, new Uri("uri in here"));
             ItemSet.addItem(a);
             a = new Armour(400, "Woven gloves", "Handknitted gloves", 20, ArmourType.GLOVES,
-                                  new EquipmentEffect(-1, 0, 4, 0, 0, 15), 1);
+                                  new EquipmentEffect(-1, 0, 4, 0, 0, 15), 1, new Uri("uri in here"));
             ItemSet.addItem(a);
             a = new Armour(500, "Mystic treads", "Very reliable pair of shoes", 20, ArmourType.BOOTS,
-                                  new EquipmentEffect(-2, 1, 3, 0, 0, 15), 1);
+                                  new EquipmentEffect(-2, 1, 3, 0, 0, 15), 1, new Uri("uri in here"));
             ItemSet.addItem(a);
 
             a = new Armour(600, "Damp britches", "These have seen better days", 20, ArmourType.LEGS,
-                                  new EquipmentEffect(-1, 0, 2, 0, 0, 10), 1);
+                                  new EquipmentEffect(-1, 0, 2, 0, 0, 10), 1, new Uri("uri in here"));
             ItemSet.addItem(a);
         }
     }
@@ -257,6 +257,7 @@ namespace Main_Game
         public string description { get; set; }
         public uint value { get; set; }
         public bool stackable { get; set; }
+        public Uri icon { get; set; }
 
         public bool loot(ICollection<ItemStack> inventory)
         {
@@ -296,7 +297,7 @@ namespace Main_Game
         public ConsumableType type { get; set; }
         public int amountRegenerated;
 
-        public Consumable(int _id, string _name, string _description, uint _value, ConsumableType _type, int _amountRegenerated)
+        public Consumable(int _id, string _name, string _description, uint _value, ConsumableType _type, int _amountRegenerated, Uri _icon)
         {
             id = _id;
             name = _name;
@@ -305,6 +306,7 @@ namespace Main_Game
             type = _type;
             amountRegenerated = _amountRegenerated;
             stackable = true;
+            icon = _icon;
         }
 
         public void consume(Character c)
@@ -344,7 +346,7 @@ namespace Main_Game
         public int level { get; set; }
         public EquipmentEffect effect { get; set; }
         
-        public Weapon(int _id, string _name, string _description, uint _value, WeaponType _type, int _level)
+        public Weapon(int _id, string _name, string _description, uint _value, WeaponType _type, int _level, Uri _icon)
         {
             id = _id;
             name = _name;
@@ -352,6 +354,7 @@ namespace Main_Game
             value = _value;
             type = _type;
             level = _level;
+            icon = _icon;
             stackable = false;
             EquipmentEffect e;
             weaponTypeEffects.TryGetValue(_type, out e);
@@ -368,6 +371,7 @@ namespace Main_Game
             type = weapon.type;
             level = _level;
             stackable = false;
+            icon = weapon.icon;
             EquipmentEffect e;
             weaponTypeEffects.TryGetValue(type, out e);
             effect = new EquipmentEffect(e);
@@ -456,7 +460,8 @@ namespace Main_Game
         public EquipmentEffect stats { get; set; }
         public int level { get; set; }
 
-        public Armour(int _id, string _name, string _description, uint _value, ArmourType _type, EquipmentEffect _stats, int _level)
+        public Armour(int _id, string _name, string _description, uint _value, ArmourType _type, EquipmentEffect _stats, int _level, 
+                        Uri _icon)
         {
             id = _id;
             name = _name;
@@ -467,6 +472,7 @@ namespace Main_Game
             _stats.modifyEffect(1 + (_level-1) * ItemSet.levelMultipler);
             stats = _stats;
             level = _level;
+            icon = _icon;
         }
 
         public Armour(int _id, Armour armour, int _level)
@@ -477,6 +483,7 @@ namespace Main_Game
             value = armour.value;
             type = armour.type;
             stackable = false;
+            icon = armour.icon;
             stats = new EquipmentEffect(armour.stats);
             stats.modifyEffect(1 + (_level-1) * ItemSet.levelMultipler);
             level = _level;

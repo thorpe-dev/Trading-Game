@@ -61,12 +61,13 @@ namespace Main_Game
     {
 
         public int expValue { get; set; }
-        public ICollection<Item> lootTable;
-        public int moneyDrop;
+        public ICollection<Item> lootTable { get; set; }
+        public int moneyDrop {get;set;}
+        public Uri icon { get; set; }
 
         public Creep(string _name, int _strength, int _agility, int _intelligence, int _speed, int _maxHealth, int _currentHealth,
                         int _maxMana, int _currentMana, IDictionary<string, Ability> _abilities, ICollection<Item> _lootTable,
-                        int _moneyDrop)
+                        int _moneyDrop, Uri _icon)
         {
             name = _name;
             strength = _strength;
@@ -77,6 +78,7 @@ namespace Main_Game
             currentHealth = _currentHealth;
             maxMana = _maxMana;
             currentMana = _currentMana;
+            icon = _icon;
             buffs = new Effect();
             abilities = new Dictionary<string, Ability>(_abilities);
             lootTable = new List<Item>(_lootTable);
