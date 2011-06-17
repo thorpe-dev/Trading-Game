@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Net;
 using System.Linq;
 using System.Windows;
@@ -62,7 +62,7 @@ namespace Main_Game
 
         public int expValue { get; set; }
         public ICollection<Item> lootTable { get; set; }
-        public int moneyDrop { get; set; }
+        public int moneyDrop {get;set;}
         public Uri icon { get; set; }
 
         public static IDictionary<string, Creep> creepDictionary = new Dictionary<string, Creep>();
@@ -129,7 +129,7 @@ namespace Main_Game
         public Armour boots { get; set; }
         public Armour legs { get; set; }
 
-        public Character(string _name, Class _class, int _level, int _expToNext, int _maxHealth, int _currentHealth,
+        public Character(string _name, Class _class, int _level, int _expToNext, int _maxHealth, int _currentHealth, 
                             int _maxMana, int _currentMana, int _money, int _strength, int _agility, int _intelligence,
                                 int _speed, IDictionary<string, Ability> _abilities, ICollection<ItemStack> _inventory, Weapon _weapon,
                                 Armour _chest, Armour _helm, Armour _gloves, Armour _boots, Armour _legs)
@@ -165,21 +165,24 @@ namespace Main_Game
             StatModifier mod = _class.initialMod;
             int _maxHealth = calculateMaxHealth(mod.strength);
             int _maxMana = calculateMaxMana(mod.intelligence);
-            return new Character(_name, _class, 1, calculateExpToNextLevel(1), _maxHealth, _maxHealth, _maxMana,
-                                    _maxMana, 100, mod.strength, mod.agility, mod.intelligence, mod.speed, _abilities, initialItems(),
-                                    _class.startingWeapon,
-                                    _class.startingChest,
-                                    _class.startingHelm,
-                                    _class.startingGloves,
-                                    _class.startingBoots,
-                                    _class.startingLegs);
+            return new Character(_name, _class, 1, calculateExpToNextLevel(1), _maxHealth, _maxHealth, _maxMana, 
+                                    _maxMana, 100, mod.strength, mod.agility, mod.intelligence, mod.speed, _abilities, initialItems(), 
+                                    new Weapon(_class.startingWeapon.id, _class.startingWeapon, 1),
+                                    new Armour(_class.startingChest.id, _class.startingChest, 1),
+                                    new Armour(_class.startingHelm.id, _class.startingHelm, 1),
+                                    new Armour (_class.startingGloves.id, _class.startingGloves, 1),
+                                    new Armour (_class.startingBoots.id, _class.startingBoots, 1),
+                                    new Armour (_class.startingLegs.id, _class.startingLegs, 1));
         }
 
         private static ICollection<ItemStack> initialItems()
         {
             ICollection<ItemStack> startingInventory = new List<ItemStack>((int)ItemStack.MAXSTACKSIZE);
-            Consumable minorHealthPot = (Consumable)ItemSet.retrieveItem(1);
+            Consumable minorHealthPot = (Consumable) ItemSet.retrieveItem(1);
+            Item i = ItemSet.retrieveItem(100);
+            Weapon w = new Weapon(i.id, i as Weapon, 1);
             startingInventory.Add(new ItemStack(minorHealthPot, 3));
+            startingInventory.Add(new ItemStack(w, 1));
             return startingInventory;
         }
 
@@ -192,6 +195,7 @@ namespace Main_Game
                                                     maxMana, money, strength, agility, intelligence, speed);
             charFormatString += formatAbilities(abilities) + formatItems(inventory) + formatWeapon() + formatChest() + formatHelm()
                                 + formatGloves() + formatBoots() + formatLegs();
+            MessageBox.Show(charFormatString);
             HttpConnection.httpPost(new Uri("characterCreate.php", UriKind.Relative), charFormatString, characterUploaded);
         }
 
@@ -213,6 +217,16 @@ namespace Main_Game
             for (int i = 0; i < itemArray.LongCount(); i++)
             {
                 formatString += "&itemid" + i + "=" + itemArray[i].item.id + "&itemcount" + i + "=" + itemArray[i].stackSize;
+                if (itemArray[i].item is Armour)
+                {
+                    Armour a = itemArray[i].item as Armour;
+                    formatString += "&itemlevel" + i + "=" + a.level;
+                }
+                else if (itemArray[i].item is Weapon)
+                {
+                    Weapon w = itemArray[i].item as Weapon;
+                    formatString += "&itemlevel" + i + "=" + w.level;
+                }
             }
             return formatString;
         }
@@ -224,7 +238,7 @@ namespace Main_Game
 
         private string formatChest()
         {
-            return "&chestid=" + chest.id + "&chestlevel=" + chest.level;
+            return "&chestid=" + chest.id + "&chestlevel=" + chest.level; 
         }
 
         private string formatHelm()
@@ -288,7 +302,7 @@ namespace Main_Game
 
         public void resetStats()
         {
-            buffs = new Effect();
+            buffs =  new Effect();
         }
 
         public override Ability getAbility()
@@ -298,7 +312,7 @@ namespace Main_Game
 
         public static int calculateMaxHealth(int _strength)
         {
-            return BASEHEALTH + 20 * _strength;
+            return BASEHEALTH + 20 * _strength;        
         }
 
         public static int calculateMaxMana(int _intelligence)

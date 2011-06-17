@@ -81,7 +81,7 @@ namespace Main_Game
                 }
                 Random rnd = new Random();
                 int lootTableSize = char_2.lootTable.Count;
-                int lootRand = rnd.Next(1, ((int)Math.Sqrt(lootTableSize) + lootTableSize)/2);
+                int lootRand = rnd.Next(1, ((int)Math.Sqrt(lootTableSize) + lootTableSize) / 2);
                 int n = lootTableSize;
                 int i = 0;
                 while (n < lootRand)
@@ -89,12 +89,35 @@ namespace Main_Game
                     n += (n - 1);
                     i++;
                 }
-               // Item 
+                Item loot = char_2.lootTable.ToArray()[i];
+                if (loot is Armour)
+                {
+                    lootRand = rnd.Next(1, ((int)Math.Sqrt(Equipment.NUMBEROFLEVELS) + Equipment.NUMBEROFLEVELS) / 2);
+                    int j = Equipment.NUMBEROFLEVELS;
+                    int k = 0;
+                    while (j < lootRand)
+                    {
+                        j += (j - 1);
+                        k++;
+                    }
+                    loot = new Armour(loot.id, loot as Armour, k);
+                }
+                else if (loot is Weapon)
+                {
+                    lootRand = rnd.Next(1, ((int)Math.Sqrt(Equipment.NUMBEROFLEVELS) + Equipment.NUMBEROFLEVELS) / 2);
+                    int j = Equipment.NUMBEROFLEVELS;
+                    int k = 0;
+                    while (j < lootRand)
+                    {
+                        j += (j - 1);
+                        k++;
+                    }
+                    loot = new Weapon(loot.id, loot as Weapon, k);
+                }
+                //Setup loot screen
                 char_1.resetStats();
                 char_1.money += char_2.expValue;
             }
-            // Handle the end of the battle here
-            // Update health and XP on server here
         }
 
         public Creep generateCreep(Dictionary<String, Creep> dict)
@@ -106,7 +129,7 @@ namespace Main_Game
             array = dict.Values.ToArray();
 
 
-            return array[rnd.Next(0,array.Length)];
+            return array[rnd.Next(0, array.Length)];
         }
     }
 }

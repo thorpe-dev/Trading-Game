@@ -36,25 +36,31 @@ namespace Main_Game
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
+            Button b = sender as Button;
+            b.IsEnabled = false;
             string name = nameBox.Text;
             if (name.Equals(""))
             {
                 MessageBox.Show("Please enter a character name");
+                b.IsEnabled = true;
                 return;
             }
             if (name.Contains(';') || name.Contains(' ') || name.Contains('\\') || name.Contains('\n') || name.Contains('\t'))
             {
                 MessageBox.Show("Character name contains invalid characters");
+                b.IsEnabled = true;
                 return;
             }
             if (classSelect.SelectedItem.Equals(null))
             {
                 MessageBox.Show("Please select a class");
+                b.IsEnabled = true;
                 return;
             }
             if (abilitiesToSelect != 0)
             {
                 MessageBox.Show("Please select " + Ability.initialAbilityLimit + " abilities");
+                b.IsEnabled = true;
                 return;
             }
             Class selectedClass = ClassSet.getClass((ClassType)Enum.Parse(typeof(ClassType), (string)classSelect.SelectedItem, false));
@@ -127,6 +133,7 @@ namespace Main_Game
 
         private void characterTransferComplete(Object sender, UploadStringCompletedEventArgs e)
         {
+            MessageBox.Show(e.Result);
             if (e.Error == null)
             {
                 XDocument doc = XDocument.Parse(e.Result);
