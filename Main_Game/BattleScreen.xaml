@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Main_Game.BattleScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="420" d:DesignWidth="600" xmlns:my="clr-namespace:Main_Game">
+
+    <Grid x:Name="LayoutRoot" Background="Silver">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="200"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Image Name="imgEnemyIcon" />
+
+        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+            <ProgressBar Name="prgCharHealth" Background="White" Foreground="Red" Grid.Row="0" Grid.Column="1" Height="30" Value="100"/>
+            <ProgressBar Name="prgCharMagic" Background="White" Foreground="Blue" Grid.Row="0" Grid.Column="1" Height="30" Value="100"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Height="132" Name="textScroller">
+            <StackPanel Background="Black" Name="battleTextBox" Height="Auto"></StackPanel>
+        </ScrollViewer>
+        <ScrollViewer Height="55" Name="abilityViewer" Width="600" Grid.ColumnSpan="3" Margin="0,12,0,133" Grid.Row="2" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Auto">
+            <Grid Name="abilityGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+            </Grid>
+        </ScrollViewer>
+        <my:LootBox Grid.ColumnSpan="3" Grid.RowSpan="3" Height="192" x:Name="lootScreen" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="372" Visibility="Collapsed" />
+    </Grid>
+</UserControl>

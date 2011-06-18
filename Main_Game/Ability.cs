@@ -48,6 +48,9 @@ namespace Main_Game
             allAbilities.Add("Maim", new AttackAbility("Maim", "Injures the enemy with all your might", 10,
                                         new Uri("Images/maim.png", UriKind.Relative),
                                         new Effect(), 40));
+            allAbilities.Add("Grow", new SelfAbility("Grow", "Grows in size and gains strength", 20, 
+                                        new Uri("Images/grow.png", UriKind.Relative),
+                                        new Effect(0, 1.3, 1, 1, 1)));
         }
 
         public static Ability fetchAbility(string abilityname)
@@ -57,16 +60,26 @@ namespace Main_Game
             return a;
         }
 
+        public static IDictionary<string, Ability> constructAbilitySet(params string[] abilityNames)
+        {
+            IDictionary<string, Ability> abilitySet = new Dictionary<string, Ability>();
+            foreach (string name in abilityNames)
+            {
+                abilitySet.Add(name, fetchAbility(name));
+            }
+            return abilitySet;
+        }
+
         public abstract uint attack(Entity attacker, Entity defender);
     }
 
     public class AttackAbility : Ability
     {
-        protected float p_attackbonus;
+        protected double p_attackbonus;
 
-        public float attackbonus { get { return p_attackbonus; } }
+        public double attackbonus { get { return p_attackbonus; } }
 
-        public AttackAbility(string _name, string _description, int _manacost, Uri _icon, Effect _abilityEffect, float _attackBonus)
+        public AttackAbility(string _name, string _description, int _manacost, Uri _icon, Effect _abilityEffect, double _attackBonus)
             : base(_name, _description, _manacost, _icon, _abilityEffect)
         {
             this.p_attackbonus = _attackBonus;
@@ -78,12 +91,13 @@ namespace Main_Game
             int hit = attacker.dice.roll();
             uint damage = 0;
 
-            if (hit == 1 || (this.manaCost > attacker.currentMana))
+            if (hit == 1 || (this.manaCost >= attacker.currentMana))
                 return damage;
             else
             {
+                attacker.currentMana -= manaCost;
                 defender.applyEffect(abilityEffect);
-                damage = (uint)Math.Floor(p_attackbonus * (float)attacker.strength * attacker.buffs.strength_mod);
+                damage = (uint)Math.Floor(p_attackbonus + (double)attacker.strength * attacker.buffs.strength_mod);
                 if (hit == 20)
                     damage *= 2;
 
@@ -102,10 +116,11 @@ namespace Main_Game
 
         public override uint attack(Entity attacker, Entity defender)
         {
-            if (manaCost < attacker.currentMana)
+            if (manaCost <= attacker.currentMana)
                 attacker.applyEffect(abilityEffect);
 
             /* Will always return the same value */
+            attacker.currentMana -= manaCost;
             return 0;
         }
     }
@@ -126,7 +141,8 @@ namespace Main_Game
             else
             {
                 defender.applyEffect(abilityEffect);
-                damage = (uint)Math.Floor(p_attackbonus * (float)attacker.intelligence * attacker.buffs.intelligence_mod);
+                attacker.currentMana -= manaCost;
+                damage = (uint)Math.Floor(p_attackbonus + (double)attacker.intelligence * attacker.buffs.intelligence_mod);
                 if (hit == 20)
                     damage *= 2;
 

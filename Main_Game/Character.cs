@@ -46,12 +46,19 @@ namespace Main_Game
 
         }
 
-        public void Attack(Ability move, Entity enemy)
+        public int Attack(Ability move, Entity enemy)
         {
             uint damage = move.attack(this, enemy);
-            if ((int)(this.currentHealth - damage) <= 0)
+            if ((int)(enemy.currentHealth - damage) <= 0)
                 enemy.currentHealth = 0;
-            this.currentHealth -= (int)damage;
+            else
+                enemy.currentHealth -= (int)damage;
+            return (int)damage;
+        }
+
+        public void resetStats()
+        {
+            buffs = new Effect();
         }
 
         public abstract Ability getAbility();
@@ -62,14 +69,14 @@ namespace Main_Game
 
         public int expValue { get; set; }
         public ICollection<Item> lootTable { get; set; }
-        public int moneyDrop {get;set;}
+        public int moneyDrop { get; set; }
         public Uri icon { get; set; }
 
         public static IDictionary<string, Creep> creepDictionary = new Dictionary<string, Creep>();
 
         public Creep(string _name, int _strength, int _agility, int _intelligence, int _speed, int _maxHealth, int _currentHealth,
                         int _maxMana, int _currentMana, IDictionary<string, Ability> _abilities, ICollection<Item> _lootTable,
-                        int _moneyDrop, Uri _icon)
+                        int _moneyDrop, int _expValue, Uri _icon)
         {
             name = _name;
             strength = _strength;
@@ -85,24 +92,46 @@ namespace Main_Game
             abilities = new Dictionary<string, Ability>(_abilities);
             lootTable = new List<Item>(_lootTable);
             moneyDrop = _moneyDrop;
+            expValue = _expValue;
             dice = new D20();
         }
 
         public static void populateCreeps()
         {
-            IDictionary<string, Ability> abilitySet = new Dictionary<string, Ability>();
-            Ability a = Ability.fetchAbility("Attack");
-            abilitySet.Add("Attack", a);
-            ICollection<Item> lootSet = new List<Item>();
-            lootSet.Add(ItemSet.retrieveItem(1));
-            Creep c = new Creep("Troll", 30, 10, 0, 10, 300, 300, 50, 50, abilitySet, lootSet, 100, new Uri("troll"));
+            IDictionary<string, Ability> trollAbilitySet = Ability.constructAbilitySet("Attack", "Grow");
+            ICollection<Item> trollLootSet = ItemSet.constructLootTable(1, 2, 100);
+            Creep c = new Creep("Troll", 30, 10, 0, 5, 200, 200, 50, 50, trollAbilitySet, trollLootSet, 100, 300, new Uri("Images/clam.png", UriKind.Relative));
+            creepDictionary.Add("Troll", c);
+
+            IDictionary<string, Ability> wizardAbilitySet = Ability.constructAbilitySet("Attack", "Fireball");
+            ICollection<Item> wizardLootSet = ItemSet.constructLootTable(200, 300, 400);
+            c = new Creep("Wizard", 10, 5, 20, 8, 150, 150, 200, 200, wizardAbilitySet, wizardLootSet, 70, 45, new Uri("Images/robot.png", UriKind.Relative));
+            creepDictionary.Add("Wizard", c);
+
+        }
+
+        public static Creep getCreep(string creepname)
+        {
+            Creep creep;
+            creepDictionary.TryGetValue(creepname, out creep);
+            return creep;
+        }
+
+        public void refreshCreep()
+        {
+            currentHealth = maxHealth;
+            currentMana = maxMana;
+            resetStats();
         }
 
         public override Ability getAbility()
         {
             Random rnd = new Random();
             Ability[] abilityArray = abilities.Values.ToArray();
-            return abilityArray[rnd.Next(0, abilityArray.Count())];
+            var availableAbilities = from ability in abilityArray
+                                     where ability.manaCost <= currentMana
+                                     select ability;
+            return availableAbilities.ElementAt(rnd.Next(0, availableAbilities.Count()));
         }
 
 
@@ -129,7 +158,7 @@ namespace Main_Game
         public Armour boots { get; set; }
         public Armour legs { get; set; }
 
-        public Character(string _name, Class _class, int _level, int _expToNext, int _maxHealth, int _currentHealth, 
+        public Character(string _name, Class _class, int _level, int _expToNext, int _maxHealth, int _currentHealth,
                             int _maxMana, int _currentMana, int _money, int _strength, int _agility, int _intelligence,
                                 int _speed, IDictionary<string, Ability> _abilities, ICollection<ItemStack> _inventory, Weapon _weapon,
                                 Armour _chest, Armour _helm, Armour _gloves, Armour _boots, Armour _legs)
@@ -165,20 +194,20 @@ namespace Main_Game
             StatModifier mod = _class.initialMod;
             int _maxHealth = calculateMaxHealth(mod.strength);
             int _maxMana = calculateMaxMana(mod.intelligence);
-            return new Character(_name, _class, 1, calculateExpToNextLevel(1), _maxHealth, _maxHealth, _maxMana, 
-                                    _maxMana, 100, mod.strength, mod.agility, mod.intelligence, mod.speed, _abilities, initialItems(), 
+            return new Character(_name, _class, 1, calculateExpToNextLevel(1), _maxHealth, _maxHealth, _maxMana,
+                                    _maxMana, 100, mod.strength, mod.agility, mod.intelligence, mod.speed, _abilities, initialItems(),
                                     new Weapon(_class.startingWeapon.id, _class.startingWeapon, 1),
                                     new Armour(_class.startingChest.id, _class.startingChest, 1),
                                     new Armour(_class.startingHelm.id, _class.startingHelm, 1),
-                                    new Armour (_class.startingGloves.id, _class.startingGloves, 1),
-                                    new Armour (_class.startingBoots.id, _class.startingBoots, 1),
-                                    new Armour (_class.startingLegs.id, _class.startingLegs, 1));
+                                    new Armour(_class.startingGloves.id, _class.startingGloves, 1),
+                                    new Armour(_class.startingBoots.id, _class.startingBoots, 1),
+                                    new Armour(_class.startingLegs.id, _class.startingLegs, 1));
         }
 
         private static ICollection<ItemStack> initialItems()
         {
             ICollection<ItemStack> startingInventory = new List<ItemStack>((int)ItemStack.MAXSTACKSIZE);
-            Consumable minorHealthPot = (Consumable) ItemSet.retrieveItem(1);
+            Consumable minorHealthPot = (Consumable)ItemSet.retrieveItem(1);
             Item i = ItemSet.retrieveItem(100);
             Weapon w = new Weapon(i.id, i as Weapon, 1);
             startingInventory.Add(new ItemStack(minorHealthPot, 3));
@@ -238,7 +267,7 @@ namespace Main_Game
 
         private string formatChest()
         {
-            return "&chestid=" + chest.id + "&chestlevel=" + chest.level; 
+            return "&chestid=" + chest.id + "&chestlevel=" + chest.level;
         }
 
         private string formatHelm()
@@ -288,7 +317,9 @@ namespace Main_Game
                                 + gloves.stats.manaMod + boots.stats.manaMod + legs.stats.manaMod;
 
             maxHealth = calculateMaxHealth(strength) + itemHealth;
+            currentHealth = maxHealth;
             maxMana = calculateMaxMana(intelligence) + itemMana;
+            currentMana = maxMana;
         }
 
         public void levelUp()
@@ -300,11 +331,6 @@ namespace Main_Game
             expToNext = calculateExpToNextLevel(level);
         }
 
-        public void resetStats()
-        {
-            buffs =  new Effect();
-        }
-
         public override Ability getAbility()
         {
             throw new NotImplementedException();
@@ -312,7 +338,7 @@ namespace Main_Game
 
         public static int calculateMaxHealth(int _strength)
         {
-            return BASEHEALTH + 20 * _strength;        
+            return BASEHEALTH + 20 * _strength;
         }
 
         public static int calculateMaxMana(int _intelligence)

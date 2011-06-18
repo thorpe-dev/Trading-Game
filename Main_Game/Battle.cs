@@ -15,52 +15,103 @@ namespace Main_Game
 {
     public class Battle
     {
-        public bool playersTurn { get; set; }
+        public bool isPlayersTurn { get; set; }
+        public string battleText { get; set; }
+        private BattleScreen observer;
 
         protected Character char_1;
         protected Creep char_2;
+        private int playerSpeedDecay;
+        private int enemySpeedDecay;
 
-
-        public Battle(Character p1, Dictionary<String, Creep> dictionary)
+        public Battle(Character p1, Creep p2, BattleScreen obs)
         {
-            this.char_1 = p1;
-            this.char_2 = generateCreep(dictionary);
-            playersTurn = false;
-
+            char_1 = p1;
+            char_2 = p2;
+            isPlayersTurn = false;
+            playerSpeedDecay = 1;
+            enemySpeedDecay = 1;
+            battleText = "";
+            observer = obs;
+            observer.addBattleText("Encountered a " + char_2.name);
         }
 
         public void beginTurn()
         {
-            if (char_1.dice.roll() * char_1.speed * char_1.buffs.speed_mod <
-                char_2.dice.roll() * char_2.speed * char_1.buffs.speed_mod)
+            if (((char_1.speed * char_1.buffs.speed_mod) / playerSpeedDecay) <
+                ((char_2.speed * char_2.buffs.speed_mod) / enemySpeedDecay))
             {
-                this.char_2.Attack(char_2.getAbility(), char_1);
+                observer.addBattleText(char_2.name + " is readying an attack");
+                Ability attack = char_2.getAbility();
+                int damage = char_2.Attack(attack, char_1);
+                if (damage == 0)
+                {
+                    if (attack is SelfAbility)
+                    {
+                        observer.addBattleText(char_2.name + " used " + attack.name + " and powered up");
+                    }
+                    else
+                    {
+                        observer.addBattleText(char_2.name + " used " + attack.name + " and missed");
+                    }
+                }
+                else
+                {
+                    observer.addBattleText(char_2.name + " used " + attack.name + " for " + damage + " damage");
+                }
+                observer.updateStats(char_1, char_2);
                 if (char_1.currentHealth == 0)
                 {
+                    observer.addBattleText("You have died");
                     endBattle();
                     return;
                 }
+                enemySpeedDecay *= 2;
+                playerSpeedDecay = 1;
                 beginTurn();
             }
             else
             {
-                playersTurn = true;
+                observer.addBattleText("You are able to attack");
+                isPlayersTurn = true;
             }
 
         }
+
 
         public void playerAttack(Ability attack)
         {
-            char_1.Attack(attack, char_2);
+            int damage = char_1.Attack(attack, char_2);
+            if (damage == 0)
+            {
+                if (attack is SelfAbility)
+                {
+                    observer.addBattleText("You used " + attack.name + " and powered up");
+                }
+                else
+                {
+                    observer.addBattleText("You used " + attack.name + " and missed");
+                }
+            }
+            else
+            {
+                observer.addBattleText("You used " + attack.name + " for " + damage + " damage");
+            }
+            observer.updateStats(char_1, char_2);
             if (char_2.currentHealth == 0)
             {
+                observer.addBattleText(char_2.name + " is defeated");
+                observer.addBattleText("You gained " + char_2.expValue + " experience");
                 endBattle();
                 return;
             }
+            observer.updateAbilities(char_1);
+            playerSpeedDecay *= 2;
+            enemySpeedDecay = 1;
             beginTurn();
         }
 
-        public void endBattle()
+        private void endBattle()
         {
             if (char_1.currentHealth == 0)
             {
@@ -69,19 +120,20 @@ namespace Main_Game
             }
             else
             {
-                int progress = char_1.expToNext - char_2.expValue;
-                if (progress <= 0)
+                int expValue = char_2.expValue;
+                int expToNext = char_1.expToNext;
+                MessageBox.Show("Need " + expToNext + " Got " + expValue);
+                while (expToNext <= expValue)
                 {
                     char_1.levelUp();
-                    char_1.expToNext += progress;
-                }
-                else
-                {
-                    char_1.expToNext -= progress;
+                    observer.addBattleText("Level up!");
+                    observer.addBattleText("You are now level " + char_1.level);
+                    expValue -= expToNext;
+                    expToNext = char_1.expToNext;
                 }
                 Random rnd = new Random();
                 int lootTableSize = char_2.lootTable.Count;
-                int lootRand = rnd.Next(1, ((int)Math.Sqrt(lootTableSize) + lootTableSize) / 2);
+                int lootRand = rnd.Next(1, (((int)Math.Pow(lootTableSize, 2) + lootTableSize) / 2) + 1);
                 int n = lootTableSize;
                 int i = 0;
                 while (n < lootRand)
@@ -92,9 +144,9 @@ namespace Main_Game
                 Item loot = char_2.lootTable.ToArray()[i];
                 if (loot is Armour)
                 {
-                    lootRand = rnd.Next(1, ((int)Math.Sqrt(Equipment.NUMBEROFLEVELS) + Equipment.NUMBEROFLEVELS) / 2);
+                    lootRand = rnd.Next(1, (((int)Math.Pow(Equipment.NUMBEROFLEVELS, 2) + Equipment.NUMBEROFLEVELS) / 2) + 1);
                     int j = Equipment.NUMBEROFLEVELS;
-                    int k = 0;
+                    int k = 1;
                     while (j < lootRand)
                     {
                         j += (j - 1);
@@ -104,9 +156,9 @@ namespace Main_Game
                 }
                 else if (loot is Weapon)
                 {
-                    lootRand = rnd.Next(1, ((int)Math.Sqrt(Equipment.NUMBEROFLEVELS) + Equipment.NUMBEROFLEVELS) / 2);
+                    lootRand = rnd.Next(1, (((int)Math.Pow(Equipment.NUMBEROFLEVELS, 2) + Equipment.NUMBEROFLEVELS) / 2) + 1);
                     int j = Equipment.NUMBEROFLEVELS;
-                    int k = 0;
+                    int k = 1;
                     while (j < lootRand)
                     {
                         j += (j - 1);
@@ -114,13 +166,20 @@ namespace Main_Game
                     }
                     loot = new Weapon(loot.id, loot as Weapon, k);
                 }
-                //Setup loot screen
+                //Setup loot screen              
                 char_1.resetStats();
-                char_1.money += char_2.expValue;
+                char_2.refreshCreep();
+                char_1.money += char_2.moneyDrop;
+                observer.displayLoot(loot);
             }
         }
 
-        public Creep generateCreep(Dictionary<String, Creep> dict)
+        public bool playerCanCast(Ability a)
+        {
+            return (a.manaCost <= char_1.currentMana);
+        }
+
+        public static Creep generateCreep(IDictionary<string, Creep> dict)
         {
             Random rnd = new Random();
 

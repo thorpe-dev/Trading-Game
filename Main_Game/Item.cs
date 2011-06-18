@@ -38,11 +38,11 @@ namespace Main_Game
             for (uint i = 1; i <= Consumable.consumablePrefixes.LongCount(); i++)
             {
                 string prefix = Consumable.consumablePrefixes[i-1];
-                healthPot = new Consumable((int)i, prefix + "healing potion", "Regenerates health", Consumable.healthPotionBaseValue * i,
-                                ConsumableType.health, (int)(Consumable.healthPotionBaseRegen * i), new Uri("uri in here", UriKind.Relative));
+                healthPot = new Consumable((int)i, prefix + "healing potion", "A potent concoction made from natural ingredients", 
+                    Consumable.healthPotionBaseValue * i, ConsumableType.health, (int)(Consumable.healthPotionBaseRegen * i), new Uri("uri in here", UriKind.Relative));
                 ItemSet.addItem(healthPot);
                 manaPot = new Consumable((int)(i + Consumable.consumablePrefixes.LongCount()), prefix + "mana potion", 
-                                "Regenerates mana", Consumable.manaPotionBaseValue * i,
+                                "A potent concoction made from natural ingredients", Consumable.manaPotionBaseValue * i,
                                 ConsumableType.mana, (int)(Consumable.manaPotionBaseRegen * i), new Uri("uri in here", UriKind.Relative));
                 ItemSet.addItem(manaPot);
             }
@@ -69,6 +69,16 @@ namespace Main_Game
             a = new Armour(600, "Damp britches", "These have seen better days", 20, ArmourType.LEGS,
                                   new EquipmentEffect(-1, 0, 2, 0, 0, 10), 1, new Uri("uri in here", UriKind.Relative));
             ItemSet.addItem(a);
+        }
+
+        public static ICollection<Item> constructLootTable(params int[] ids)
+        {
+            ICollection<Item> lootTable = new List<Item>();
+            foreach (int id in ids)
+            {
+                lootTable.Add(retrieveItem(id));
+            }
+            return lootTable;
         }
     }
 
@@ -295,7 +305,7 @@ namespace Main_Game
         public static string[] consumablePrefixes = { "minor ", "", "greater " };
 
         public ConsumableType type { get; set; }
-        public int amountRegenerated;
+        public int amountRegenerated { get; set; }
 
         public Consumable(int _id, string _name, string _description, uint _value, ConsumableType _type, int _amountRegenerated, Uri _icon)
         {

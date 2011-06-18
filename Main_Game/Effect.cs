@@ -15,18 +15,18 @@ namespace Main_Game
     {
         private uint p_health_restore;
 
-        private float p_strength_mod;
-        private float p_agility_mod;
-        private float p_speed_mod;
-        private float p_intelligence_mod;
+        private double p_strength_mod;
+        private double p_agility_mod;
+        private double p_speed_mod;
+        private double p_intelligence_mod;
 
         public uint health_restore { get { return p_health_restore; } set { p_health_restore = value; } }
-        public float strength_mod { get { return p_strength_mod; } set { p_strength_mod = value; } }
-        public float agility_mod { get { return p_agility_mod; } set { p_agility_mod = value; } }
-        public float speed_mod { get { return p_speed_mod; } set { p_speed_mod = value; } }
-        public float intelligence_mod { get { return p_intelligence_mod; } set { p_intelligence_mod = value; } }
+        public double strength_mod { get { return p_strength_mod; } set { p_strength_mod = value; } }
+        public double agility_mod { get { return p_agility_mod; } set { p_agility_mod = value; } }
+        public double speed_mod { get { return p_speed_mod; } set { p_speed_mod = value; } }
+        public double intelligence_mod { get { return p_intelligence_mod; } set { p_intelligence_mod = value; } }
 
-        public Effect(uint hr, float stm, float am, float im, float spm)
+        public Effect(uint hr, double stm, double am, double im, double spm)
         {
             p_health_restore = hr;
             p_strength_mod = stm;

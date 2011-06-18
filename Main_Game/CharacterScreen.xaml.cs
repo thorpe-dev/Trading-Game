@@ -24,6 +24,7 @@ namespace Main_Game
             InitializeComponent();
             Ability.populateAllAbility();
             ItemSet.constructItemBase();
+            Creep.populateCreeps();
             initialiseClasses();
             HttpConnection.httpGet(new Uri("character.php", UriKind.Relative), new DownloadStringCompletedEventHandler(transferComplete));
         }
@@ -216,7 +217,6 @@ namespace Main_Game
 
         private void updateCharPane(Character c)
         {
-            
             string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\nMoney:{5}\n" +
                                             "Strength:{6} \nAgility:{7} \nIntelligence:{8}\nSpeed:{9}",
                                             c.name, c.type.ToString(), c.level, c.maxHealth,
@@ -291,9 +291,7 @@ namespace Main_Game
         private void playCharButton_Click(object sender, RoutedEventArgs e)
         {
             HttpConnection.httpGet(new Uri("enterWorld.php", UriKind.Relative), characterLoaded);
-            City tCity = new City(500, 300);
-            ScreenManager.SetScreen(tCity);
-            tCity.Focus();
+
         }
 
         private void characterLoaded(object sender, DownloadStringCompletedEventArgs e)
@@ -305,7 +303,10 @@ namespace Main_Game
                 {
                     Location l = new Location(LocationType.HomeHub);
                     Location.currentLocation = l;
-                    MessageBox.Show("Entering location: " + l.place.ToString());
+                    Creep c = Battle.generateCreep(Creep.creepDictionary);
+                    BattleScreen b = new BattleScreen(Character.currentCharacter, c);
+                    ScreenManager.SetScreen(b);
+                    b.Focus();
                 }
                 else
                 {

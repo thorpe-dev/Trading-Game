@@ -116,6 +116,12 @@
     <Compile Include="Shop.xaml.cs">
       <DependentUpon>Shop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BattleScreen.xaml.cs">
+      <DependentUpon>BattleScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LootBox.xaml.cs">
+      <DependentUpon>LootBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tavern.xaml.cs">
       <DependentUpon>Tavern.xaml</DependentUpon>
     </Compile>
@@ -162,6 +168,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Shop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BattleScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LootBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
