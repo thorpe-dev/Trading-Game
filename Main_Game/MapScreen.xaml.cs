@@ -159,35 +159,90 @@ namespace Main_Game
                 update_map(current_view);
                 handle_events();
                 update_location(player_row, player_col);
+
+                // Put borders around the maps
+                rec_map_border.Margin = new Thickness(10, 10, 0, 0);
+                rec_map_border.Width = map_dimensions * 128;
+                rec_map_border.Height = map_dimensions * 128;
+                rec_minimap_border.Margin = new Thickness(410, 9, 0, 0);
+                rec_minimap_border.Width = (dungeon_dimensions - 2) * 16 + 2;
+                rec_minimap_border.Height = (dungeon_dimensions - 2) * 16 + 2;
+                img_light_radius.Margin = new Thickness(138, 138, 0, 0);
+                img_light_base.Margin = new Thickness(138, 138, 0, 0);
+                img_light_base.Source = get_image(dungeon_theme.exit_piece);
+
+                // Storyboard for slowing players down
+                slow = new Storyboard();
+                slow.Duration = new Duration(new TimeSpan(2500000));
+                slow.Completed += enable_move;
             }
             else
             {
-                // Poll server for results
+                // Get instance from server
+                Uri path = new Uri("dungeon_get_instance.php", UriKind.Relative);
+                HttpConnection.httpGet(path, instance_recieved);
+            }
+        }
+
+        public void instance_recieved(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
                 // ********************************************************************
                 // * Set instance id
                 // * Set dungeon_dimensions
                 // * Set theme
                 // ********************************************************************
-                // Once the instance is found and the dungeon is constructed, fetch it
-                Uri path = new Uri("dungeon_get_square.php", UriKind.Relative);
-                string parameters = String.Format("instance={0}", this.instance);
-                HttpConnection.httpPost(path, parameters, dungeon_recieved);
-            }
-            // Put borders around the maps
-            rec_map_border.Margin = new Thickness(10, 10, 0, 0);
-            rec_map_border.Width = map_dimensions * 128;
-            rec_map_border.Height = map_dimensions * 128;
-            rec_minimap_border.Margin = new Thickness(410, 9, 0, 0);
-            rec_minimap_border.Width = (dungeon_dimensions - 2) * 16 + 2;
-            rec_minimap_border.Height = (dungeon_dimensions - 2) * 16 + 2;
-            img_light_radius.Margin = new Thickness(138, 138, 0, 0);
-            img_light_base.Margin = new Thickness(138, 138, 0, 0);
-            img_light_base.Source = get_image(dungeon_theme.exit_piece);
+                try
+                {
+                    XDocument doc = XDocument.Parse(e.Result);
+                    // Check if a dungeon was found
+                    var dungeons = from dungeon in doc.Descendants("dungeon")
+                                    select new MapSquare()
+                                    {
+                                        x = (int)dungeon.Element("instance"),
+                                        y = (int)dungeon.Element("theme"),
+                                        shape = (int)dungeon.Element("size")
+                                    };
+                    MapSquare[] map_squares = dungeons.ToArray();
+                    if (map_squares.Length > 0)
+                    {
+                        this.dungeon_dimensions = map_squares[0].shape;
+                        this.instance = map_squares[0].x;
+                        this.theme = map_squares[0].y;
+                        MessageBox.Show("instance: " + this.instance);
 
-            // Storyboard for slowing players down
-            slow = new Storyboard();
-            slow.Duration = new Duration(new TimeSpan(2500000));
-            slow.Completed += enable_move;
+                        // Put borders around the maps
+                        rec_map_border.Margin = new Thickness(10, 10, 0, 0);
+                        rec_map_border.Width = map_dimensions * 128;
+                        rec_map_border.Height = map_dimensions * 128;
+                        rec_minimap_border.Margin = new Thickness(410, 9, 0, 0);
+                        rec_minimap_border.Width = (dungeon_dimensions - 2) * 16 + 2;
+                        rec_minimap_border.Height = (dungeon_dimensions - 2) * 16 + 2;
+                        img_light_radius.Margin = new Thickness(138, 138, 0, 0);
+                        img_light_base.Margin = new Thickness(138, 138, 0, 0);
+                        img_light_base.Source = get_image(dungeon_theme.exit_piece);
+
+                        // Storyboard for slowing players down
+                        slow = new Storyboard();
+                        slow.Duration = new Duration(new TimeSpan(2500000));
+                        slow.Completed += enable_move;
+
+                        // Once the instance is found and the dungeon is constructed, fetch it
+                        Uri path = new Uri("dungeon_get_square.php", UriKind.Relative);
+                        string parameters = String.Format("instance={0}", this.instance);
+                        HttpConnection.httpPost(path, parameters, dungeon_recieved);
+                    }
+                }
+                catch (Exception e1)
+                {
+                    MessageBox.Show(e1.ToString());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Could not recieve dungeon: " + e.Error.ToString());
+            }
         }
 
         public void enable_move(object sender, EventArgs e)
@@ -279,34 +334,42 @@ namespace Main_Game
             // Use the recieved id to send all squares to the database
             if (e.Error == null)
             {
-                XDocument doc = XDocument.Parse(e.Result);
-                if (doc.Element("instance") != null)
+                try
                 {
-                    MessageBox.Show("Instance: " + (int)doc.Element("instance"));
-                    this.instance = (int)doc.Element("instance");
-                    // Update the player location on the server
-                    enter_dungeon();
-                    // Send the dungeon square by square
-                    Uri path = new Uri("dungeon_add_square.php", UriKind.Relative);
-                    string parameters;
-                    for (int i = 0; i < this.dungeon_dimensions; i++)
+                    XDocument doc = XDocument.Parse(e.Result);
+                    if (doc.Element("instance") != null)
                     {
-                        for (int j = 0; j < this.dungeon_dimensions; j++)
+                        MessageBox.Show("Instance: " + (int)doc.Element("instance"));
+                        this.instance = (int)doc.Element("instance");
+                        // Update the player location on the server
+                        enter_dungeon();
+                        // Send the dungeon square by square
+                        Uri path = new Uri("dungeon_add_square.php", UriKind.Relative);
+                        string parameters;
+                        for (int i = 0; i < this.dungeon_dimensions; i++)
                         {
-                            parameters = String.Format("instance={0}&xcoord={1}&ycoord={2}"
-                               + "&shape={3}&content={4}", this.instance, i, j,
-                               this.map[i][j], this.events[i][j]);
-                            HttpConnection.httpPost(path, parameters, dungeon_sent);
+                            for (int j = 0; j < this.dungeon_dimensions; j++)
+                            {
+                                parameters = String.Format("instance={0}&xcoord={1}&ycoord={2}"
+                                   + "&shape={3}&content={4}", this.instance, i, j,
+                                   this.map[i][j], this.events[i][j]);
+                                HttpConnection.httpPost(path, parameters, dungeon_sent);
+                            }
                         }
+                        // Check the dungeon is still fully intact
+                        path = new Uri("dungeon_get_square.php", UriKind.Relative);
+                        parameters = String.Format("instance={0}", this.instance);
+                        HttpConnection.httpPost(path, parameters, dungeon_recieved);
                     }
-                    // Check the dungeon is still fully intact
-                    path = new Uri("dungeon_get_square.php", UriKind.Relative);
-                    parameters = String.Format("instance={0}", this.instance);
-                    HttpConnection.httpPost(path, parameters, dungeon_recieved);
+                    else
+                    {
+                        MessageBox.Show("FAIL!");
+                    }
                 }
-                else
+                catch (Exception e1)
                 {
-                    MessageBox.Show("FAIL!");
+                    MessageBox.Show("XML error when retrieving instance: " + e1.ToString());
+                    MessageBox.Show(e.Result);
                 }
             }
             else
@@ -387,6 +450,7 @@ namespace Main_Game
                             string parameters
                               = String.Format("instance={0}", this.instance);
                             HttpConnection.httpPost(path, parameters, dungeon_sent);
+                            MessageBox.Show("Dungeon Built");
                         }
                         else
                         {
@@ -1042,6 +1106,20 @@ namespace Main_Game
             else if (e.Key == Key.Down) btn_down_Click(null, null);
             else if (e.Key == Key.Left) btn_left_Click(null, null);
             else if (e.Key == Key.Right) btn_right_Click(null, null);
+        }
+
+        private void btn_exit_Click(object sender, RoutedEventArgs e)
+        {
+            // Delete the dungeon on the server
+            Uri path = new Uri("dungeon_host_exit.php", UriKind.Relative);
+            HttpConnection.httpGet(path, leave_dungeon);
+        }
+
+        private void leave_dungeon(object sender, DownloadStringCompletedEventArgs e)
+        {
+            Tavern tTavern = new Tavern();
+            ScreenManager.SetScreen(tTavern);
+            tTavern.Focus();
         }
 
     }

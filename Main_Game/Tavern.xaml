@@ -8,18 +8,15 @@
     xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input" 
     xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data">
 
-    <Grid x:Name="LayoutRoot">
-        <Button Content="Go To Mission!" Height="32" HorizontalAlignment="Left" Margin="12,12,0,0" Name="btn_mission" VerticalAlignment="Top" Width="101" Click="btn_mission_Click" />
-        <Button Content="Clear List" Height="29" HorizontalAlignment="Left" Margin="12,50,0,0" Name="btn_clear_list" VerticalAlignment="Top" Width="103" Click="btn_clear_list_Click" />
-        <Button Content="Search" Height="29" HorizontalAlignment="Left" Margin="12,181,0,0" Name="btn_search" VerticalAlignment="Top" Width="103" Click="btn_search_Click" Visibility="Visible" />
-        <TextBox Height="172" HorizontalAlignment="Left" Margin="392,185,0,0" Name="txt_test" VerticalAlignment="Top" Width="210" TextWrapping="Wrap" Text="Players" />
-        <ScrollViewer Height="150" HorizontalAlignment="Left" Margin="135,12,0,0" Name="scv_players" VerticalAlignment="Top" Width="250" Background="#1E000000" UseLayoutRounding="False" />
-        <dataInput:Label Height="26" HorizontalAlignment="Left" Margin="398,9,0,0" Name="lbl_debug" VerticalAlignment="Top" Width="74" Content="DEBUG:" />
-        <dataInput:Label Height="18" HorizontalAlignment="Left" Margin="402,34,0,0" Name="lbl_char_id" VerticalAlignment="Top" Width="57" Content="Char ID:" />
-        <TextBox Height="20" HorizontalAlignment="Left" Margin="465,32,0,0" Name="txt_id" VerticalAlignment="Top" Width="42" Text="1" TextAlignment="Right" />
-        <dataInput:Label Content="Dungeon:" Height="18" HorizontalAlignment="Left" Margin="402,61,0,0" Name="lbl_dungeon" VerticalAlignment="Top" Width="57" />
-        <TextBox Height="20" HorizontalAlignment="Left" Margin="465,59,0,0" Name="txt_dungeon" Text="1" TextAlignment="Right" VerticalAlignment="Top" Width="42" />
-        <CheckBox Content="First Player" Height="27" HorizontalAlignment="Left" Margin="402,84,0,0" Name="chk_fp" VerticalAlignment="Top" Width="106" IsChecked="True" Checked="chk_fp_Checked" Unchecked="chk_fp_Unchecked" />
-        <CheckBox Content="Only Player" Height="27" HorizontalAlignment="Left" IsChecked="True" Margin="402,107,0,0" Name="chk_op" VerticalAlignment="Top" Width="106" Checked="chk_op_Checked" Unchecked="chk_op_Unchecked" />
+    <Grid x:Name="LayoutRoot" Height="393" Width="588" Background="Black">
+        <Rectangle Height="79" HorizontalAlignment="Left" Margin="25,237,0,0" Name="rectangle1" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="537" Fill="#FF57524C" />
+        <Button Content="Begin Quest" Height="32" HorizontalAlignment="Left" Margin="240,348,0,0" Name="btn_mission" VerticalAlignment="Top" Width="101" Click="btn_mission_Click" IsEnabled="False" />
+        <ScrollViewer Height="150" HorizontalAlignment="Left" Margin="305,40,0,0" Name="scv_players" VerticalAlignment="Top" Width="257" Background="White" UseLayoutRounding="False" />
+        <dataInput:Label Height="25" HorizontalAlignment="Left" Margin="25,20,0,0" Name="lbl_quests" VerticalAlignment="Top" Width="138" Content="Quests:" Foreground="White" />
+        <dataInput:Label Content="Active Players:" Foreground="White" Height="25" HorizontalAlignment="Left" Margin="305,20,0,0" Name="label1" VerticalAlignment="Top" Width="138" />
+        <ScrollViewer Background="White" Height="150" HorizontalAlignment="Left" Margin="25,40,0,0" Name="scv_quests" UseLayoutRounding="False" VerticalAlignment="Top" Width="257" />
+        <TextBlock Height="62" HorizontalAlignment="Left" Margin="33,245,0,0" Name="txt_description" Text="This is where quest descriptions go" VerticalAlignment="Top" Width="519" Foreground="Black" TextWrapping="Wrap" />
+        <Rectangle Height="75" HorizontalAlignment="Left" Margin="27,239,0,0" Name="rectangle2" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="533" />
+        <TextBlock Height="21" HorizontalAlignment="Left" Margin="25,212,0,0" Name="txt_title" Text="Quest Title" VerticalAlignment="Top" Width="537" Foreground="White" TextAlignment="Center" />
     </Grid>
 </UserControl>

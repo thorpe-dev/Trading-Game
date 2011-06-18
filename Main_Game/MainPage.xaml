@@ -4,12 +4,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="463" d:DesignWidth="1000" Loaded="main_Loaded">
+    d:DesignHeight="427" d:DesignWidth="1000" Loaded="main_Loaded">
 
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot" Background="Black">
         <Grid HorizontalAlignment="Center" Name="mainContent" VerticalAlignment="Center">
         </Grid>
-        <Grid Height="37" HorizontalAlignment="Left" Name="settingBar" VerticalAlignment="Top" Width="1000" Margin="0,463,0,0">
+        <Grid Height="75" HorizontalAlignment="Stretch" Name="settingBar" VerticalAlignment="Bottom" Width="1000" Margin="0,0,0,0">
         </Grid>
     </Grid>
 </UserControl>
