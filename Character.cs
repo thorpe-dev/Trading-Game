@@ -19,7 +19,11 @@ namespace Trading_Project
         public D20 dice;
 
         /* Every player and NPC should have these stats */
+        protected uint max_health;
         protected uint p_health;
+
+        protected uint max_mana;
+        protected uint p_mana;
 
 
         protected uint p_strength;
@@ -27,11 +31,10 @@ namespace Trading_Project
         protected uint p_speed;
         protected uint p_intelligence;
 
-        protected uint p_mana;
-
         protected uint p_exp;
 
         protected Effect p_effect;
+        protected Weapon p_weapon;
 
         /* List of things the character can do */
         protected List<Move> moves;
@@ -46,29 +49,9 @@ namespace Trading_Project
         public uint speed { get { return (uint)Math.Floor((float)p_speed * p_effect.speed_mod); } }
         public uint intelligence { get { return (uint)Math.Floor((float)p_speed * p_effect.intelligence_mod); } }
 
-        public uint mana
-        {
-            get
-            {
-                return p_mana;
-            }
-            set
-            {
-                p_mana = value;
-            }
-        }
+        public uint mana { get { return p_mana; } set { p_mana = value; } }
 
-        public uint exp 
-        { 
-            get 
-            { 
-                return p_exp; 
-            }
-            set
-            {
-                p_exp = value;
-            }
-        }
+        public uint exp { get { return p_exp; } set { p_exp = value; } }
 
         public Effect effect { get { return p_effect; } }
 
@@ -90,6 +73,7 @@ namespace Trading_Project
             uint damage = move.attack(this, enemy);
             if ((int)(this.health - damage) <= 0)
                 enemy.health = 0;
+
             this.health -= damage;
         }
 
@@ -99,7 +83,15 @@ namespace Trading_Project
             this.p_effect.dexterity_mod *= effect.dexterity_mod;
             this.p_effect.speed_mod *= effect.speed_mod;
 
-            this.p_health += effect.health_restore;
+            if (this.p_health + effect.health_restore < this.max_health)
+                this.p_health += effect.health_restore;
+            else
+                this.p_health = this.max_health;
+
+            if (this.p_mana + effect.mana_restore < this.max_mana)
+                this.p_mana += effect.mana_restore;
+            else
+                this.p_mana = this.max_mana;
 
         }
 

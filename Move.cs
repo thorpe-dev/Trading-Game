@@ -15,19 +15,26 @@ namespace Trading_Project
     {
         protected String p_name;
 
-        protected Effect move_effect;
+        protected Effect p_move_effect;
 
         protected uint p_mana_cost;
+
+        protected float p_attackbonus;
+
+        public float attackbonus { get { return p_attackbonus; } }
 
         public uint mana_cost { get { return p_mana_cost; } }
 
         public String name { get { return p_name; } }
 
+        public Effect move_effect { get { return p_move_effect; } }
+
 
         public Move(String name, uint hr, float stm, float dm, float spm)
         {
             this.p_name = name;
-            this.move_effect = new Effect();
+            this.p_move_effect = new Effect();
+            this.p_attackbonus = 1;
         }
 
         public abstract uint attack(Character attacker, Character defender);

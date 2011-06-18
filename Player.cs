@@ -28,8 +28,6 @@ namespace Trading_Project
 
         public override void die(Character c)
         {
-            //send XP increase to server - right now winning a battle increases exp by 1 each time
-            c.exp += 1;
         }
 
         public override Move getMove()

@@ -14,10 +14,10 @@ namespace Trading_Project
     public class SelfMove:Move
     {
 
-        public SelfMove(String name, uint hr, float stm, float dm, float spm)
+        public SelfMove(String name, uint hr, uint mr, float stm, float dm, float spm, float im)
             : base(name,hr,stm,dm,spm)
         {
-            move_effect = new Effect(hr, stm, dm, spm);
+            move_effect = new Effect(hr, mr, stm, dm, spm, im);
         }
 
         public override uint attack(Character attacker, Character defender)

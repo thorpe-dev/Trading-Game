@@ -13,8 +13,25 @@ namespace Trading_Project
 {
     public class Weapon
     {
-        protected float attack_bonus;
+        protected float p_attack_bonus;
 
-        protected Effect weapon_effect;
+        protected Effect p_weapon_effect;
+
+        public float attack_bonus { get { return p_attack_bonus; } }
+        public Effect weapon_effect { get { return p_weapon_effect; } }
+
+        public Weapon()
+        {
+            p_attack_bonus = 1;
+            p_weapon_effect = new Effect();
+        }
+
+        public Weapon(float ab, uint hr, uint mr, float sm, float dm, float spm, float im)
+        {
+            p_attack_bonus = ab;
+
+            p_weapon_effect = new Effect(hr, mr, sm, dm, spm, im);
+
+        }
     }
 }
