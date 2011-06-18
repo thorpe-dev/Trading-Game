@@ -12,21 +12,13 @@ using System.Windows.Shapes;
 
 namespace Main_Game
 {
-    public partial class settingBar : UserControl, IScreen
+    public partial class BattleScreen : UserControl, IScreen
     {
-        public settingBar()
+        public BattleScreen()
         {
             InitializeComponent();
         }
 
         public UIElement Element { get { return this; } }
-
-        private void logoutBtn_Click(object sender, RoutedEventArgs e)
-        {
-            ScreenManager.SetScreen(new LoginScreen());           
-            ScreenManager.SetSideBar(null);           
-            ScreenManager.SetSettingBar(null);
-            // Magic logout shizzle.
-        }
     }
 }

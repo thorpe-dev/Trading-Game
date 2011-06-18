@@ -42,6 +42,11 @@ namespace Main_Game
                 MessageBox.Show("Please enter a character name");
                 return;
             }
+            if (name.Contains(';') || name.Contains(' ') || name.Contains('\\') || name.Contains('\n') || name.Contains('\t'))
+            {
+                MessageBox.Show("Character name contains invalid characters");
+                return;
+            }
             if (classSelect.SelectedItem.Equals(null))
             {
                 MessageBox.Show("Please select a class");
@@ -142,4 +147,3 @@ namespace Main_Game
         }
     }
 }
-

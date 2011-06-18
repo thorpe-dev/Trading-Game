@@ -4,8 +4,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="500" d:DesignWidth="1000" Loaded="main_Loaded">
+    d:DesignHeight="463" d:DesignWidth="1000" Loaded="main_Loaded">
 
+<<<<<<< HEAD
     <Grid x:Name="LayoutRoot" Background="Silver">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -13,14 +14,18 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         
         <Grid Name="mainContent" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">
+=======
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid HorizontalAlignment="Center" Name="mainContent" VerticalAlignment="Center">
+>>>>>>> eb33a39aae168b8915516d54d62aba2389911842
         </Grid>
-        <Grid Name="settingBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
+        <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="settingBar" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
         </Grid>
-        <Grid Name="sideBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="1">
+        <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="sideBar"    Grid.Row="0" Grid.Column="1">
         </Grid>
     </Grid>
 </UserControl>

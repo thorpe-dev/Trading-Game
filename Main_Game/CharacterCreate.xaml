@@ -7,7 +7,6 @@
            xmlns:my="clr-namespace:Main_Game" 
            xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
             Background="HotPink" >
-
     <controls:ChildWindow.Resources>
         <my:StringClasses x:Key="StringClasses"/>
     </controls:ChildWindow.Resources>

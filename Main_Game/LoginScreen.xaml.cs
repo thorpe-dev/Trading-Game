@@ -53,7 +53,6 @@ namespace Main_Game
                 else
                 {
                     ScreenManager.SetScreen(new CharacterScreen());
-                    ScreenManager.SetSettingBar(new settingBar());
                 }
             }
             else
@@ -66,6 +65,16 @@ namespace Main_Game
         {
             Register r = new Register();
             r.Show();
+        }
+
+        private void btn_skip_Click(object sender, RoutedEventArgs e)
+        {
+            BattleScreen tBattleScreen = new BattleScreen();
+            CharacterScreen tCharScreen = new CharacterScreen();
+            ScreenManager.SetScreen(tCharScreen);
+            ScreenManager.SetSettingBar(new settingBar());
+            ScreenManager.SetSideBar(new sideBar());
+            tBattleScreen.Focus();
         }
 
     }

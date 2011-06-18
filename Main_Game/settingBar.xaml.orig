@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Main_Game.settingBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+<<<<<<< HEAD
+    mc:Ignorable="d"
+    >
+    <Grid Name="bottomBar" Background="Sienna">
+        <Button Content="Logout" Height="30" HorizontalAlignment="Left" Name="logoutBtn" VerticalAlignment="Top" Width="120"/>
+=======
+    mc:Ignorable="d" Height="37">
+    
+    <Grid x:Name="LayoutRoot" Background="#FF524E4E" Width="1000" Height="29" VerticalAlignment="Stretch">
+        <Button Content="Logout" Height="25" HorizontalAlignment="Left" Name="logoutBtn" VerticalAlignment="Top" Width="139" Margin="12,2,0,0" />
+>>>>>>> eb33a39aae168b8915516d54d62aba2389911842
+    </Grid>
+</UserControl>

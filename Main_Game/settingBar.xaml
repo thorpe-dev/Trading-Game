@@ -3,9 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Height="37" Width="1000">
-    
-    <Grid x:Name="LayoutRoot" Background="#FF524E4E" Width="1000" Height="37">
-        <Button Content="Logout" Height="30" HorizontalAlignment="Left" Name="logoutBtn" VerticalAlignment="Top" Width="139" Margin="12,4,0,0" />
+    mc:Ignorable="d"
+    >
+    <Grid Name="bottomBar" Background="Sienna">
+        <Button Content="Logout" Height="30" HorizontalAlignment="Left" Name="logoutBtn" VerticalAlignment="Top" Width="120" Click="logoutBtn_Click" />
     </Grid>
 </UserControl>

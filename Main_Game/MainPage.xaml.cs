@@ -22,8 +22,6 @@ namespace Main_Game
 
         public void SetScreen(IScreen screen)
         {
-           /* this.LayoutRoot.Children.Clear();
-            this.LayoutRoot.Children.Add(screen.Element);*/
             mainContent.Children.Clear();
             mainContent.Children.Add(screen.Element);
         }
@@ -31,7 +29,15 @@ namespace Main_Game
         public void SetSettingBar(IScreen screen)
         {
             settingBar.Children.Clear();
-            settingBar.Children.Add(screen.Element);
+            if (screen != null)
+                settingBar.Children.Add(screen.Element);
+        }
+
+        public void SetSideBar(IScreen screen)
+        {
+            sideBar.Children.Clear();
+            if (screen != null)
+                sideBar.Children.Add(screen.Element);
         }
 
         private void main_Loaded(object sender, RoutedEventArgs e)
@@ -50,6 +56,7 @@ namespace Main_Game
     {
         void SetScreen(IScreen screen);
         void SetSettingBar(IScreen screen);
+        void SetSideBar(IScreen screen);
     }
 
     public static class ScreenManager
@@ -69,6 +76,11 @@ namespace Main_Game
         public static void SetSettingBar(IScreen screen)
         {
             _host.SetSettingBar(screen);
+        }
+
+        public static void SetSideBar(IScreen screen)
+        {
+            _host.SetSideBar(screen);
         }
     }
 
