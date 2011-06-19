@@ -82,7 +82,7 @@ namespace Main_Game
             this.reward = r;
             InitializeComponent();
             if (first_player)
-                {
+            {
                 // Initialise all arrays used
                 initialise_arrays();
                 // Randomly generate a dungeon
@@ -212,14 +212,14 @@ namespace Main_Game
                     XDocument doc = XDocument.Parse(e.Result);
                     // Check if a dungeon was found
                     var dungeons = from dungeon in doc.Descendants("dungeon")
-                                    select new DungeonDefinition()
-                                    {
-                                        instance = (int)dungeon.Element("instance"),
-                                        theme = (int)dungeon.Element("theme"),
-                                        size = (int)dungeon.Element("size"),
-                                        light = (int)dungeon.Element("light"),
-                                        reward = (int)dungeon.Element("reward")
-                                    };
+                                   select new DungeonDefinition()
+                                   {
+                                       instance = (int)dungeon.Element("instance"),
+                                       theme = (int)dungeon.Element("theme"),
+                                       size = (int)dungeon.Element("size"),
+                                       light = (int)dungeon.Element("light"),
+                                       reward = (int)dungeon.Element("reward")
+                                   };
                     if (dungeons.Count() > 0)
                     {
                         this.dungeon_dimensions = dungeons.ElementAt(0).size;
@@ -343,7 +343,7 @@ namespace Main_Game
             // Post the dungeon info to the database and get the instance id
             string parameters
                 = String.Format("theme={0}&size={1}&light={2}&reward={3}", this.theme, this.dungeon_dimensions,
-                   this.lightint,this.reward);
+                   this.lightint, this.reward);
             Uri path = new Uri("create_dungeon.php", UriKind.Relative);
             HttpConnection.httpPost(path, parameters, send_dungeon);
         }
@@ -957,7 +957,7 @@ namespace Main_Game
                     HttpConnection.httpPost(path, parameters, handle_encounter);
                 }
                 else
-                {  
+                {
                     if (events[player_row][player_col] == 3)
                     {
                         handle_combat();
@@ -989,7 +989,7 @@ namespace Main_Game
                     {
                         handle_item();
                     }
-                        
+
                 }
             }
             else
@@ -1013,8 +1013,8 @@ namespace Main_Game
 
         public void handle_item()
         {
-            // Handle Item
-            MessageBox.Show("Item");
+            LootBox lootBox = new LootBox(ItemSet.retrieveItem(1));
+            lootBox.Show();
         }
 
         public void update_current_values()
@@ -1065,7 +1065,7 @@ namespace Main_Game
                         // Make sure they appear in the tavern 
                         Uri path = new Uri("enterWorld.php", UriKind.Relative);
                         HttpConnection.httpGet(path, check_success);
-                        btn_exit_Click(null,null);
+                        btn_exit_Click(null, null);
                     }
                     else
                     {
@@ -1194,7 +1194,7 @@ namespace Main_Game
                         success = false;
                 }
             // Create a new tavern and pas it the mission complete status 
-            Tavern tTavern = new Tavern(success,this.reward);
+            Tavern tTavern = new Tavern(success, this.reward);
             ScreenManager.SetScreen(tTavern);
             tTavern.Focus();
         }

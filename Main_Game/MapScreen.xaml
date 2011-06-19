@@ -5,7 +5,7 @@
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            mc:Ignorable="d"
            d:DesignWidth="719" d:DesignHeight="480"
-           Name="Mission" IsTabStop="True" KeyDown="Mission_KeyDown">
+           Name="Mission" IsTabStop="True" KeyDown="Mission_KeyDown" xmlns:my="clr-namespace:Main_Game">
     <Grid x:Name="LayoutRoot" Background="Black" Height="497" Width="800">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="627*" />

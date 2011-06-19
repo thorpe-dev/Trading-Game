@@ -99,9 +99,9 @@ namespace Main_Game
 
         public void displayLoot(Item loot)
         {
-            lootScreen.addReturnScreen(dungeon);
-            lootScreen.update(loot);
-            lootScreen.Visibility = Visibility.Visible;
+            LootBox lootBox = new LootBox(loot);
+            lootBox.addReturnScreen(dungeon);
+            lootBox.Show();
         }
 
         public void updateAbilities(Character c)

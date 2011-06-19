@@ -299,7 +299,11 @@ namespace Main_Game
             {
                 XDocument doc = XDocument.Parse(e.Result);
                 if (doc.Element("error") == null)
+                {
+                    ScreenManager.SetSideBar(new sideBar());
+                    ScreenManager.SetSettingBar(new settingBar());
                     ScreenManager.SetScreen(new Tavern(false, 0));
+                }
                 else
                     MessageBox.Show("Error: " + (string)doc.Element("error"));
             }

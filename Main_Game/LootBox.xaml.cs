@@ -13,14 +13,15 @@ using System.Windows.Media.Imaging;
 
 namespace Main_Game
 {
-    public partial class LootBox : UserControl
+    public partial class LootBox : ChildWindow
     {
         private Item loot;
         private IScreen returnScreen;
 
-        public LootBox()
+        public LootBox(Item _loot)
         {
             InitializeComponent();
+            update(_loot);
         }
 
         public void addReturnScreen(IScreen _returnScreen)
@@ -79,7 +80,10 @@ namespace Main_Game
 
         private void dropBtn_Click(object sender, RoutedEventArgs e)
         {
-            ScreenManager.SetScreen(returnScreen); 
+            DialogResult = true;
+            if (returnScreen != null)
+                ScreenManager.SetScreen(returnScreen);
         }
+
     }
 }

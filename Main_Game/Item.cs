@@ -35,39 +35,39 @@ namespace Main_Game
         {
             Consumable healthPot;
             Consumable manaPot;
-            for (uint i = 1; i <= Consumable.consumablePrefixes.LongCount(); i++)
+            for (uint i = 1; i <= Consumable.consumablePrefixes.Count(); i++)
             {
-                string prefix = Consumable.consumablePrefixes[i-1];
-                healthPot = new Consumable((int)i, prefix + "healing potion", "A potent concoction made from natural ingredients", 
-                    Consumable.healthPotionBaseValue * i, ConsumableType.health, (int)(Consumable.healthPotionBaseRegen * i), new Uri("uri in here", UriKind.Relative));
+                string prefix = Consumable.consumablePrefixes[i - 1];
+                healthPot = new Consumable((int)i, prefix + "healing potion", "Regenerates health", Consumable.healthPotionBaseValue * i,
+                                ConsumableType.health, (int)(Consumable.healthPotionBaseRegen * i), new Uri("Images/Items/rune-long.png", UriKind.Relative));
                 ItemSet.addItem(healthPot);
-                manaPot = new Consumable((int)(i + Consumable.consumablePrefixes.LongCount()), prefix + "mana potion", 
-                                "A potent concoction made from natural ingredients", Consumable.manaPotionBaseValue * i,
-                                ConsumableType.mana, (int)(Consumable.manaPotionBaseRegen * i), new Uri("uri in here", UriKind.Relative));
+                manaPot = new Consumable((int)(i + Consumable.consumablePrefixes.LongCount()), prefix + "mana potion",
+                                "Regenerates mana", Consumable.manaPotionBaseValue * i,
+                                ConsumableType.mana, (int)(Consumable.manaPotionBaseRegen * i), new Uri("Images/Items/rune-long.png", UriKind.Relative));
                 ItemSet.addItem(manaPot);
             }
             Weapon.populateWeaponTypeEffects();
-            Weapon w = new Weapon(101, "Magic stick", "A magical staff", 50, WeaponType.STAFF, 1, new Uri("uri in here", UriKind.Relative));
+            Weapon w = new Weapon(101, "Magic stick", "A magical staff", 50, WeaponType.STAFF, 1, new Uri("Images/Items/addy-scim.png", UriKind.Relative));
             ItemSet.addItem(w);
-            w = new Weapon(100, "Broadsword", "Large two handed sword", 50, WeaponType.TWOHANDEDSWORD, 1, new Uri("uri in here", UriKind.Relative));
+            w = new Weapon(100, "Broadsword", "Large two handed sword", 50, WeaponType.TWOHANDEDSWORD, 1, new Uri("Images/Items/addy-mace.png", UriKind.Relative));
             ItemSet.addItem(w);
-            w = new Weapon(102, "Shortsword", "A short blade", 50, WeaponType.ONEHANDEDSWORD, 1, new Uri("uri in here", UriKind.Relative));
+            w = new Weapon(102, "Shortsword", "A short blade", 50, WeaponType.ONEHANDEDSWORD, 1, new Uri("Images/Items/addy-baxe.png", UriKind.Relative));
             ItemSet.addItem(w);
             Armour a = new Armour(200, "Long robe", "A cotton robe", 50, ArmourType.CHEST,
-                                   new EquipmentEffect(0, 0, 10, 0, 0, 50), 1, new Uri("uri in here", UriKind.Relative));
+                                   new EquipmentEffect(0, 0, 10, 0, 0, 50), 1, new Uri("Images/Items/rune-lsword.png", UriKind.Relative));
             ItemSet.addItem(a);
             a = new Armour(300, "Soft hood", "A nice hood", 30, ArmourType.HELM,
-                                   new EquipmentEffect(-2, 0, 5, 0, 0, 20), 1, new Uri("uri in here", UriKind.Relative));
+                                   new EquipmentEffect(-2, 0, 5, 0, 0, 20), 1, new Uri("Images/Items/addy-scim.png", UriKind.Relative));
             ItemSet.addItem(a);
             a = new Armour(400, "Woven gloves", "Handknitted gloves", 20, ArmourType.GLOVES,
-                                  new EquipmentEffect(-1, 0, 4, 0, 0, 15), 1, new Uri("uri in here", UriKind.Relative));
+                                  new EquipmentEffect(-1, 0, 4, 0, 0, 15), 1, new Uri("Images/Items/addy-scim.png", UriKind.Relative));
             ItemSet.addItem(a);
             a = new Armour(500, "Mystic treads", "Very reliable pair of shoes", 20, ArmourType.BOOTS,
-                                  new EquipmentEffect(-2, 1, 3, 0, 0, 15), 1, new Uri("uri in here", UriKind.Relative));
+                                  new EquipmentEffect(-2, 1, 3, 0, 0, 15), 1, new Uri("Images/Items/addy-mace.png", UriKind.Relative));
             ItemSet.addItem(a);
 
             a = new Armour(600, "Damp britches", "These have seen better days", 20, ArmourType.LEGS,
-                                  new EquipmentEffect(-1, 0, 2, 0, 0, 10), 1, new Uri("uri in here", UriKind.Relative));
+                                  new EquipmentEffect(-1, 0, 2, 0, 0, 10), 1, new Uri("Images/Items/addy-baxe.png", UriKind.Relative));
             ItemSet.addItem(a);
         }
 
@@ -142,6 +142,7 @@ namespace Main_Game
 
                     c.weapon = weapon;
                     c.inventory.Remove(this);
+                    c.calculateStats();
                     return true;
                 }
                 else
@@ -151,6 +152,7 @@ namespace Main_Game
                     ItemStack oldWeapon = new ItemStack(c.weapon);
                     inventory.Add(oldWeapon);
                     c.weapon = weapon;
+                    c.calculateStats();
                     return true;
                 }
             }
@@ -166,6 +168,7 @@ namespace Main_Game
 
                                 c.chest = armour;
                                 c.inventory.Remove(this);
+                                c.calculateStats();
                                 return true;
                             }
                             else
@@ -175,6 +178,7 @@ namespace Main_Game
                                 ItemStack oldChest = new ItemStack(c.chest);
                                 inventory.Add(oldChest);
                                 c.chest = armour;
+                                c.calculateStats();
                                 return true;
                             }
                         }
@@ -185,6 +189,7 @@ namespace Main_Game
 
                                 c.helm = armour;
                                 c.inventory.Remove(this);
+                                c.calculateStats();
                                 return true;
                             }
                             else
@@ -194,6 +199,7 @@ namespace Main_Game
                                 ItemStack oldHelm = new ItemStack(c.helm);
                                 inventory.Add(oldHelm);
                                 c.helm = armour;
+                                c.calculateStats();
                                 return true;
                             }
                         }
@@ -204,6 +210,7 @@ namespace Main_Game
 
                                 c.gloves = armour;
                                 c.inventory.Remove(this);
+                                c.calculateStats();
                                 return true;
                             }
                             else
@@ -213,6 +220,7 @@ namespace Main_Game
                                 ItemStack oldgloves = new ItemStack(c.gloves);
                                 inventory.Add(oldgloves);
                                 c.gloves = armour;
+                                c.calculateStats();
                                 return true;
                             }
                         }
@@ -223,6 +231,7 @@ namespace Main_Game
 
                                 c.boots = armour;
                                 c.inventory.Remove(this);
+                                c.calculateStats();
                                 return true;
                             }
                             else
@@ -232,6 +241,7 @@ namespace Main_Game
                                 ItemStack oldboots = new ItemStack(c.boots);
                                 inventory.Add(oldboots);
                                 c.boots = armour;
+                                c.calculateStats();
                                 return true;
                             }
                         }
@@ -242,6 +252,7 @@ namespace Main_Game
 
                                 c.legs = armour;
                                 c.inventory.Remove(this);
+                                c.calculateStats();
                                 return true;
                             }
                             else
@@ -251,6 +262,7 @@ namespace Main_Game
                                 ItemStack oldlegs = new ItemStack(c.legs);
                                 inventory.Add(oldlegs);
                                 c.legs = armour;
+                                c.calculateStats();
                                 return true;
                             }
                         }
@@ -278,12 +290,14 @@ namespace Main_Game
                 {
                     ItemStack stack = stacks.First();
                     stack.stackSize++;
+                    MainPage.currentSideBar.updateInventory();
                     return true;
                 }
             }
             if (inventory.Count < Character.INVENTORYSIZE)
             {
                 inventory.Add(new ItemStack(this));
+                MainPage.currentSideBar.updateInventory();
                 return true;
             }
             return false;
@@ -343,6 +357,7 @@ namespace Main_Game
                     c.currentMana += amountRegenerated;
                 }
             }
+            MainPage.currentSettingBar.updateBars(c);
         }
     }
 

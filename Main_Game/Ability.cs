@@ -91,7 +91,7 @@ namespace Main_Game
             int hit = attacker.dice.roll();
             uint damage = 0;
 
-            if (hit == 1 || (this.manaCost >= attacker.currentMana))
+            if (hit == 1 || (this.manaCost > attacker.currentMana))
                 return damage;
             else
             {

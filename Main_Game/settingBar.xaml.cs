@@ -90,5 +90,11 @@ namespace Main_Game
             mana_bar_reduce.Begin();
             mana_damage.From = mana_bar.Width;
         }
+
+        public void updateBars(Character c)
+        {
+            alter_hp(c.maxHealth, c.currentHealth);
+            alter_mana(c.maxMana, c.currentMana);
+        }
     }
 }

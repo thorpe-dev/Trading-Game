@@ -117,6 +117,9 @@
     <Compile Include="LootBox.xaml.cs">
       <DependentUpon>LootBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="sideBar.xaml.cs">
+      <DependentUpon>sideBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tavern.xaml.cs">
       <DependentUpon>Tavern.xaml</DependentUpon>
     </Compile>
@@ -168,6 +171,10 @@
     <Page Include="LootBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="sideBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Tavern.xaml">
       <SubType>Designer</SubType>
@@ -363,6 +370,20 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\MageIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Items\addy-baxe.png" />
+    <Resource Include="Images\Items\addy-mace.png" />
+    <Resource Include="Images\Items\addy-scim.png" />
+    <Resource Include="Images\Items\armour.png" />
+    <Resource Include="Images\Items\backgrounds.png" />
+    <Resource Include="Images\Items\boots.png" />
+    <Resource Include="Images\Items\gloves.png" />
+    <Resource Include="Images\Items\head.png" />
+    <Resource Include="Images\Items\legs.png" />
+    <Resource Include="Images\Items\rune-long.png" />
+    <Resource Include="Images\Items\rune-lsword.png" />
+    <Resource Include="Images\Items\weapon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

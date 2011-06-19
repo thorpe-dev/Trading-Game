@@ -292,10 +292,10 @@ namespace Main_Game
 
         public void calculateStats()
         {
-            int baseStrength = charClass.initialMod.strength + level * charClass.levelMod.strength;
-            int baseInt = charClass.initialMod.intelligence + level * charClass.levelMod.intelligence;
-            int baseAgi = charClass.initialMod.agility + level * charClass.levelMod.agility;
-            int baseSpeed = charClass.initialMod.speed + level * charClass.levelMod.speed;
+            int baseStrength = charClass.initialMod.strength + (level-1) * charClass.levelMod.strength;
+            int baseInt = charClass.initialMod.intelligence + (level-1) * charClass.levelMod.intelligence;
+            int baseAgi = charClass.initialMod.agility + (level-1) * charClass.levelMod.agility;
+            int baseSpeed = charClass.initialMod.speed + (level-1) * charClass.levelMod.speed;
 
             int itemStrength = 0;
             int itemAgility = 0;
