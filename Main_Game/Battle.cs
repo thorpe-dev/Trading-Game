@@ -115,14 +115,13 @@ namespace Main_Game
         {
             if (char_1.currentHealth == 0)
             {
-                //Player has lost
+                
                 return;
             }
             else
             {
                 int expValue = char_2.expValue;
                 int expToNext = char_1.expToNext;
-                MessageBox.Show("Need " + expToNext + " Got " + expValue);
                 while (expToNext <= expValue)
                 {
                     char_1.levelUp();
@@ -131,6 +130,7 @@ namespace Main_Game
                     expValue -= expToNext;
                     expToNext = char_1.expToNext;
                 }
+                char_1.expToNext -= expValue;
                 Random rnd = new Random();
                 int lootTableSize = char_2.lootTable.Count;
                 int lootRand = rnd.Next(1, (((int)Math.Pow(lootTableSize, 2) + lootTableSize) / 2) + 1);

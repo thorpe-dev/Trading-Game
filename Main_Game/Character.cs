@@ -378,6 +378,17 @@ namespace Main_Game
             expToNext = calculateExpToNextLevel(level);
         }
 
+        public void awardExp(int expAmount)
+        {
+            int expValue = expAmount;
+            while (expToNext <= expValue)
+            {
+                expValue -= expToNext;
+                levelUp();
+            }
+            expToNext -= expValue;
+        }
+
         public override Ability getAbility()
         {
             throw new NotImplementedException();
