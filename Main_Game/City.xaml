@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     d:DesignHeight="500" d:DesignWidth="1000" 
     KeyDown="city_KeyDown"
-    IsTabStop="True">
+    IsTabStop="True" LostFocus="UserControl_LostFocus" GotFocus="UserControl_GotFocus">
     
     <Grid x:Name="LayoutRoot" Background="Beige">
         <Canvas x:Name="cnvCity" Height="500" Width="1000">

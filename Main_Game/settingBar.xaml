@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    IsTabStop="True"
     >
     <Grid Name="bottomBar" Background="Sienna">
         <Button Content="Logout" Height="30" HorizontalAlignment="Left" Name="logoutBtn" VerticalAlignment="Top" Width="120" Click="logoutBtn_Click" />

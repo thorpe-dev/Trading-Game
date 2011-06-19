@@ -15,11 +15,6 @@ namespace Main_Game
 {
     public partial class sideBar : UserControl, IScreen
     {
-
-        public int charHealthCurrent = 20;
-        public int charHealthMax = 100;
-        public int charMagicCurrent = 30;
-        public int charMagicMax = 60;
         public bool inBattle = false;
         public Character curCharacter = Character.currentCharacter;
 
@@ -27,14 +22,12 @@ namespace Main_Game
         public sideBar()
         {
             InitializeComponent();
-            setCharHealthCur(charHealthCurrent);
-            setCharHealthMax(charHealthMax);
-            setCharMagicCur(charMagicCurrent);
-            setCharMagicMax(charMagicMax);
 
-            //Initialise inventory
-            //Initialise equipment
-
+            updateEquipment();
+            updateInventory();
+            curCharacter.calculateStats();
+            updateStats();
+            txtCharName.Text = curCharacter.name;
         }
 
         public UIElement Element { get { return this; } }
@@ -63,86 +56,136 @@ namespace Main_Game
             prgCharMagic.Maximum = maxmagic;
         }
 
-        private void btnEquip_Checked(object sender, RoutedEventArgs e)
+        private void clearInventory()
         {
-            recEquipBG.Visibility = Visibility.Visible;
-            brdEquipped.Visibility = Visibility.Visible;
-        }
-
-        private void btnStats_Checked(object sender, RoutedEventArgs e)
-        {
-            brdEquipped.Visibility = Visibility.Collapsed;
-            recEquipBG.Visibility = Visibility.Collapsed;
-        }
-
-        private void btnInventory_Click(object sender, RoutedEventArgs e)
-        {
-            var btn = (Button)sender;
-           // MessageBox.Show("Row:" + btn.GetValue(Grid.RowProperty) + " Col: " + btn.GetValue(Grid.ColumnProperty) + "clicked");
-            int pos = (int)btn.GetValue(Grid.RowProperty) * 5 +  (int)btn.GetValue(Grid.ColumnProperty);
-            if (curCharacter.inventory.ElementAt(pos).useItem(curCharacter, inBattle))
+            foreach (Image i in grdInventory.Children)
             {
-                updateEquipment();
-                updateInventory();
+                i.Source = new BitmapImage(new Uri("Images/Dungeon/blank.png", UriKind.Relative));
             }
         }
 
-        private void btnEquipment_Click(object sender, RoutedEventArgs e)
-        {
-            
-            var btn = (Button)sender;
-            switch (btn.Tag.ToString()){
-                case "weapon":
-                    if (!curCharacter.weapon.dequip(curCharacter))
-                        imgWeapon.Source = new BitmapImage(new Uri("Images/Items/weapon.png", UriKind.Relative));
-                    break;
-                case "chest":
-                    if (!curCharacter.chest.dequip(curCharacter))
-                        imgChest.Source = new BitmapImage(new Uri("Images/Items/armour.png", UriKind.Relative));
-                    break;
-                case "legs":
-                    if (!curCharacter.legs.dequip(curCharacter))
-                        imgLegs.Source = new BitmapImage(new Uri("Images/Items/legs.png", UriKind.Relative));
-                    break;
-                case "boots":
-                    if (!curCharacter.boots.dequip(curCharacter))
-                        imgBoots.Source = new BitmapImage(new Uri("Images/Items/boots.png", UriKind.Relative));
-                    break;
-                case "gloves":
-                    if (!curCharacter.gloves.dequip(curCharacter))
-                        imgGloves.Source = new BitmapImage(new Uri("Images/Items/gloves.png", UriKind.Relative));
-                    break;
-                case "helm":
-                    if (!curCharacter.helm.dequip(curCharacter))
-                        imgHelmet.Source = new BitmapImage(new Uri("Images/Items/head.png", UriKind.Relative));
-                    break;
-            }
-        }
         private void updateInventory()
         {
-            int locCount = 0;
+            clearInventory();
+            int count = 0;
+
+            List<ItemStack> its = new List<ItemStack>();
+            List<Image> ims = new List<Image>();
+            List<TextBlock> tbs = new List<TextBlock>();
             foreach (ItemStack it in curCharacter.inventory)
             {
-                var itemImage = (from d in grdInventory.Children
-                               where (Grid.GetColumn(d as FrameworkElement) == locCount % 5 && Grid.GetRow(d as FrameworkElement) == locCount / 4)
-                               select d).FirstOrDefault();
-                //(itemImage as Image).Source = it.icon;
-                locCount += 1;
+                its.Add(it);
+                count++;
             }
+
+            foreach (Object i in grdInventory.Children)
+            {
+                if (i is Image)
+                    ims.Add((Image)i);
+                //else if (i is TextBlock)
+                //    tbs.Add(i as TextBlock);
+            }
+
+
+            for (int x = 0; x < count; x++)
+            {
+                ims[x].Source = new BitmapImage(its[x].item.icon);
+                //tbs[x].Text = its[x].stackSize.ToString();                
+            }
+
+            grdInventory.UpdateLayout();
+
         }
 
         private void updateEquipment()
         {
-            
-            imgWeapon.Source = new BitmapImage(curCharacter.weapon.icon);
-            imgHelmet.Source = new BitmapImage(curCharacter.helm.icon);
-            imgChest.Source = new BitmapImage(curCharacter.chest .icon);
-            imgLegs.Source = new BitmapImage(curCharacter.legs.icon);
-            imgBoots.Source = new BitmapImage(curCharacter.boots.icon);
-            imgGloves.Source = new BitmapImage(curCharacter.gloves.icon);
-            
+            if (curCharacter.weapon != null)
+                imgWeapon.Source = new BitmapImage(curCharacter.weapon.icon);
+            if (curCharacter.helm != null)
+                imgHelmet.Source = new BitmapImage(curCharacter.helm.icon);
+            if (curCharacter.chest != null)
+                imgChest.Source = new BitmapImage(curCharacter.chest.icon);
+            if (curCharacter.legs != null)
+                imgLegs.Source = new BitmapImage(curCharacter.legs.icon);
+            if (curCharacter.boots != null)
+                imgBoots.Source = new BitmapImage(curCharacter.boots.icon);
+            if (curCharacter.gloves != null)
+                imgGloves.Source = new BitmapImage(curCharacter.gloves.icon);
         }
 
-    }
+        private void UserControl_GotFocus(object sender, RoutedEventArgs e)
+        {
+            grdSideBar.Background = new SolidColorBrush(Colors.Red);
+        }
 
+        private void UserControl_LostFocus(object sender, RoutedEventArgs e)
+        {
+            grdSideBar.Background = new SolidColorBrush(Colors.Blue);
+        }
+
+        private void equip_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            switch (((Image)sender).Tag.ToString())
+            {
+                case "weapon":
+                    if (curCharacter.weapon.dequip(curCharacter))
+                        imgWeapon.Source = new BitmapImage(new Uri("Images/Items/weapon.png", UriKind.Relative));
+                    break;
+                case "chest":
+                    if (curCharacter.chest.dequip(curCharacter))
+                        imgChest.Source = new BitmapImage(new Uri("Images/Items/armour.png", UriKind.Relative));
+                    break;
+                case "legs":
+                    if (curCharacter.legs.dequip(curCharacter))
+                        imgLegs.Source = new BitmapImage(new Uri("Images/Items/legs.png", UriKind.Relative));
+                    break;
+                case "boots":
+                    if (curCharacter.boots.dequip(curCharacter))
+                        imgBoots.Source = new BitmapImage(new Uri("Images/Items/boots.png", UriKind.Relative));
+                    break;
+                case "gloves":
+                    if (curCharacter.gloves.dequip(curCharacter))
+                        imgGloves.Source = new BitmapImage(new Uri("Images/Items/gloves.png", UriKind.Relative));
+                    break;
+                case "helm":
+                    if (curCharacter.helm.dequip(curCharacter))
+                        imgHelmet.Source = new BitmapImage(new Uri("Images/Items/head.png", UriKind.Relative));
+                    break;
+
+            }
+            updateInventory();
+            updateStats();
+        }
+
+        private void inventory_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var img = (Image)sender;
+            int pos = (int)img.GetValue(Grid.RowProperty) * 5 + (int)img.GetValue(Grid.ColumnProperty);
+
+            curCharacter.inventory.ElementAt(pos).useItem(curCharacter, inBattle);
+
+            updateInventory();
+            updateEquipment();
+            updateStats();   
+        }
+
+        private void updateStats()
+        {
+            curCharacter.calculateStats();
+            txtStrengthVal.Text = curCharacter.strength.ToString();
+            txtAgilityVal.Text = curCharacter.agility.ToString();
+            txtIntVal.Text = curCharacter.intelligence.ToString();
+            txtSpeedVal.Text = curCharacter.speed.ToString();
+            setCharMagicMax(curCharacter.maxMana);
+            setCharHealthMax(curCharacter.maxHealth);
+            setCharHealthCur(curCharacter.currentHealth);
+            setCharMagicCur(curCharacter.currentMana);
+
+            txtLevel.Text = "Level " + curCharacter.level.ToString();
+            txtExp.Text = "Exp to next level: " + curCharacter.expToNext.ToString();
+            txtGold.Text = "Gold: " + curCharacter.money.ToString();
+
+        }
+    }
 }
