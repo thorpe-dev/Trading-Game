@@ -84,7 +84,7 @@ namespace Main_Game
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            ScreenManager.SetScreen(new MapScreen(0,0,(false),(false)));
+            ScreenManager.SetScreen(new MapScreen(false,false,0,0,0,0,0,0));
             this.DialogResult = true;
         }
 

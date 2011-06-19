@@ -33,7 +33,7 @@ namespace Main_Game
             e.Handled = true;
             if (Canvas.GetTop(mainChar) == 300 - 2*step && Canvas.GetLeft(mainChar) == 500 - 4*step)
             {
-                Tavern tTavern = new Tavern();
+                Tavern tTavern = new Tavern(false,0);
                 ScreenManager.SetScreen(tTavern);
                 tTavern.Focus();
 

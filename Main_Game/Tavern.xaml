@@ -18,5 +18,7 @@
         <TextBlock Height="62" HorizontalAlignment="Left" Margin="33,245,0,0" Name="txt_description" Text="This is where quest descriptions go" VerticalAlignment="Top" Width="519" Foreground="Black" TextWrapping="Wrap" />
         <Rectangle Height="75" HorizontalAlignment="Left" Margin="27,239,0,0" Name="rectangle2" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="533" />
         <TextBlock Height="21" HorizontalAlignment="Left" Margin="25,212,0,0" Name="txt_title" Text="Quest Title" VerticalAlignment="Top" Width="537" Foreground="White" TextAlignment="Center" />
+        <Button Content="Add Quests" Height="30" HorizontalAlignment="Left" Margin="50,345,0,0" Name="btn_add_quest" VerticalAlignment="Top" Width="79" Click="btn_add_quest_Click" Visibility="Collapsed" />
+        <dataInput:Label Height="35" HorizontalAlignment="Left" Margin="397,345,0,0" Name="lbl_poll_check" VerticalAlignment="Top" Width="95" Content="0" Foreground="Red" />
     </Grid>
 </UserControl>

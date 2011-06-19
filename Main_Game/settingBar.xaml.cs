@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
+using System.Xml.Linq;
 
 namespace Main_Game
 {
@@ -24,8 +25,8 @@ namespace Main_Game
         double bar_width = 135;
         double hp_max = 200;
         double hp_current = 200;
-        double mana_max = 200;
-        double mana_current = 200;
+        //double mana_max = 200;
+        //double mana_current = 200;
 
         public settingBar()
         {
@@ -42,7 +43,7 @@ namespace Main_Game
             hp_bar.Fill = hp_brush;
             hp_bar.HorizontalAlignment = HorizontalAlignment.Left;
             hp_bar.VerticalAlignment = VerticalAlignment.Top;
-            hp_bar.Margin = new Thickness(436, 13, 0, 0);
+            hp_bar.Margin = new Thickness(436, 16, 0, 0);
             LayoutRoot.Children.Add(hp_bar);
 
             mana_bar_reduce = new Storyboard();
@@ -57,7 +58,7 @@ namespace Main_Game
             mana_bar.Fill = hp_brush;
             mana_bar.HorizontalAlignment = HorizontalAlignment.Left;
             mana_bar.VerticalAlignment = VerticalAlignment.Top;
-            mana_bar.Margin = new Thickness(436, 47, 0, 0);
+            mana_bar.Margin = new Thickness(436, 44, 0, 0);
             LayoutRoot.Children.Add(mana_bar);
 
             Storyboard.SetTarget(damage,hp_bar);
@@ -69,6 +70,7 @@ namespace Main_Game
             Storyboard.SetTargetProperty(mana_damage, new PropertyPath("(Width)"));
             hp_bar_reduce.Children.Add(mana_damage);
             mana_damage.From = bar_width;
+
         }
 
         public UIElement Element { get { return this; } }
@@ -77,7 +79,6 @@ namespace Main_Game
         {
             Messages m = new Messages();
             m.Show();
-            img_messages.Source = new BitmapImage(new Uri("Images/mail.png", UriKind.Relative));
         }
 
         private void alter_hp(double hpmax, double newhp)

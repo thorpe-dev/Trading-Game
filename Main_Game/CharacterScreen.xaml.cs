@@ -176,7 +176,7 @@ namespace Main_Game
         private void playCharButton_Click(object sender, RoutedEventArgs e)
         {
             HttpConnection.httpGet(new Uri("enterWorld.php", UriKind.Relative), characterLoaded);
-            ScreenManager.SetScreen(new Tavern());
+            ScreenManager.SetScreen(new Tavern(false,0));
         }
 
         private void characterLoaded(object sender, DownloadStringCompletedEventArgs e)

@@ -25,8 +25,8 @@ namespace Main_Game
         int theme = 0;
         // Light level of dungeon
         Double light_level = 0.5;
+        int lightint = 50;
         // Boolean to check if this player should generate the dungeon and if it should be sent
-        int charid = 1;
         bool first_player = true;
         bool only_player = false;
         // Number of squares per row/column in the dungeon (+2 because of borders)
@@ -35,6 +35,8 @@ namespace Main_Game
         int dungeon_enemies = 6;
         // Number of items to generate
         int dungeon_items = 6;
+        // Reward for completing the dungeon
+        int reward = 0;
 
         // The current instance id
         int instance;
@@ -66,13 +68,73 @@ namespace Main_Game
         bool move_allowed = true;
 
 
-        public MapScreen(int charac, int dungeon, bool first, bool only)
+        public MapScreen(bool first, bool only, int t, int s, int m, int it, int l, int r)
         {
-            this.charid = charac;
-            this.instance = dungeon;
             this.first_player = first;
             this.only_player = only;
+            this.theme = t;
+            this.dungeon_dimensions = s;
+            this.dungeon_enemies = m;
+            this.dungeon_items = it;
+            double light = ((double)l) / 100;
+            this.light_level = light;
+            this.lightint = l;
+            this.reward = r;
             InitializeComponent();
+            if (first_player)
+                {
+                // Initialise all arrays used
+                initialise_arrays();
+                // Randomly generate a dungeon
+                generate_dungeon();
+                // Fill it with encounters
+                populate_dungeon();
+                // Post the dungeon to the server if necessary
+                if (!only_player)
+                {
+                    post_dungeon();
+                    // Start polling server for other player locations
+                    start_poll_locations();
+                }
+
+                // Update the player's current view
+                for (int i = 0; i < this.map_dimensions; i++)
+                {
+                    for (int j = 0; j < this.map_dimensions; j++)
+                    {
+                        this.current_view[i][j] = map[(player_row - 1 + i)][(player_col - 1 + j)];
+                    }
+                }
+                update_map(current_view);
+                handle_events();
+                update_location(player_row, player_col);
+
+                // Put borders around the maps
+                rec_map_border.Margin = new Thickness(10, 10, 0, 0);
+                rec_map_border.Width = map_dimensions * 128;
+                rec_map_border.Height = map_dimensions * 128;
+                rec_minimap_border.Margin = new Thickness(410, 9, 0, 0);
+                rec_minimap_border.Width = (dungeon_dimensions - 2) * 16 + 2;
+                rec_minimap_border.Height = (dungeon_dimensions - 2) * 16 + 2;
+                img_light_radius.Margin = new Thickness(138, 138, 0, 0);
+                img_light_base.Margin = new Thickness(138, 138, 0, 0);
+                img_light_base.Source = get_image(dungeon_theme.exit_piece);
+
+                // Storyboard for slowing players down
+                slow = new Storyboard();
+                slow.Duration = new Duration(new TimeSpan(2500000));
+                slow.Completed += enable_move;
+            }
+            else
+            {
+                // Get instance from server
+                Uri path = new Uri("dungeon_get_instance.php", UriKind.Relative);
+                HttpConnection.httpGet(path, instance_recieved);
+            }
+        }
+
+        public void initialise_arrays()
+        {
             fill_tilesets();
             create_minimap();
             // Set up the 'visited' array
@@ -134,54 +196,6 @@ namespace Main_Game
                     this.map[i][j] = blank;
                 }
             }
-            if (first_player)
-            {
-                // Randomly generate a dungeon
-                generate_dungeon();
-                // Fill it with encounters
-                populate_dungeon();
-                // Post the dungeon to the server if necessary
-                if (!only_player)
-                {
-                    post_dungeon();
-                    // Start polling server for other player locations
-                    start_poll_locations();
-                }
-
-                // Update the player's current view
-                for (int i = 0; i < this.map_dimensions; i++)
-                {
-                    for (int j = 0; j < this.map_dimensions; j++)
-                    {
-                        this.current_view[i][j] = map[(player_row - 1 + i)][(player_col - 1 + j)];
-                    }
-                }
-                update_map(current_view);
-                handle_events();
-                update_location(player_row, player_col);
-
-                // Put borders around the maps
-                rec_map_border.Margin = new Thickness(10, 10, 0, 0);
-                rec_map_border.Width = map_dimensions * 128;
-                rec_map_border.Height = map_dimensions * 128;
-                rec_minimap_border.Margin = new Thickness(410, 9, 0, 0);
-                rec_minimap_border.Width = (dungeon_dimensions - 2) * 16 + 2;
-                rec_minimap_border.Height = (dungeon_dimensions - 2) * 16 + 2;
-                img_light_radius.Margin = new Thickness(138, 138, 0, 0);
-                img_light_base.Margin = new Thickness(138, 138, 0, 0);
-                img_light_base.Source = get_image(dungeon_theme.exit_piece);
-
-                // Storyboard for slowing players down
-                slow = new Storyboard();
-                slow.Duration = new Duration(new TimeSpan(2500000));
-                slow.Completed += enable_move;
-            }
-            else
-            {
-                // Get instance from server
-                Uri path = new Uri("dungeon_get_instance.php", UriKind.Relative);
-                HttpConnection.httpGet(path, instance_recieved);
-            }
         }
 
         public void instance_recieved(object sender, DownloadStringCompletedEventArgs e)
@@ -198,20 +212,25 @@ namespace Main_Game
                     XDocument doc = XDocument.Parse(e.Result);
                     // Check if a dungeon was found
                     var dungeons = from dungeon in doc.Descendants("dungeon")
-                                    select new MapSquare()
+                                    select new DungeonDefinition()
                                     {
-                                        x = (int)dungeon.Element("instance"),
-                                        y = (int)dungeon.Element("theme"),
-                                        shape = (int)dungeon.Element("size")
+                                        instance = (int)dungeon.Element("instance"),
+                                        theme = (int)dungeon.Element("theme"),
+                                        size = (int)dungeon.Element("size"),
+                                        light = (int)dungeon.Element("light"),
+                                        reward = (int)dungeon.Element("reward")
                                     };
-                    MapSquare[] map_squares = dungeons.ToArray();
-                    if (map_squares.Length > 0)
+                    if (dungeons.Count() > 0)
                     {
-                        this.dungeon_dimensions = map_squares[0].shape;
-                        this.instance = map_squares[0].x;
-                        this.theme = map_squares[0].y;
+                        this.dungeon_dimensions = dungeons.ElementAt(0).size;
+                        this.instance = dungeons.ElementAt(0).instance;
+                        this.theme = dungeons.ElementAt(0).theme;
+                        double light = ((double)dungeons.ElementAt(0).light) / 100;
+                        this.light_level = light;
+                        this.reward = dungeons.ElementAt(0).reward;
                         MessageBox.Show("instance: " + this.instance);
-
+                        // Initialise all arrays used
+                        initialise_arrays();
                         // Put borders around the maps
                         rec_map_border.Margin = new Thickness(10, 10, 0, 0);
                         rec_map_border.Width = map_dimensions * 128;
@@ -255,8 +274,8 @@ namespace Main_Game
         private void enter_dungeon()
         {
             Uri path = new Uri("enter_dungeon.php", UriKind.Relative);
-            string parameters = String.Format("instance={0}&x={1}&y={2}&charnum={3}"
-                , this.instance, player_row, player_col, this.charid);
+            string parameters = String.Format("instance={0}&x={1}&y={2}"
+                , this.instance, player_row, player_col);
             HttpConnection.httpPost(path, parameters, dungeon_sent);
             //MessageBox.Show("Dungeon Entered");
         }
@@ -305,8 +324,7 @@ namespace Main_Game
                         txt_pos.Text = txt_pos.Text + Environment.NewLine + "Dun: " + map_squares[i].content +
                             " ID: " + map_squares[i].shape + " Pos: (" + map_squares[i].x + "," +
                             map_squares[i].y + ")";
-                        if (map_squares[i].content == this.instance
-                            && map_squares[i].shape != this.charid)
+                        if (map_squares[i].content == this.instance)
                         {
                             players[(map_squares[i].x)][(map_squares[i].y)] = 1;
                         }
@@ -324,7 +342,8 @@ namespace Main_Game
         {
             // Post the dungeon info to the database and get the instance id
             string parameters
-                = String.Format("theme={0}&size={1}", this.theme, this.dungeon_dimensions);
+                = String.Format("theme={0}&size={1}&light={2}&reward={3}", this.theme, this.dungeon_dimensions,
+                   this.lightint,this.reward);
             Uri path = new Uri("create_dungeon.php", UriKind.Relative);
             HttpConnection.httpPost(path, parameters, send_dungeon);
         }
@@ -938,7 +957,15 @@ namespace Main_Game
                     HttpConnection.httpPost(path, parameters, handle_encounter);
                 }
                 else
-                {
+                {  
+                    if (events[player_row][player_col] == 3)
+                    {
+                        handle_combat();
+                    }
+                    else if (events[player_row][player_col] == 4)
+                    {
+                        handle_item();
+                    }
                     events[player_row][player_col] = 1;
                 }
 
@@ -954,14 +981,33 @@ namespace Main_Game
                 XDocument doc = XDocument.Parse(e.Result);
                 if (doc.Element("encounter") != null)
                 {
-                    if ((int)doc.Element("encounter") > 2)
-                        MessageBox.Show("Event: " + (int)doc.Element("encounter"));
+                    if ((int)doc.Element("encounter") == 3)
+                    {
+                        handle_combat();
+                    }
+                    else if ((int)doc.Element("encounter") == 4)
+                    {
+                        handle_item();
+                    }
+                        
                 }
             }
             else
             {
                 MessageBox.Show("Could not recieve encounter: " + e.Error.ToString());
             }
+        }
+
+        public void handle_combat()
+        {
+            // Handle Combat
+            MessageBox.Show("Combat");
+        }
+
+        public void handle_item()
+        {
+            // Handle Item
+            MessageBox.Show("Item");
         }
 
         public void update_current_values()
@@ -1006,13 +1052,28 @@ namespace Main_Game
                 }
                 catch (Exception e1)
                 {
-                    MessageBox.Show("Error in parsing events: " + e1.ToString());
+                    if (!first_player)
+                    {
+                        MessageBox.Show("Host has left dungeon. Returning to tavern...");
+                        // Make sure they appear in the tavern 
+                        Uri path = new Uri("enterWorld.php", UriKind.Relative);
+                        HttpConnection.httpGet(path, check_success);
+                        btn_exit_Click(null,null);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error in parsing events: " + e1.ToString());
+                    }
                 }
             }
             else
             {
                 MessageBox.Show("Could not recieve events: " + e.Error.ToString());
             }
+        }
+
+        public void check_success(object sender, DownloadStringCompletedEventArgs e)
+        {
         }
 
         private void btn_up_Click(object sender, RoutedEventArgs e)
@@ -1117,7 +1178,16 @@ namespace Main_Game
 
         private void leave_dungeon(object sender, DownloadStringCompletedEventArgs e)
         {
-            Tavern tTavern = new Tavern();
+            // Check if all monsters are dead
+            bool success = true;
+            for (int i = 0; i < this.events.Length; i++)
+                for (int j = 0; j < this.events[i].Length; j++)
+                {
+                    if (events[i][j] == 3)
+                        success = false;
+                }
+            // Create a new tavern and pas it the mission complete status 
+            Tavern tTavern = new Tavern(success,this.reward);
             ScreenManager.SetScreen(tTavern);
             tTavern.Focus();
         }
@@ -1381,5 +1451,14 @@ namespace Main_Game
             this.exit_south = south;
             this.exit_west = west;
         }
+    }
+
+    public class DungeonDefinition
+    {
+        public int theme;
+        public int size;
+        public int reward;
+        public int light;
+        public int instance;
     }
 }
