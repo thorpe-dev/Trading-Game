@@ -179,7 +179,7 @@
                     <Image Grid.Row="3" Grid.Column="3"  MouseLeftButtonDown="inventory_MouseLeftButtonDown" />
                     <Image Grid.Row="3" Grid.Column="4"  MouseLeftButtonDown="inventory_MouseLeftButtonDown" />
 
-                    <!--<TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="0" Text="20" FontSize="8" />
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="0" Text="20" FontSize="8" />
                     <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="1" Text="1" FontSize="8" />
                     <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="2" FontSize="8" />
                     <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="3" FontSize="8" />
@@ -201,7 +201,7 @@
                     <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top"  Grid.Row="3" Grid.Column="1" FontSize="8" />
                     <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top"  Grid.Row="3" Grid.Column="2" FontSize="8" />
                     <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top"  Grid.Row="3" Grid.Column="3" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top"  Grid.Row="3" Grid.Column="4" FontSize="8" />-->
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top"  Grid.Row="3" Grid.Column="4" FontSize="8" />
 
 
                 </Grid>

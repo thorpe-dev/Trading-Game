@@ -56,22 +56,14 @@ namespace Main_Game
             prgCharMagic.Maximum = maxmagic;
         }
 
-        private void clearInventory()
-        {
-            foreach (Image i in grdInventory.Children)
-            {
-                i.Source = new BitmapImage(new Uri("Images/Dungeon/blank.png", UriKind.Relative));
-            }
-        }
-
         private void updateInventory()
         {
-            clearInventory();
             int count = 0;
 
             List<ItemStack> its = new List<ItemStack>();
             List<Image> ims = new List<Image>();
             List<TextBlock> tbs = new List<TextBlock>();
+
             foreach (ItemStack it in curCharacter.inventory)
             {
                 its.Add(it);
@@ -80,17 +72,35 @@ namespace Main_Game
 
             foreach (Object i in grdInventory.Children)
             {
-                if (i is Image)
-                    ims.Add((Image)i);
-                //else if (i is TextBlock)
-                //    tbs.Add(i as TextBlock);
+
+                // clear images
+                Image im = i as Image;
+                TextBlock tb = i as TextBlock;
+
+                // If it's an image
+                if (im != null)
+                {
+                    im.Source = new BitmapImage(new Uri("Images/Items/head.png", UriKind.Relative));
+                    ims.Add(im);
+                }
+                // If it's a TextBlock
+                else if (tb != null)
+                {
+                    tb.Text = " ";
+                    tbs.Add(tb);
+                }
             }
 
 
             for (int x = 0; x < count; x++)
             {
                 ims[x].Source = new BitmapImage(its[x].item.icon);
-                //tbs[x].Text = its[x].stackSize.ToString();                
+                if (its[x].stackSize > 1)
+                    tbs[x].Text = its[x].stackSize.ToString();
+                else
+                {
+                    tbs[x].Text = "";
+                }
             }
 
             grdInventory.UpdateLayout();
