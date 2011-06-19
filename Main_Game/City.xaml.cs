@@ -40,12 +40,21 @@ namespace Main_Game
             }
             else if (Canvas.GetTop(mainChar) == 300 + 5*step && Canvas.GetLeft(mainChar) == 500 + 4*step)
             {
-                Bar tBar = new Bar();
+                Shop tBar = new Shop();
                 ScreenManager.SetScreen(tBar);
                 tBar.Focus();
             }        
         }
 
+        private void UserControl_GotFocus(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void UserControl_LostFocus(object sender, RoutedEventArgs e)
+        {
+            
+        }
 
        
     }
@@ -74,7 +83,4 @@ namespace Main_Game
                 Canvas.SetTop(mainChar, Canvas.GetTop(mainChar) + step);
         }
     }
-    
-
-
 }

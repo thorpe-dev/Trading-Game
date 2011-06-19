@@ -69,13 +69,11 @@ namespace Main_Game
 
         private void btn_skip_Click(object sender, RoutedEventArgs e)
         {
-            BattleScreen tBattleScreen = new BattleScreen();
-            CharacterScreen tCharScreen = new CharacterScreen();
-            ScreenManager.SetScreen(tCharScreen);
+            City tCity = new City(500,300);
+            ScreenManager.SetScreen(tCity);
             ScreenManager.SetSettingBar(new settingBar());
             ScreenManager.SetSideBar(new sideBar());
-            tBattleScreen.Focus();
+            tCity.Focus();
         }
-
     }
 }

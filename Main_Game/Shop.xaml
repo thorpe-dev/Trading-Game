@@ -7,9 +7,37 @@
     d:DesignHeight="300" d:DesignWidth="400" 
     KeyDown="Shop_KeyDown" 
     IsTabStop="True">    
-        <Canvas x:Name="theCanvas" Width="400" Height="400" KeyDown="Shop_KeyDown">
-        <Image x:Name="ShopBackground" Height="400" Source="Images/cave-030.png"></Image>
-        <Image x:Name="mainChar" Canvas.Left="170" Canvas.Top="270" Source="Images/Gothitelle.png" Height="64" ></Image>
+    <Canvas x:Name="theCanvas" Width="400" Height="400" KeyDown="Shop_KeyDown">
+        <Image x:Name="ShopBackground" Height="400" Source="Images/cave-030.png"/>
+        <Grid Height="400" Width="400">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <Image x:Name="mainChar" Grid.Row="4" Grid.Column="3" Source="Images/Gothitelle.png" Height="64"/>
+
+            <Button Name="buy1" Grid.Row="3" Grid.Column="2" Opacity="0.3" Tag="100"/>
+            <Button Name="buy2" Grid.Row="3" Grid.Column="3" Opacity="0.3" Tag="102"/>
+            <Button Name="buy3" Grid.Row="3" Grid.Column="4" Opacity="0.3" Tag=""/>
+
+        </Grid>
+        
     </Canvas>
    
+    
+    
 </UserControl>

@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Net;
 using System.Linq;
 using System.Windows;
@@ -62,7 +62,11 @@ namespace Main_Game
 
         public int expValue { get; set; }
         public ICollection<Item> lootTable { get; set; }
+<<<<<<< HEAD:Main_Game/SupportClasses/Character.cs
+        public int moneyDrop { get; set; }
+=======
         public int moneyDrop {get;set;}
+>>>>>>> 6f929235cf20378dc4f250b5fe93b3b9efcaf79e:Main_Game/Character.cs
         public Uri icon { get; set; }
 
         public static IDictionary<string, Creep> creepDictionary = new Dictionary<string, Creep>();
@@ -129,7 +133,7 @@ namespace Main_Game
         public Armour boots { get; set; }
         public Armour legs { get; set; }
 
-        public Character(string _name, Class _class, int _level, int _expToNext, int _maxHealth, int _currentHealth, 
+        public Character(string _name, Class _class, int _level, int _expToNext, int _maxHealth, int _currentHealth,
                             int _maxMana, int _currentMana, int _money, int _strength, int _agility, int _intelligence,
                                 int _speed, IDictionary<string, Ability> _abilities, ICollection<ItemStack> _inventory, Weapon _weapon,
                                 Armour _chest, Armour _helm, Armour _gloves, Armour _boots, Armour _legs)
@@ -165,6 +169,16 @@ namespace Main_Game
             StatModifier mod = _class.initialMod;
             int _maxHealth = calculateMaxHealth(mod.strength);
             int _maxMana = calculateMaxMana(mod.intelligence);
+<<<<<<< HEAD:Main_Game/SupportClasses/Character.cs
+            return new Character(_name, _class, 1, calculateExpToNextLevel(1), _maxHealth, _maxHealth, _maxMana,
+                                    _maxMana, 100, mod.strength, mod.agility, mod.intelligence, mod.speed, _abilities, initialItems(),
+                                    _class.startingWeapon,
+                                    _class.startingChest,
+                                    _class.startingHelm,
+                                    _class.startingGloves,
+                                    _class.startingBoots,
+                                    _class.startingLegs);
+=======
             return new Character(_name, _class, 1, calculateExpToNextLevel(1), _maxHealth, _maxHealth, _maxMana, 
                                     _maxMana, 100, mod.strength, mod.agility, mod.intelligence, mod.speed, _abilities, initialItems(), 
                                     new Weapon(_class.startingWeapon.id, _class.startingWeapon, 1),
@@ -173,14 +187,19 @@ namespace Main_Game
                                     new Armour (_class.startingGloves.id, _class.startingGloves, 1),
                                     new Armour (_class.startingBoots.id, _class.startingBoots, 1),
                                     new Armour (_class.startingLegs.id, _class.startingLegs, 1));
+>>>>>>> 6f929235cf20378dc4f250b5fe93b3b9efcaf79e:Main_Game/Character.cs
         }
 
         private static ICollection<ItemStack> initialItems()
         {
             ICollection<ItemStack> startingInventory = new List<ItemStack>((int)ItemStack.MAXSTACKSIZE);
+<<<<<<< HEAD:Main_Game/SupportClasses/Character.cs
+            Consumable minorHealthPot = (Consumable)ItemSet.retrieveItem(1);
+=======
             Consumable minorHealthPot = (Consumable) ItemSet.retrieveItem(1);
             Item i = ItemSet.retrieveItem(100);
             Weapon w = new Weapon(i.id, i as Weapon, 1);
+>>>>>>> 6f929235cf20378dc4f250b5fe93b3b9efcaf79e:Main_Game/Character.cs
             startingInventory.Add(new ItemStack(minorHealthPot, 3));
             startingInventory.Add(new ItemStack(w, 1));
             return startingInventory;
@@ -238,7 +257,7 @@ namespace Main_Game
 
         private string formatChest()
         {
-            return "&chestid=" + chest.id + "&chestlevel=" + chest.level; 
+            return "&chestid=" + chest.id + "&chestlevel=" + chest.level;
         }
 
         private string formatHelm()
@@ -268,76 +287,27 @@ namespace Main_Game
             int baseAgi = charClass.initialMod.agility + level * charClass.levelMod.agility;
             int baseSpeed = charClass.initialMod.speed + level * charClass.levelMod.speed;
 
-            int itemStrength = 0;
-            int itemAgility = 0;
-            int itemIntelligence = 0;
-            int itemSpeed = 0;
-            int itemHealth = 0;
-            int itemMana = 0;
-            if (weapon != null)
-            {
-                itemStrength += weapon.effect.strengthMod;
-                itemAgility += weapon.effect.agilityMod;
-                itemIntelligence += weapon.effect.intelligenceMod;
-                itemSpeed += weapon.effect.speedMod;
-                itemHealth += weapon.effect.healthMod;
-                itemMana += weapon.effect.manaMod;
-            }
-            if (chest != null)
-            {
-                itemStrength += chest.stats.strengthMod;
-                itemAgility += chest.stats.agilityMod;
-                itemIntelligence += chest.stats.intelligenceMod;
-                itemSpeed += chest.stats.speedMod;
-                itemHealth += chest.stats.healthMod;
-                itemMana += chest.stats.manaMod;
-            }
-            if (helm != null)
-            {
-                itemStrength += helm.stats.strengthMod;
-                itemAgility += helm.stats.agilityMod;
-                itemIntelligence += helm.stats.intelligenceMod;
-                itemSpeed += helm.stats.speedMod;
-                itemHealth += helm.stats.healthMod;
-                itemMana += helm.stats.manaMod;
-            }
-            if (gloves != null)
-            {
-                itemStrength += gloves.stats.strengthMod;
-                itemAgility += gloves.stats.agilityMod;
-                itemIntelligence += gloves.stats.intelligenceMod;
-                itemSpeed += gloves.stats.speedMod;
-                itemHealth += gloves.stats.healthMod;
-                itemMana += gloves.stats.manaMod;
-            }
-            if (boots != null)
-            {
-                itemStrength += boots.stats.strengthMod;
-                itemAgility += boots.stats.agilityMod;
-                itemIntelligence += boots.stats.intelligenceMod;
-                itemSpeed += boots.stats.speedMod;
-                itemHealth += boots.stats.healthMod;
-                itemMana += boots.stats.manaMod;
-            }
-            if (legs != null)
-            {
-                itemStrength += legs.stats.strengthMod;
-                itemAgility += legs.stats.agilityMod;
-                itemIntelligence += legs.stats.intelligenceMod;
-                itemSpeed += legs.stats.speedMod;
-                itemHealth += legs.stats.healthMod;
-                itemMana += legs.stats.manaMod;
-            }
+            int itemStrength = weapon.effect.strengthMod + chest.stats.strengthMod + helm.stats.strengthMod
+                                + gloves.stats.strengthMod + boots.stats.strengthMod + legs.stats.strengthMod;
+            int itemAgility = weapon.effect.agilityMod + chest.stats.agilityMod + helm.stats.agilityMod
+                                + gloves.stats.agilityMod + boots.stats.agilityMod + legs.stats.agilityMod;
+            int itemIntelligence = weapon.effect.intelligenceMod + chest.stats.intelligenceMod + helm.stats.intelligenceMod
+                                + gloves.stats.intelligenceMod + boots.stats.intelligenceMod + legs.stats.intelligenceMod;
+            int itemSpeed = weapon.effect.speedMod + chest.stats.speedMod + helm.stats.speedMod
+                                + gloves.stats.speedMod + boots.stats.speedMod + legs.stats.speedMod;
 
             strength = baseStrength + itemStrength;
             agility = baseAgi + itemAgility;
             intelligence = baseInt + itemIntelligence;
             speed = baseSpeed + itemSpeed;
 
+            int itemHealth = weapon.effect.healthMod + chest.stats.healthMod + helm.stats.healthMod
+                                + gloves.stats.healthMod + boots.stats.healthMod + legs.stats.healthMod;
+            int itemMana = weapon.effect.manaMod + chest.stats.manaMod + helm.stats.manaMod
+                                + gloves.stats.manaMod + boots.stats.manaMod + legs.stats.manaMod;
+
             maxHealth = calculateMaxHealth(strength) + itemHealth;
-            currentHealth = maxHealth;
             maxMana = calculateMaxMana(intelligence) + itemMana;
-            currentMana = maxMana;
         }
 
         public void levelUp()
@@ -351,7 +321,7 @@ namespace Main_Game
 
         public void resetStats()
         {
-            buffs =  new Effect();
+            buffs = new Effect();
         }
 
         public override Ability getAbility()
@@ -361,7 +331,7 @@ namespace Main_Game
 
         public static int calculateMaxHealth(int _strength)
         {
-            return BASEHEALTH + 20 * _strength;        
+            return BASEHEALTH + 20 * _strength;
         }
 
         public static int calculateMaxMana(int _intelligence)
