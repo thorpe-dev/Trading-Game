@@ -297,24 +297,71 @@ namespace Main_Game
             int baseAgi = charClass.initialMod.agility + level * charClass.levelMod.agility;
             int baseSpeed = charClass.initialMod.speed + level * charClass.levelMod.speed;
 
-            int itemStrength = weapon.effect.strengthMod + chest.stats.strengthMod + helm.stats.strengthMod
-                                + gloves.stats.strengthMod + boots.stats.strengthMod + legs.stats.strengthMod;
-            int itemAgility = weapon.effect.agilityMod + chest.stats.agilityMod + helm.stats.agilityMod
-                                + gloves.stats.agilityMod + boots.stats.agilityMod + legs.stats.agilityMod;
-            int itemIntelligence = weapon.effect.intelligenceMod + chest.stats.intelligenceMod + helm.stats.intelligenceMod
-                                + gloves.stats.intelligenceMod + boots.stats.intelligenceMod + legs.stats.intelligenceMod;
-            int itemSpeed = weapon.effect.speedMod + chest.stats.speedMod + helm.stats.speedMod
-                                + gloves.stats.speedMod + boots.stats.speedMod + legs.stats.speedMod;
+            int itemStrength = 0;
+            int itemAgility = 0;
+            int itemIntelligence = 0;
+            int itemSpeed = 0;
+            int itemHealth = 0;
+            int itemMana = 0;
+            if (weapon != null)
+            {
+                itemStrength += weapon.effect.strengthMod;
+                itemAgility += weapon.effect.agilityMod;
+                itemIntelligence += weapon.effect.intelligenceMod;
+                itemSpeed += weapon.effect.speedMod;
+                itemHealth += weapon.effect.healthMod;
+                itemMana += weapon.effect.manaMod;
+            }
+            if (chest != null)
+            {
+                itemStrength += chest.stats.strengthMod;
+                itemAgility += chest.stats.agilityMod;
+                itemIntelligence += chest.stats.intelligenceMod;
+                itemSpeed += chest.stats.speedMod;
+                itemHealth += chest.stats.healthMod;
+                itemMana += chest.stats.manaMod;
+            }
+            if (helm != null)
+            {
+                itemStrength += helm.stats.strengthMod;
+                itemAgility += helm.stats.agilityMod;
+                itemIntelligence += helm.stats.intelligenceMod;
+                itemSpeed += helm.stats.speedMod;
+                itemHealth += helm.stats.healthMod;
+                itemMana += helm.stats.manaMod;
+            }
+            if (gloves != null)
+            {
+                itemStrength += gloves.stats.strengthMod;
+                itemAgility += gloves.stats.agilityMod;
+                itemIntelligence += gloves.stats.intelligenceMod;
+                itemSpeed += gloves.stats.speedMod;
+                itemHealth += gloves.stats.healthMod;
+                itemMana += gloves.stats.manaMod;
+            }
+            if (boots != null)
+            {
+                itemStrength += boots.stats.strengthMod;
+                itemAgility += boots.stats.agilityMod;
+                itemIntelligence += boots.stats.intelligenceMod;
+                itemSpeed += boots.stats.speedMod;
+                itemHealth += boots.stats.healthMod;
+                itemMana += boots.stats.manaMod;
+            }
+            if (legs != null)
+            {
+                itemStrength += legs.stats.strengthMod;
+                itemAgility += legs.stats.agilityMod;
+                itemIntelligence += legs.stats.intelligenceMod;
+                itemSpeed += legs.stats.speedMod;
+                itemHealth += legs.stats.healthMod;
+                itemMana += legs.stats.manaMod;
+            }
 
             strength = baseStrength + itemStrength;
             agility = baseAgi + itemAgility;
             intelligence = baseInt + itemIntelligence;
             speed = baseSpeed + itemSpeed;
-
-            int itemHealth = weapon.effect.healthMod + chest.stats.healthMod + helm.stats.healthMod
-                                + gloves.stats.healthMod + boots.stats.healthMod + legs.stats.healthMod;
-            int itemMana = weapon.effect.manaMod + chest.stats.manaMod + helm.stats.manaMod
-                                + gloves.stats.manaMod + boots.stats.manaMod + legs.stats.manaMod;
 
             maxHealth = calculateMaxHealth(strength) + itemHealth;
             currentHealth = maxHealth;
