@@ -31,6 +31,6 @@
         <Rectangle Height="47" HorizontalAlignment="Left" Margin="446,41,0,0" Name="rec_map_border" Stroke="#FFC86400" StrokeThickness="1" VerticalAlignment="Top" Width="52" />
         <Rectangle Height="47" HorizontalAlignment="Left" Margin="504,41,0,0" Name="rec_minimap_border" Stroke="#FFC86400" StrokeThickness="1" VerticalAlignment="Top" Width="52" />
         <Button Content="Exit" Height="25" HorizontalAlignment="Left" Margin="290,421,0,0" Name="btn_exit" VerticalAlignment="Top" Width="28" IsEnabled="False" Click="btn_exit_Click" />
-        <TextBox Height="160" HorizontalAlignment="Left" Margin="411,234,0,0" Name="txt_pos" VerticalAlignment="Top" Width="287" Visibility="Visible" />
+        <TextBox Height="160" HorizontalAlignment="Left" Margin="411,234,0,0" Name="txt_pos" VerticalAlignment="Top" Width="287" Visibility="Collapsed" />
     </Grid>
 </UserControl>

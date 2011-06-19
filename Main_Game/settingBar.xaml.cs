@@ -23,10 +23,6 @@ namespace Main_Game
         Rectangle hp_bar;
         Rectangle mana_bar;
         double bar_width = 135;
-        double hp_max = 200;
-        double hp_current = 200;
-        //double mana_max = 200;
-        //double mana_current = 200;
 
         public settingBar()
         {
@@ -81,65 +77,18 @@ namespace Main_Game
             m.Show();
         }
 
-        private void alter_hp(double hpmax, double newhp)
+        public void alter_hp(double hpmax, double newhp)
         {
             damage.To = (newhp) / hpmax * bar_width;
             hp_bar_reduce.Begin();
             damage.From = hp_bar.Width;
         }
 
-        private void alter_mana(double manamax, double newmana)
+        public void alter_mana(double manamax, double newmana)
         {
             mana_damage.To = (newmana) / manamax * bar_width;
             mana_bar_reduce.Begin();
             mana_damage.From = mana_bar.Width;
-        }
-
-        private void btn_hit_Click(object sender, RoutedEventArgs e)
-        {/*
-            try
-            {
-                hp_current = (hp_current - Int32.Parse(txt_damage.Text));
-                if (hp_current < 0)
-                {
-                    hp_current = 0;
-                }
-                damage.To = (hp_current) / hp_max * bar_width;
-                hp_bar_reduce.Begin();
-                damage.From = hp_bar.Width;
-            }
-            catch (Exception e1)
-            {
-                MessageBox.Show(e1.ToString());
-            }*/
-            alter_hp(200, 140);
-            alter_mana(700, 369);
-        }
-
-        private void btn_restore_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                hp_current = (hp_current + Int32.Parse(txt_damage.Text));
-                if (hp_current > hp_max)
-                {
-                    hp_current = hp_max;
-                }
-                if ((hp_current / hp_max *bar_width) > bar_width)
-                {
-                    damage.To = bar_width;
-                }
-                else
-                {
-                    damage.To = (hp_current) / hp_max * bar_width;
-                }
-                hp_bar_reduce.Begin();
-                damage.From = hp_bar.Width;
-            }
-            catch (Exception e1)
-            {
-                MessageBox.Show(e1.ToString());
-            }
         }
     }
 }

@@ -78,9 +78,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Bar.xaml.cs">
-      <DependentUpon>Bar.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Battle.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CharacterCreate.xaml.cs">
@@ -88,9 +85,6 @@
     </Compile>
     <Compile Include="CharacterScreen.xaml.cs">
       <DependentUpon>CharacterScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="City.xaml.cs">
-      <DependentUpon>City.xaml</DependentUpon>
     </Compile>
     <Compile Include="Class.cs" />
     <Compile Include="D20.cs" />
@@ -117,9 +111,6 @@
     <Compile Include="settingBar.xaml.cs">
       <DependentUpon>settingBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Shop.xaml.cs">
-      <DependentUpon>Shop.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BattleScreen.xaml.cs">
       <DependentUpon>BattleScreen.xaml</DependentUpon>
     </Compile>
@@ -138,19 +129,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="Bar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="CharacterCreate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CharacterScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="City.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -175,10 +158,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="settingBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Shop.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

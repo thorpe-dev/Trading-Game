@@ -16,10 +16,16 @@ namespace Main_Game
     public partial class LootBox : UserControl
     {
         private Item loot;
+        private IScreen returnScreen;
 
         public LootBox()
         {
-            InitializeComponent();                          
+            InitializeComponent();
+        }
+
+        public void addReturnScreen(IScreen _returnScreen)
+        {
+            returnScreen = _returnScreen;
         }
 
         public void update(Item _loot)
@@ -73,7 +79,7 @@ namespace Main_Game
 
         private void dropBtn_Click(object sender, RoutedEventArgs e)
         {
-            ScreenManager.SetScreen(new BattleScreen(Character.currentCharacter, Battle.generateCreep(Creep.creepDictionary)));
+            ScreenManager.SetScreen(returnScreen); 
         }
     }
 }

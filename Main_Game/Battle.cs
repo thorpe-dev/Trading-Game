@@ -115,7 +115,10 @@ namespace Main_Game
         {
             if (char_1.currentHealth == 0)
             {
-                
+
+                char_1.resetStats();
+                char_2.refreshCreep();
+                observer.leaveBtn.Visibility = Visibility.Visible;
                 return;
             }
             else

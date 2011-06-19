@@ -16,13 +16,15 @@ namespace Main_Game
     public partial class BattleScreen : UserControl, IScreen
     {
         public Battle battle { get; set; }
+        public MapScreen dungeon { get; set; }
 
-        public BattleScreen(Character c, Creep creep)
+        public BattleScreen(Character c, Creep creep, MapScreen _dungeon)
         {
             InitializeComponent();
             battle = new Battle(c, creep, this);
             populateEnemy(creep);
             populateAbilityGrid(c);
+            dungeon = _dungeon;
             battle.beginTurn();
         }
 
@@ -90,10 +92,14 @@ namespace Main_Game
         {
             prgCharHealth.Value = ((double)cr.currentHealth / cr.maxHealth) * 100;
             prgCharMagic.Value = ((double)cr.currentMana / cr.maxMana) * 100;
+            settingBar settings = MainPage.currentSettingBar;
+            settings.alter_hp(ch.maxHealth, ch.currentHealth);
+            settings.alter_mana(ch.maxMana, ch.currentMana);
         }
 
         public void displayLoot(Item loot)
         {
+            lootScreen.addReturnScreen(dungeon);
             lootScreen.update(loot);
             lootScreen.Visibility = Visibility.Visible;
         }
@@ -111,5 +117,11 @@ namespace Main_Game
         }
 
         public UIElement Element { get { return this; } }
+
+        private void leaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Character.currentCharacter.restoreCharacter();
+            ScreenManager.SetScreen(new Tavern(false, 0));
+        }
     }
 }

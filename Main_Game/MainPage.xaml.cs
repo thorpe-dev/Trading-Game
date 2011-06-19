@@ -15,6 +15,8 @@ namespace Main_Game
     public partial class MainPage : UserControl, IScreenHost
     {
 
+        public static settingBar currentSettingBar;
+
         public MainPage()
         {
             InitializeComponent();
@@ -32,6 +34,7 @@ namespace Main_Game
         {
             settingBar.Children.Clear();
             settingBar.Children.Add(screen.Element);
+            currentSettingBar = screen as settingBar;
         }
 
         private void main_Loaded(object sender, RoutedEventArgs e)

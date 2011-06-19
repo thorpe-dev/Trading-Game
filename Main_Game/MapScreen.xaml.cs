@@ -1000,8 +1000,15 @@ namespace Main_Game
 
         public void handle_combat()
         {
-            // Handle Combat
-            MessageBox.Show("Combat");
+            try
+            {
+                Creep creep = Battle.generateCreep(Creep.creepDictionary);
+                ScreenManager.SetScreen(new BattleScreen(Character.currentCharacter, creep, this));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public void handle_item()

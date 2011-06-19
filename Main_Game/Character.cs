@@ -100,7 +100,7 @@ namespace Main_Game
         {
             IDictionary<string, Ability> trollAbilitySet = Ability.constructAbilitySet("Attack", "Grow");
             ICollection<Item> trollLootSet = ItemSet.constructLootTable(1, 2, 100);
-            Creep c = new Creep("Troll", 30, 10, 0, 5, 200, 200, 50, 50, trollAbilitySet, trollLootSet, 100, 300, new Uri("Images/clam.png", UriKind.Relative));
+            Creep c = new Creep("Troll", 30, 10, 0, 5, 200, 200, 50, 50, trollAbilitySet, trollLootSet, 100, 50, new Uri("Images/clam.png", UriKind.Relative));
             creepDictionary.Add("Troll", c);
 
             IDictionary<string, Ability> wizardAbilitySet = Ability.constructAbilitySet("Attack", "Fireball");
@@ -373,8 +373,7 @@ namespace Main_Game
         {
             level++;
             calculateStats();
-            currentHealth = maxHealth;
-            currentMana = maxMana;
+            restoreCharacter();
             expToNext = calculateExpToNextLevel(level);
         }
 
@@ -387,6 +386,14 @@ namespace Main_Game
                 levelUp();
             }
             expToNext -= expValue;
+        }
+
+        public void restoreCharacter()
+        {
+            currentHealth = maxHealth;
+            currentMana = maxMana;
+            MainPage.currentSettingBar.alter_hp(maxHealth, maxHealth);
+            MainPage.currentSettingBar.alter_mana(maxMana, maxMana);
         }
 
         public override Ability getAbility()

@@ -36,5 +36,6 @@
             </Grid>
         </ScrollViewer>
         <my:LootBox Grid.ColumnSpan="3" Grid.RowSpan="3" Height="192" x:Name="lootScreen" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="372" Visibility="Collapsed" />
+        <Button Content="Leave" Grid.Column="2" Height="42" HorizontalAlignment="Left" Margin="41,27,0,0" Name="leaveBtn" VerticalAlignment="Top" Width="150" Visibility="Collapsed" Click="leaveBtn_Click" />
     </Grid>
 </UserControl>

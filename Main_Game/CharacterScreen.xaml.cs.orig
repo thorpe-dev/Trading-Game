@@ -296,12 +296,9 @@ namespace Main_Game
         private void characterLoaded(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error == null)
-            {
-                XDocument doc = XDocument.Parse(e.Result);
-                if (doc.Element("error") == null)
-                    ScreenManager.SetScreen(new Tavern(false, 0));
-                else
-                    MessageBox.Show("Error: " + (string)doc.Element("error"));
+            {        
+                
+                    ScreenManager.SetScreen(new Tavern(false,0));
             }
             else
             {

@@ -59,7 +59,7 @@ namespace Main_Game
             }
         }
 
-        private static void stopPolling()
+        public static void stopPolling()
         {
             timer.Stop();
         }
@@ -83,11 +83,6 @@ namespace Main_Game
         {
             public WebClient client;
             public Uri resource;
-        }
-
-        public static void stopPolling()
-        {
-            timer.Stop();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Main_Game
 
         public int roll()
         {
-            return rnd.Next(1, 20);
+            return rnd.Next(1, 21);
         }
     }
 }
