@@ -85,6 +85,9 @@ namespace Main_Game
             public Uri resource;
         }
 
-
+        public static void stopPolling()
+        {
+            timer.Stop();
+        }
     }
 }

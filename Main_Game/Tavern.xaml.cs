@@ -17,11 +17,29 @@ namespace Main_Game
     {
         Player[] players;
         Grid grd_players;
+        Grid grd_quests;
         List<int> invites = new List<int>();
+        bool only = true;
+        int host;
+        Quest[] quests;
+        int pollcount = 0;
 
-        public Tavern()
+        public Tavern(bool success, int reward)
         {
+            if (success)
+            {
+                // The player has just returned from a mission, so reward them
+                MessageBox.Show("You have completed the quest and been awarded " + reward
+                    + " experience points");
+            }
+            // Update the player's location
+            Uri path = new Uri("dungeon_host_exit.php", UriKind.Relative);
+            HttpConnection.httpGet(path, start_poll_tavern);
+            // Make sure they appear in the tavern 
+            path = new Uri("enterWorld.php", UriKind.Relative);
+            HttpConnection.httpGet(path, check_success);
             InitializeComponent();
+            // Grid to store the players
             grd_players = new Grid();
             ColumnDefinition new_def = new ColumnDefinition();
             new_def.Width = new GridLength(125);
@@ -36,128 +54,167 @@ namespace Main_Game
             grd_players.VerticalAlignment = VerticalAlignment.Top;
             grd_players.Margin = new Thickness(1, 1, 0, 0);
             grd_players.Height = 100;
-            grd_players.Width = 200;
+            grd_players.Width = 250;
             scv_players.Content = grd_players;
+            
+            // Grid to store the quests
+            grd_quests = new Grid();
+            new_def = new ColumnDefinition();
+            new_def.Width = new GridLength(50);
+            grd_quests.ColumnDefinitions.Add(new_def);
+            new_def = new ColumnDefinition();
+            new_def.Width = new GridLength(200);
+            grd_quests.ColumnDefinitions.Add(new_def);
+            grd_quests.HorizontalAlignment = HorizontalAlignment.Left;
+            grd_quests.VerticalAlignment = VerticalAlignment.Top;
+            grd_quests.Margin = new Thickness(1, 1, 0, 0);
+            grd_quests.Height = 100;
+            grd_quests.Width = 250;
+            scv_quests.Content = grd_quests;
+
+            txt_title.Visibility = Visibility.Collapsed;
+            txt_description.Visibility = Visibility.Collapsed;
+            rectangle1.Visibility = Visibility.Collapsed;
+            rectangle2.Visibility = Visibility.Collapsed;
+
+            // Get a selection of missions
+            path = new Uri("tavern_get_missions.php", UriKind.Relative);
+            HttpConnection.httpGet(path, quests_recieved);
         }
 
         public UIElement Element { get { return this; } }
 
-/*        // Executes when the user navigates to this page.
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            
-            /*
-            // Test shit...
-            players = new Player[1];
-            players[0] = new Player();
-            players[0].username = "AAAAAAAAAAAAAAAA";
-            players[0].pid = 1;
-            Label player1 = new Label();
-            player1.Width = 150;
-            player1.Height = 25;
-            player1.Content = "AAAAAAAAAAAAAAAA";
-            Grid.SetRow(player1, 0);
-            Grid.SetColumn(player1, 0);
-            grd_players.Children.Add(player1);
-            Button player1btn = new Button();
-            player1btn.Click += new RoutedEventHandler(btn_invite_handler);
-            player1btn.Tag = 0;
-            player1btn.Content = "Invite";
-            player1btn.Width = 50;
-            player1btn.Height = 25;
-            Grid.SetRow(player1btn, 0);
-            Grid.SetColumn(player1btn, 1);
-            grd_players.Children.Add(player1btn);
-            players[0].invite = player1btn;
-            //grd_players.Children.Clear();
-        }
-        */
-        private void btn_mission_Click(object sender, RoutedEventArgs e)
-        {
-            ScreenManager.SetScreen(new MapScreen());
-        }
-
-        public void lobby(object sender, DownloadStringCompletedEventArgs e)
+        private void start_poll_tavern(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error == null)
             {
-                txt_test.Text = e.Result.ToString();
+                Uri path = new Uri("lobby.php", UriKind.Relative);
                 try
                 {
-                    XDocument doc = XDocument.Parse(e.Result);
-                    var lobby_players = from player in doc.Descendants("player")
-                                        select new Player()
-                                        {
-                                            pid = (int)player.Element("pid"),
-                                            username = (string)player.Element("username")
-                                        };
-                    grd_players.Children.Clear();
-                    players = lobby_players.ToArray();
-                    if (grd_players.RowDefinitions.Count < players.Length)
-                    {
-                        while (grd_players.RowDefinitions.Count < players.Length)
-                        {
-                            RowDefinition new_def = new RowDefinition();
-                            new_def.Height = new GridLength(25);
-                            grd_players.RowDefinitions.Add(new_def);
-                        }
-                    }
-                    grd_players.Height = 25 * players.Length;
-                    txt_test.Text = "Results:\n";
-                    for (int i = 0; i < players.Length; i++)
-                    {
-                        Label new_lbl = new Label();
-                        new_lbl.Width = 125;
-                        new_lbl.Height = 25;
-                        new_lbl.Content = players[i].username;
-                        Grid.SetRow(new_lbl, i);
-                        Grid.SetColumn(new_lbl, 0);
-                        grd_players.Children.Add(new_lbl);
-
-                        Button new_btn = new Button();
-                        new_btn.Tag = i;
-                        if (!invites.Contains(players[i].pid))
-                        {
-                            new_btn.Click += new RoutedEventHandler(btn_invite_handler);
-                            new_btn.Content = "Invite";
-                        }
-                        else
-                        {
-                            new_btn.Click += new RoutedEventHandler(btn_remove_handler);
-                            new_btn.Content = "Remove";
-                        }
-                        new_btn.Width = 50;
-                        new_btn.Height = 25;
-                        Grid.SetRow(new_btn, i);
-                        Grid.SetColumn(new_btn, 1);
-                        grd_players.Children.Add(new_btn);
-
-                        players[i].show_name = new_lbl;
-                        players[i].invite = new_btn;
-                        txt_test.Text = txt_test.Text + players[i].username + "\n";
-                    }
+                    HttpConnection.httpLongPoll(path, lobby, 2);
                 }
-                catch (Exception e1)
+                catch (Exception ex)
                 {
-                    txt_test.Text = "Error in parsing: " + e1.ToString();
+                    MessageBox.Show(ex.ToString());
                 }
             }
             else
             {
-                txt_test.Text = "ERROR in results" + e.Error.ToString();
+                MessageBox.Show(e.Error.ToString());
+            }
+        }
+      
+        private void btn_mission_Click(object sender, RoutedEventArgs e)
+        {
+            Uri path = new Uri("tavern_all_invites.php", UriKind.Relative);
+            HttpConnection.httpGet(path, check_success);
+            for (int i = 0; i < quests.Length; i++)
+            {
+                if (quests[i].chosen)
+                {
+                    Quest q = quests[i];
+                    ScreenManager.SetScreen(new MapScreen(true, only, q.theme,q.size,q.monsters,
+                        q.items,q.light_level,q.reward));
+                }
             }
         }
 
-        private void btn_search_Click(object sender, RoutedEventArgs e)
+        public void check_success(object sender, DownloadStringCompletedEventArgs e)
         {
-            Uri path = new Uri("lobby.php", UriKind.Relative);
-            try
+        }
+
+        public void lobby(object sender, DownloadStringCompletedEventArgs e)
+        {
+            pollcount++;
+            lbl_poll_check.Content = pollcount;
+            if (e.Error == null)
             {
-                HttpConnection.httpLongPoll(path, lobby, 2);
+                try
+                {
+                    XDocument doc = XDocument.Parse(e.Result);
+                    // Check if any other players were found
+                    if (doc.Element("notfound") == null)
+                    {
+                        var lobby_players = from player in doc.Descendants("player")
+                                            select new Player()
+                                            {
+                                                cid = (int)player.Element("cid"),
+                                                username = (string)player.Element("name"),
+                                                invited_by = (int)player.Element("invited")
+                                            };
+                        grd_players.Children.Clear();
+                        players = lobby_players.ToArray();
+                        if (grd_players.RowDefinitions.Count < players.Length)
+                        {
+                            while (grd_players.RowDefinitions.Count < players.Length)
+                            {
+                                RowDefinition new_def = new RowDefinition();
+                                new_def.Height = new GridLength(25);
+                                grd_players.RowDefinitions.Add(new_def);
+                            }
+                        }
+                        grd_players.Height = 25 * players.Length;
+                        for (int i = 0; i < players.Length; i++)
+                        {
+                            // The name in the grid
+                            Label new_lbl = new Label();
+                            new_lbl.Width = 125;
+                            new_lbl.Height = 25;
+                            new_lbl.Content = players[i].username;
+                            Grid.SetRow(new_lbl, i);
+                            Grid.SetColumn(new_lbl, 0);
+                            grd_players.Children.Add(new_lbl);
+
+                            if (players[i].invited_by == 1)
+                            {
+                                // The 'join' button
+                                Button new_btn = new Button();
+                                new_btn.Tag = i;
+                                new_btn.Click += new RoutedEventHandler(btn_join_handler);
+                                new_btn.Content = "Join";
+                                new_btn.Width = 50;
+                                new_btn.Height = 25;
+                                Grid.SetRow(new_btn, i);
+                                Grid.SetColumn(new_btn, 2);
+                                grd_players.Children.Add(new_btn);
+                                players[i].join = new_btn;
+                            }
+                            else
+                            {
+                                // The 'invite' button
+                                Button new_btn = new Button();
+                                new_btn.Tag = i;
+                                if (!invites.Contains(players[i].cid))
+                                {
+                                    new_btn.Click += new RoutedEventHandler(btn_invite_handler);
+                                    new_btn.Content = "Invite";
+                                }
+                                else
+                                {
+                                    new_btn.Click += new RoutedEventHandler(btn_remove_handler);
+                                    new_btn.Content = "Remove";
+                                }
+                                new_btn.Width = 50;
+                                new_btn.Height = 25;
+                                Grid.SetRow(new_btn, i);
+                                Grid.SetColumn(new_btn, 1);
+                                grd_players.Children.Add(new_btn);
+                                players[i].invite = new_btn;
+                            }
+
+
+                            players[i].show_name = new_lbl;
+                        }
+                    }
+                }
+                catch (Exception e1)
+                {
+                    MessageBox.Show("Error: " + e.Result + e1.ToString());
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.ToString());
+                //txt_test.Text = "ERROR in results" + e.Error.ToString();
             }
         }
 
@@ -166,11 +223,59 @@ namespace Main_Game
             int index = Int32.Parse((sender as Button).Tag.ToString());
             string name = players[index].username;
             // Invite them...
-            MessageBox.Show("Sent invite to " + name + " (player number " + players[index].pid + ")");
-            players[index].invite.Content = "Remove";
-            players[index].invite.Click -= btn_invite_handler;
-            players[index].invite.Click += new RoutedEventHandler(btn_remove_handler);
-            invites.Add(players[index].pid);
+            Uri path = new Uri("tavern_invite.php", UriKind.Relative);
+            string parameters = String.Format("target={0}", players[index].cid);
+            HttpConnection.httpPost(path, parameters, invite_update);
+        }
+
+        private void invite_update(object sender, UploadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                try
+                {
+                    XDocument doc = XDocument.Parse(e.Result);
+                    int cid = (int)doc.Element("cid");
+                    // Update the UI
+                    for (int i = 0; i < players.Length; i++)
+                    {
+                        if (players[i].cid == cid)
+                        {
+                            players[i].invite.Content = "Remove";
+                            players[i].invite.Click -= btn_invite_handler;
+                            players[i].invite.Click += new RoutedEventHandler(btn_remove_handler);
+                            if (invites.Count == 0)
+                            {
+                                // Add the player to the party table
+                                only = false;
+                                Uri path = new Uri("tavern_start_party.php", UriKind.Relative);
+                                HttpConnection.httpGet(path, party_started);
+                            }
+                            invites.Add(cid);
+                        }
+                    }
+                }
+                catch (Exception e1)
+                {
+                    MessageBox.Show("Parse error: " + e1.ToString());
+                }
+            }
+            else
+            {
+                MessageBox.Show("SendInvite Fail: " + e.Error.ToString());
+            }
+        }
+
+        private void party_started(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                //MessageBox.Show("Result of party: " + e.Result);
+            }
+            else
+            {
+                MessageBox.Show("Could not START PARTY: " + e.Error.ToString());
+            }
         }
 
         private void btn_remove_handler(object sender, RoutedEventArgs e)
@@ -178,38 +283,223 @@ namespace Main_Game
             int index = Int32.Parse((sender as Button).Tag.ToString());
             string name = players[index].username;
             // Remove an invite
-            MessageBox.Show("Removed invite to " + name);
-            players[index].invite.Content = "Invite";
-            players[index].invite.Click -= btn_remove_handler;
-            players[index].invite.Click += new RoutedEventHandler(btn_invite_handler);
-            invites.Remove(players[index].pid);
+            Uri path = new Uri("tavern_remove_invite.php", UriKind.Relative);
+            string parameters = String.Format("target={0}", players[index].cid);
+            HttpConnection.httpPost(path, parameters, remove_invite_update);
         }
 
-        private void btn_clear_list_Click(object sender, RoutedEventArgs e)
+        private void remove_invite_update(object sender, UploadStringCompletedEventArgs e)
         {
-            txt_test.Text = "";
+            if (e.Error == null)
+            {
+                try
+                {
+                    XDocument doc = XDocument.Parse(e.Result);
+                    int cid = (int)doc.Element("cid");
+                    // Update the UI
+                    for (int i = 0; i < players.Length; i++)
+                    {
+                        if (players[i].cid == cid)
+                        {
+                            players[i].invite.Content = "Invite";
+                            players[i].invite.Click -= btn_remove_handler;
+                            players[i].invite.Click += new RoutedEventHandler(btn_invite_handler);
+                            invites.Remove(cid);
+                            if (invites.Count == 0)
+                            {
+                                // Remove the player from the party table
+                                only = true;
+                                Uri path = new Uri("tavern_remove_all.php", UriKind.Relative);
+                                HttpConnection.httpGet(path, party_started);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e1)
+                {
+                    MessageBox.Show("Parse error: " + e1.ToString());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invite remove error: " + e.Error.ToString());
+            }
         }
 
-    }
-    /*
-    public class PlayerInvite
-    {
-        string player_name;
-        bool invited;
-
-        public PlayerInvite(string name)
+        private void btn_join_handler(object sender, RoutedEventArgs e)
         {
-            this.player_name = name;
-            this.invited = false;
+            int index = Int32.Parse((sender as Button).Tag.ToString());
+            this.host = players[index].cid;
+            //MessageBox.Show("Trying to join " + host);
+            // Remove all their invites and party up....
+            invites.Clear();
+            Uri path = new Uri("tavern_remove_all.php", UriKind.Relative);
+            HttpConnection.httpGet(path, confirm_invite);
+        }
+
+        private void confirm_invite(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                Uri path = new Uri("tavern_accept_invite.php", UriKind.Relative);
+                string parameters = String.Format("hostid={0}", host);
+                HttpConnection.httpPost(path, parameters, start_poll_party);
+            }
+            else
+            {
+                MessageBox.Show(e.Error.ToString());
+            }
+        }
+
+        private void start_poll_party(object sender, UploadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                XDocument doc = XDocument.Parse(e.Result);
+                // Check if the invite still stands
+                if (doc.Element("error") == null)
+                {
+                    TavernWaitForHost wait = new TavernWaitForHost(host);
+                    wait.Show();
+                }
+            }
+            else
+            {
+                MessageBox.Show(e.Error.ToString());
+            }
+        }
+
+        private void quests_recieved(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                try
+                {
+                    XDocument doc = XDocument.Parse(e.Result);
+                    // Check if any missions were found
+                    if (doc.Element("notfound") == null)
+                    {
+                        var missions = from mission in doc.Descendants("mission")
+                                             select new Quest()
+                                             {
+                                                 title = (string)mission.Element("title"),
+                                                 description = (string)mission.Element("description"),
+                                                 size = (int)mission.Element("size"),
+                                                 theme = (int)mission.Element("theme"),
+                                                 light_level = (int)mission.Element("light"),
+                                                 monsters  = (int)mission.Element("monster"),
+                                                 items  = (int)mission.Element("item"),
+                                                 reward = (int)mission.Element("reward")
+                                             };
+                        this.quests = missions.ToArray();
+                        fill_quests();
+                    }
+                }
+                catch (Exception e1)
+                {
+                    MessageBox.Show("XML error: " + e1.ToString());
+                    MessageBox.Show("Result: " + e.Result);
+                }
+            }
+            else
+            {
+                MessageBox.Show("PHP error: " + e.Error.ToString());
+            }
+        }
+
+        private void fill_quests()
+        {
+            grd_quests.Children.Clear();
+            grd_quests.Height = quests.Length * 25;
+            while (grd_quests.RowDefinitions.Count < quests.Length)
+            {
+                RowDefinition newrow = new RowDefinition();
+                newrow.Height = new GridLength(25);
+                grd_quests.RowDefinitions.Add(newrow);
+            }
+            for (int i = 0; i < quests.Length; i++)
+            {
+                quests[i].selected = new RadioButton();
+                quests[i].selected.Content = "";
+                Grid.SetColumn(quests[i].selected, 0);
+                Grid.SetRow(quests[i].selected, i);
+                grd_quests.Children.Add(quests[i].selected);
+                quests[i].selected.Tag = i;
+                quests[i].selected.Checked += select_quest;
+                quests[i].display_title = new Label();
+                quests[i].display_title.Content = quests[i].title;
+                Grid.SetColumn(quests[i].display_title, 1);
+                Grid.SetRow(quests[i].display_title, i);
+                grd_quests.Children.Add(quests[i].display_title);
+                quests[i].display_title.Tag = i;
+                quests[i].display_title.MouseEnter += display_quest;
+            }
+        }
+
+        public void select_quest(object sender, RoutedEventArgs e)
+        {
+            int index = Int32.Parse((sender as RadioButton).Tag.ToString());
+            view_quest(index);
+            btn_mission.IsEnabled = true;
+            for (int i = 0; i < quests.Length; i++)
+            {
+                if (i == index)
+                    quests[i].chosen = true;
+                else
+                    quests[i].chosen = false;
+            }
+        }
+
+        public void display_quest(object sender, RoutedEventArgs e)
+        {
+            int index = Int32.Parse((sender as Label).Tag.ToString());
+            view_quest(index);
+        }
+
+        public void view_quest(int index)
+        {
+            txt_title.Text = quests[index].title;
+            txt_description.Text = quests[index].description;
+            txt_title.Visibility = Visibility.Visible;
+            txt_description.Visibility = Visibility.Visible;
+            rectangle1.Visibility = Visibility.Visible;
+            rectangle2.Visibility = Visibility.Visible;
+        }
+
+        private void btn_add_quest_Click(object sender, RoutedEventArgs e)
+        {
+            Uri path = new Uri("add_quests.php", UriKind.Relative);
+            HttpConnection.httpGet(path, quests_added);
+        }
+
+        private void quests_added(object sender, DownloadStringCompletedEventArgs e)
+        {
+            MessageBox.Show(e.Result);
         }
     }
-    */
+
     public class Player
     {
-        public int pid;
+        public int cid;
         public string username;
         public Label show_name;
         public Button invite;
-        //public bool invited;
+        public Button join;
+        public int invited_by;
+    }
+
+    public class Quest
+    {
+        public string title;
+        public string description;
+        public int size;
+        public int theme;
+        public int light_level;
+        public int monsters;
+        public int items;
+        public int reward;
+        public bool chosen;
+        public RadioButton selected;
+        public Label display_title;
     }
 }

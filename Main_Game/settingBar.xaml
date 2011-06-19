@@ -3,9 +3,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Height="37" Width="1000">
+    mc:Ignorable="d" Height="75" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" d:DesignWidth="792">
     
-    <Grid x:Name="LayoutRoot" Background="#FF524E4E" Width="1000" Height="37">
-        <Button Content="Logout" Height="30" HorizontalAlignment="Left" Name="logoutBtn" VerticalAlignment="Top" Width="139" Margin="12,4,0,0" />
+    <Grid x:Name="LayoutRoot" Background="#FF524E4E" Height="76" VerticalAlignment="Stretch">
+        <Button Content="Logout" Height="25" Name="logoutBtn" VerticalAlignment="Top" Margin="24,23,0,0" HorizontalAlignment="Left" Width="94" />
+        <Image Height="32" Margin="0,0,23,21" Name="img_messages" Stretch="Fill" VerticalAlignment="Bottom" Source="/Main_Game;component/Images/mail.png" MouseLeftButtonDown="img_messages_MouseLeftButtonDown" HorizontalAlignment="Right" Width="32" />
+        <Rectangle Height="11" HorizontalAlignment="Left" Margin="435,15,0,0" Name="rectangle1" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="137" Fill="#FF192400" />
+        <Rectangle Fill="#FF192400" Height="11" HorizontalAlignment="Left" Margin="435,43,0,0" Name="rectangle2" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="137" />
+        <sdk:Label Height="21" HorizontalAlignment="Left" Margin="412,12,0,0" Name="label1" VerticalAlignment="Top" Width="34" Content="HP:" />
+        <sdk:Label Content="Mana:" Height="21" HorizontalAlignment="Left" Margin="397,40,0,0" Name="label2" VerticalAlignment="Top" Width="34" />
+        <Image Height="64" HorizontalAlignment="Left" Margin="324,5,0,0" Name="img_portrait" Stretch="Fill" VerticalAlignment="Top" Width="64" Source="/Main_Game;component/Images/MageIcon.png" />
+        <Button Content="Hit" Height="18" HorizontalAlignment="Left" Margin="589,11,0,0" Name="btn_hit" VerticalAlignment="Top" Width="27" Click="btn_hit_Click" />
+        <Button Content="Restore" Height="18" HorizontalAlignment="Left" Margin="622,11,0,0" Name="btn_restore" VerticalAlignment="Top" Width="49" Click="btn_restore_Click" />
+        <TextBox Height="21" HorizontalAlignment="Left" Margin="677,10,0,0" Name="txt_damage" VerticalAlignment="Top" Width="30" />
     </Grid>
 </UserControl>

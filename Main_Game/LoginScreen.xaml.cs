@@ -67,6 +67,5 @@ namespace Main_Game
             Register r = new Register();
             r.Show();
         }
-
     }
 }

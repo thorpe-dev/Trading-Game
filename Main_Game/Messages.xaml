@@ -1,0 +1,35 @@
+﻿<controls:ChildWindow x:Class="Main_Game.Messages"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="456" Height="402" 
+           Title="Messages" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="238*" />
+            <RowDefinition Height="23" />
+        </Grid.RowDefinitions>
+
+        <Button x:Name="btn_close" Content="Close" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Bottom" />
+        <Button Content="New" Height="23" HorizontalAlignment="Left" Name="btn_new_msg" VerticalAlignment="Bottom" Width="75" Grid.Row="1" Click="btn_new_msg_Click" />
+        <Button Content="Delete" Height="23" HorizontalAlignment="Left" Margin="81,0,0,0" Name="btn_delete" VerticalAlignment="Bottom" Width="75" Grid.Row="1" Click="btn_delete_Click" />
+        <sdk:DataGrid AutoGenerateColumns="False" Height="26" HorizontalAlignment="Left" Margin="6,5,0,0" Name="grd_title" VerticalAlignment="Top" Width="422">
+            <sdk:DataGrid.Columns>
+                <sdk:DataGridCheckBoxColumn CanUserReorder="True" CanUserResize="True" CanUserSort="True" Width="50" />
+                <sdk:DataGridCheckBoxColumn CanUserReorder="True" CanUserResize="True" CanUserSort="True" Header="Sender" Width="140" />
+                <sdk:DataGridCheckBoxColumn CanUserReorder="True" CanUserResize="True" CanUserSort="True" Header="Subject" Width="230" />
+            </sdk:DataGrid.Columns>
+        </sdk:DataGrid>
+        <ScrollViewer Height="95" HorizontalAlignment="Left" Margin="6,33,0,0" Name="scv_message_holder" VerticalAlignment="Top" Width="422" />
+        <Button Content="Generate" Grid.Row="1" Height="21" HorizontalAlignment="Left" Margin="258,0,0,0" Name="btn_gen" VerticalAlignment="Top" Width="61" Click="btn_gen_Click" VerticalContentAlignment="Top" Visibility="Collapsed" />
+        <Button Content="Fill" Height="21" HorizontalAlignment="Right" Margin="0,0,81,0" Name="btn_fill" VerticalAlignment="Top" Width="61" Grid.Row="1" Click="btn_fill_Click" VerticalContentAlignment="Top" Visibility="Collapsed" />
+        <Grid Height="200" HorizontalAlignment="Left" Margin="26,134,0,0" Name="grd_message_view" VerticalAlignment="Top" Width="377">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="150" />
+            </Grid.RowDefinitions>
+        </Grid>
+        <Button Content="Refresh" Height="23" HorizontalAlignment="Left" Margin="162,0,0,0" Name="btn_refresh" VerticalAlignment="Bottom" Width="75" Grid.Row="1" Click="btn_refresh_Click" />
+    </Grid>
+</controls:ChildWindow>

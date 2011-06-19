@@ -291,27 +291,14 @@ namespace Main_Game
         private void playCharButton_Click(object sender, RoutedEventArgs e)
         {
             HttpConnection.httpGet(new Uri("enterWorld.php", UriKind.Relative), characterLoaded);
-
         }
 
         private void characterLoaded(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error == null)
-            {
-                XDocument doc = XDocument.Parse(e.Result);
-                if (doc.Element("error") == null)
-                {
-                    Location l = new Location(LocationType.HomeHub);
-                    Location.currentLocation = l;
-                    Creep c = Battle.generateCreep(Creep.creepDictionary);
-                    BattleScreen b = new BattleScreen(Character.currentCharacter, c);
-                    ScreenManager.SetScreen(b);
-                    b.Focus();
-                }
-                else
-                {
-                    MessageBox.Show((string)doc.Element("error"));
-                }
+            {        
+                
+                    ScreenManager.SetScreen(new Tavern(false,0));
             }
             else
             {
