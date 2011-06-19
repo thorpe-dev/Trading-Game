@@ -65,19 +65,19 @@ namespace Trading_Project
 
             while (i.MoveNext())
             {
-                if (i.Current.move_effect.strength_mod < max_str_pen.move_effect.strength_mod && (i.Current is AttackMove))
+                if (i.Current.move_effect.strength_mod < max_str_pen.move_effect.strength_mod && (i.Current is AttackMove) && (i.Current.mana_cost <= this.mana))
                     max_str_pen = i.Current;
 
-                if (i.Current.move_effect.dexterity_mod < max_str_pen.move_effect.dexterity_mod && (i.Current is AttackMove))
+                if (i.Current.move_effect.dexterity_mod < max_str_pen.move_effect.dexterity_mod && (i.Current is AttackMove) && (i.Current.mana_cost <= this.mana))
                     max_dex_pen = i.Current;
 
-                if (i.Current.move_effect.intelligence_mod < max_str_pen.move_effect.intelligence_mod && (i.Current is AttackMove))
+                if (i.Current.move_effect.intelligence_mod < max_str_pen.move_effect.intelligence_mod && (i.Current is AttackMove) && (i.Current.mana_cost <= this.mana))
                     max_int_pen = i.Current;
 
-                if (i.Current.move_effect.speed_mod < max_str_pen.move_effect.speed_mod && (i.Current is AttackMove))
+                if (i.Current.move_effect.speed_mod < max_str_pen.move_effect.speed_mod && (i.Current is AttackMove) && (i.Current.mana_cost <= this.mana))
                     max_spd_pen = i.Current;
 
-                if (i.Current.move_effect.mana_restore < max_str_pen.move_effect.mana_restore && (i.Current is AttackMove))
+                if (i.Current.move_effect.mana_restore < max_str_pen.move_effect.mana_restore && (i.Current is AttackMove) && (i.Current.mana_cost <= this.mana))
                     max_mana_pen = i.Current;
             }
 

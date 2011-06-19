@@ -27,7 +27,7 @@ namespace Trading_Project
 
         public String name { get { return p_name; } }
 
-        public Effect move_effect { get { return p_move_effect; } }
+        public Effect move_effect { get { return p_move_effect; } set { p_move_effect = value; } }
 
 
         public Move(String name, uint hr, float stm, float dm, float spm)

@@ -25,6 +25,9 @@ namespace Main_Game
         public Uri icon { get; set; }
         public Effect abilityEffect { get; set; }
 
+        protected float p_attackbonus;
+        public float attackbonus { get { return p_attackbonus; } }
+
         public Ability(string _name, string _description, int _manacost, Uri _icon, Effect _abilityEffect)
         {
             name = _name;
@@ -32,6 +35,7 @@ namespace Main_Game
             manaCost = _manacost;
             icon = _icon;
             abilityEffect = _abilityEffect;
+            p_attackbonus = 0;
         }
 
         public static void populateAllAbility()
@@ -62,9 +66,6 @@ namespace Main_Game
 
     public class AttackAbility : Ability
     {
-        protected float p_attackbonus;
-
-        public float attackbonus { get { return p_attackbonus; } }
 
         public AttackAbility(string _name, string _description, int _manacost, Uri _icon, Effect _abilityEffect, float _attackBonus)
             : base(_name, _description, _manacost, _icon, _abilityEffect)

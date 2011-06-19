@@ -65,6 +65,8 @@ namespace Main_Game
         public int moneyDrop { get; set; }
         public Uri icon { get; set; }
 
+        private uint no_turns { get; set; }
+
         public static IDictionary<string, Creep> creepDictionary = new Dictionary<string, Creep>();
 
         public Creep(string _name, int _strength, int _agility, int _intelligence, int _speed, int _maxHealth, int _currentHealth,
@@ -100,9 +102,107 @@ namespace Main_Game
 
         public override Ability getAbility()
         {
+            this.no_turns++;
+
+            if (this.no_turns < 4)
+                return earlyMove();
+            else
+                return lateMove();
+        }
+
+        public Ability earlyMove()
+        {
+            Ability max_str_pen;
+            Ability max_dex_pen;
+            Ability max_int_pen;
+            Ability max_spd_pen;
+            Ability max_mana_pen;
+
             Random rnd = new Random();
-            Ability[] abilityArray = abilities.Values.ToArray();
-            return abilityArray[rnd.Next(0, abilityArray.Count())];
+            int move_choice = rnd.Next(1, 5);
+
+            max_str_pen = max_dex_pen = max_int_pen = max_spd_pen = max_mana_pen = this.abilities.First().Value;
+
+            foreach (var ab in this.abilities)
+            {
+                if ((ab.Value.abilityEffect.strength_mod < max_str_pen.abilityEffect.strength_mod)
+                    && (ab.Value is AttackAbility)
+                    && (ab.Value.manaCost <= this.currentMana))
+                    max_str_pen = ab.Value;
+
+                if ((ab.Value.abilityEffect.agility_mod < max_str_pen.abilityEffect.agility_mod)
+                    && (ab.Value is AttackAbility)
+                    && (ab.Value.manaCost <= this.currentMana))
+                    max_dex_pen = ab.Value;
+
+                if ((ab.Value.abilityEffect.intelligence_mod < max_str_pen.abilityEffect.intelligence_mod)
+                    && (ab.Value is AttackAbility)
+                    && (ab.Value.manaCost <= this.currentMana))
+                    max_int_pen = ab.Value;
+
+                if ((ab.Value.abilityEffect.speed_mod < max_str_pen.abilityEffect.speed_mod)
+                    && (ab.Value is AttackAbility)
+                    && (ab.Value.manaCost <= this.currentMana))
+                    max_spd_pen = ab.Value;
+
+                if ((ab.Value.abilityEffect.mana_restore < max_str_pen.abilityEffect.mana_restore)
+                    && (ab.Value is AttackAbility)
+                    && (ab.Value.manaCost <= this.currentMana))
+                    max_mana_pen = ab.Value;
+            }
+
+            switch (move_choice)
+            {
+                case 1:
+                    return max_str_pen;
+                case 2:
+                    return max_dex_pen;
+                case 3:
+                    return max_int_pen;
+                case 4:
+                    return max_spd_pen;
+                default:
+                    return max_mana_pen;
+
+            }
+        }
+
+        public Ability lateMove()
+        {
+            Ability max_attack;
+            Ability max_health; // Most health restored to NPC
+            Ability min_health; // Most damage done to Player
+
+            Random rnd = new Random();
+            int move_choice = rnd.Next(1, 3);
+
+            max_attack = max_health = min_health = this.abilities.First().Value;
+
+            foreach (var ab in this.abilities)
+            {
+                if ((ab.Value is AttackAbility)
+                    && (ab.Value.attackbonus < max_attack.attackbonus))
+                    max_attack = ab.Value;
+
+                if ((ab.Value is SelfAbility)
+                    && (ab.Value.abilityEffect.health_restore > max_health.abilityEffect.health_restore))
+                    max_health = ab.Value;
+
+                if ((ab.Value is AttackAbility) 
+                    && ab.Value.abilityEffect.health_restore < min_health.abilityEffect.health_restore)
+                    min_health = ab.Value;
+            }
+
+            switch (move_choice)
+            {
+                case 1:
+                    return max_attack;
+                case 2:
+                    return max_health;
+                default:
+                    return min_health;
+
+            }
         }
 
 

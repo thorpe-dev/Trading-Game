@@ -61,10 +61,12 @@ namespace Trading_Project
         {
             p_effect = new Effect();
             dice = new D20();
-            p_health = 50;
+            max_health = p_health = 50;
             p_strength = 10;
             p_dexterity = 10;
             p_speed = 10;
+            p_intelligence = 10;
+            p_mana = 20;
         }
 
 
