@@ -32,29 +32,29 @@ namespace Main_Game
 
         public UIElement Element { get { return this; } }
 
-        public void setCharHealthCur(int hp)
-        {
-            txtHealthCurrent.Text = hp.ToString();
-            prgCharHealth.Value = hp;
-        }
+        //public void setCharHealthCur(int hp)
+        //{
+        //    txtHealthCurrent.Text = hp.ToString();
+        //    prgCharHealth.Value = hp;
+        //}
 
-        public void setCharHealthMax(int maxhp)
-        {
-            txtHealthMax.Text = maxhp.ToString();
-            prgCharHealth.Maximum = maxhp;
-        }
+        //public void setCharHealthMax(int maxhp)
+        //{
+        //    txtHealthMax.Text = maxhp.ToString();
+        //    prgCharHealth.Maximum = maxhp;
+        //}
 
-        public void setCharMagicCur(int magic)
-        {
-            txtMagicCurrent.Text = magic.ToString();
-            prgCharMagic.Value = magic;
-        }
+        //public void setCharMagicCur(int magic)
+        //{
+        //    txtMagicCurrent.Text = magic.ToString();
+        //    prgCharMagic.Value = magic;
+        //}
 
-        public void setCharMagicMax(int maxmagic)
-        {
-            txtMagicMax.Text = maxmagic.ToString();
-            prgCharMagic.Maximum = maxmagic;
-        }
+        //public void setCharMagicMax(int maxmagic)
+        //{
+        //    txtMagicMax.Text = maxmagic.ToString();
+        //    prgCharMagic.Maximum = maxmagic;
+        //}
 
         public void updateInventory()
         {
@@ -173,8 +173,8 @@ namespace Main_Game
             var img = (Image)sender;
             int pos = (int)img.GetValue(Grid.RowProperty) * 5 + (int)img.GetValue(Grid.ColumnProperty);
 
-            curCharacter.inventory.ElementAt(pos).useItem(curCharacter, inBattle);
-
+                curCharacter.inventory.ElementAt(pos).useItem(curCharacter, inBattle);
+            
             updateInventory();
             updateEquipment();
             updateStats();
@@ -187,15 +187,25 @@ namespace Main_Game
             txtAgilityVal.Text = curCharacter.agility.ToString();
             txtIntVal.Text = curCharacter.intelligence.ToString();
             txtSpeedVal.Text = curCharacter.speed.ToString();
-            setCharMagicMax(curCharacter.maxMana);
-            setCharHealthMax(curCharacter.maxHealth);
-            setCharHealthCur(curCharacter.currentHealth);
-            setCharMagicCur(curCharacter.currentMana);
+            //setCharMagicMax(curCharacter.maxMana);
+            //setCharHealthMax(curCharacter.maxHealth);
+            //setCharHealthCur(curCharacter.currentHealth);
+            //setCharMagicCur(curCharacter.currentMana);
 
             txtLevel.Text = "Level " + curCharacter.level.ToString();
             txtExp.Text = "Exp to next level: " + curCharacter.expToNext.ToString();
             txtGold.Text = "Gold: " + curCharacter.money.ToString();
 
+        }
+
+        private void inventory_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Drop
+            var img = (Image)sender;
+            int pos = (int)img.GetValue(Grid.RowProperty) * 5 + (int)img.GetValue(Grid.ColumnProperty);
+            curCharacter.inventory.ElementAt(pos).dropItem(curCharacter.inventory);
+            updateInventory();
+            e.Handled = true;
         }
     }
 }
