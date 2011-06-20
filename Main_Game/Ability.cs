@@ -51,6 +51,25 @@ namespace Main_Game
             allAbilities.Add("Grow", new SelfAbility("Grow", "Grows in size and gains strength", 20, 
                                         new Uri("Images/grow.png", UriKind.Relative),
                                         new Effect(0, 1.3, 1, 1, 1)));
+
+            allAbilities.Add("War Cry", new SelfAbility("War Cry", "A morale-boosting shout that raises attack", 10,
+                                        new Uri("Images/grow.png", UriKind.Relative),
+                                        new Effect(0, 1.3, 1, 1, 1)));
+            allAbilities.Add("Wild Charge", new AttackAbility("Wild Charge", "A reckless attack that causes more damage", 40,
+                                        new Uri("Images/grow.png", UriKind.Relative),
+                                        new Effect(0, 1, 1, 1, 1), 30));
+            allAbilities.Add("Regenerate", new SelfAbility("Regenerate", "Restores the user", 50,
+                                        new Uri("Images/grow.png", UriKind.Relative),
+                                        new Effect(50, 1, 1, 1, 1)));
+            allAbilities.Add("Grave Chill", new MagicAbility("Grave Chill", "Freezes the enemy with unholy power", 25,
+                                        new Uri("Images/fireball.png", UriKind.Relative),
+                                        new Effect(), 40));
+            allAbilities.Add("Bull Rush", new AttackAbility("Bull Rush", "A reckless attack that causes more damage and boosts speed", 40,
+                                        new Uri("Images/grow.png", UriKind.Relative),
+                                        new Effect(0, 1, 1, 1, 1.2), 30));
+            allAbilities.Add("Battle Roar", new SelfAbility("Battle Roar", "A morale-boosting shout that raises attack", 10,
+                                        new Uri("Images/grow.png", UriKind.Relative),
+                                        new Effect(0, 1.3, 1, 1, 1)));
         }
 
         public static Ability fetchAbility(string abilityname)

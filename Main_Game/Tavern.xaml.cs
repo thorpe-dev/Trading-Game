@@ -31,6 +31,7 @@ namespace Main_Game
                 // The player has just returned from a mission, so reward them
                 MessageBox.Show("You have completed the quest and been awarded " + reward
                     + " experience points");
+                Character.currentCharacter.awardExp(reward);
             }
             Character.currentCharacter.restoreCharacter();
             // Update the player's location
@@ -114,8 +115,10 @@ namespace Main_Game
                 if (quests[i].chosen)
                 {
                     Quest q = quests[i];
-                    ScreenManager.SetScreen(new MapScreen(true, only, q.theme,q.size,q.monsters,
-                        q.items,q.light_level,q.reward));
+                    MapScreen m = new MapScreen(true, only, q.theme, q.size, q.monsters,
+                        q.items, q.light_level, q.reward);
+                    ScreenManager.SetScreen(m);
+                    m.Focus();
                 }
             }
         }

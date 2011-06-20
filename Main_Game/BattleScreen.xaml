@@ -4,37 +4,40 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="420" d:DesignWidth="600" xmlns:my="clr-namespace:Main_Game">
+    d:DesignHeight="420" d:DesignWidth="600" xmlns:my="clr-namespace:Main_Game" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
 
-    <Grid x:Name="LayoutRoot" Background="Silver">
+    <Grid x:Name="LayoutRoot" Background="Black" Width="598">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="80"/>
             <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="0*" />
+            <ColumnDefinition Width="399*" />
+            <ColumnDefinition Width="199*" />
         </Grid.ColumnDefinitions>
 
-        <Image Name="imgEnemyIcon" />
+        <Image Name="imgEnemyIcon" Margin="22,43,195,37" Grid.RowSpan="2" Grid.Column="1" />
 
-        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
-            <ProgressBar Name="prgCharHealth" Background="White" Foreground="Red" Grid.Row="0" Grid.Column="1" Height="30" Value="100"/>
-            <ProgressBar Name="prgCharMagic" Background="White" Foreground="Blue" Grid.Row="0" Grid.Column="1" Height="30" Value="100"/>
-        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"></StackPanel>
 
-        <ScrollViewer Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Height="132" Name="textScroller">
-            <StackPanel Background="Black" Name="battleTextBox" Height="Auto"></StackPanel>
+        <ScrollViewer Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Height="132" Name="textScroller" Background="Black" BorderBrush="Black">
+            <StackPanel Background="White" Name="battleTextBox" Height="Auto"></StackPanel>
         </ScrollViewer>
-        <ScrollViewer Height="55" Name="abilityViewer" Width="600" Grid.ColumnSpan="3" Margin="0,12,0,133" Grid.Row="2" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Auto">
+        <ScrollViewer Height="55" Name="abilityViewer" Grid.ColumnSpan="2" Margin="5,12,8,133" Grid.Row="2" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Auto" Grid.Column="1" BorderBrush="Black">
             <Grid Name="abilityGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                 </Grid.RowDefinitions>
             </Grid>
         </ScrollViewer>
-        <Button Content="Leave" Grid.Column="2" Height="42" HorizontalAlignment="Left" Margin="41,27,0,0" Name="leaveBtn" VerticalAlignment="Top" Width="150" Visibility="Collapsed" Click="leaveBtn_Click" />
+        <Button Content="Leave" Grid.Column="2" Height="42" HorizontalAlignment="Left" Margin="41,70,0,0" Name="leaveBtn" VerticalAlignment="Top" Width="150" Visibility="Collapsed" Click="leaveBtn_Click" />
+        <Rectangle Fill="#FF192400" Height="11" HorizontalAlignment="Left" Margin="254,85,0,0" Name="rectangle1" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="137" Grid.Column="1" />
+        <Rectangle Fill="#FF192400" HorizontalAlignment="Left" Margin="254,113,0,0" Name="rectangle2" Stroke="Black" StrokeThickness="1" Width="137" Grid.Column="1" Height="11" VerticalAlignment="Top" />
+        <sdk:Label Content="HP:" Height="21" HorizontalAlignment="Left" Margin="231,82,0,0" Name="label1" VerticalAlignment="Top" Width="34" Grid.Column="1" Foreground="White" />
+        <sdk:Label Content="Mana:" Height="21" HorizontalAlignment="Left" Margin="216,110,0,0" Name="label2" VerticalAlignment="Top" Width="34" Grid.Column="1" Foreground="White" />
+        <sdk:Label Content="Name" Foreground="White" Grid.Column="1" Height="21" HorizontalAlignment="Left" Margin="23,24,0,0" Name="lbl_creepname" VerticalAlignment="Top" Width="181" />
+        <Rectangle Grid.Column="1" Height="182" HorizontalAlignment="Left" Margin="10,12,0,0" Name="rec_map_border" Stroke="#FFC86400" StrokeThickness="1" VerticalAlignment="Top" Width="389" Grid.RowSpan="2" />
     </Grid>
 </UserControl>

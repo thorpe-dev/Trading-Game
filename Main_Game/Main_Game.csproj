@@ -237,9 +237,6 @@
     <Resource Include="Images\Dungeon\DeadEndWest.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Dungeon\enemy.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Dungeon\Exit.png" />
   </ItemGroup>
   <ItemGroup>
@@ -360,9 +357,6 @@
     <Resource Include="Images\Dungeon\TJunctionWest.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Dungeon\treasure.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\mail.png" />
   </ItemGroup>
   <ItemGroup>
@@ -384,6 +378,42 @@
     <Resource Include="Images\Items\rune-long.png" />
     <Resource Include="Images\Items\rune-lsword.png" />
     <Resource Include="Images\Items\weapon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\treasure.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\WarriorIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\down_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\left_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\right_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\up_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\RogueIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\enemy.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -364,9 +364,7 @@ namespace Main_Game
             speed = baseSpeed + itemSpeed;
 
             maxHealth = calculateMaxHealth(strength) + itemHealth;
-            currentHealth = maxHealth;
             maxMana = calculateMaxMana(intelligence) + itemMana;
-            currentMana = maxMana;
         }
 
         public void levelUp()

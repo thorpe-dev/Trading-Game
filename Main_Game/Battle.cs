@@ -24,6 +24,9 @@ namespace Main_Game
         private int playerSpeedDecay;
         private int enemySpeedDecay;
 
+        private Storyboard turn_delay;
+        private Storyboard ready_delay;
+
         public Battle(Character p1, Creep p2, BattleScreen obs)
         {
             char_1 = p1;
@@ -33,15 +36,39 @@ namespace Main_Game
             enemySpeedDecay = 1;
             battleText = "";
             observer = obs;
+            turn_delay = new Storyboard();
+            turn_delay.Duration = new Duration(TimeSpan.FromSeconds(2));
+            turn_delay.Completed += beginTurn;
+            ready_delay = new Storyboard();
+            ready_delay.Duration = new Duration(TimeSpan.FromSeconds(1));
+            ready_delay.Completed += continueTurn;
             observer.addBattleText("Encountered a " + char_2.name);
         }
 
-        public void beginTurn()
+        public void start()
+        {
+            turn_delay.Begin();
+        }
+
+        public void beginTurn(object sender, EventArgs e)
         {
             if (((char_1.speed * char_1.buffs.speed_mod) / playerSpeedDecay) <
                 ((char_2.speed * char_2.buffs.speed_mod) / enemySpeedDecay))
             {
                 observer.addBattleText(char_2.name + " is readying an attack");
+            }
+            else
+            {
+                observer.addBattleText("You are able to attack");
+            }
+            ready_delay.Begin();
+        }
+
+        public void continueTurn(object sender, EventArgs e)
+        {
+            if (((char_1.speed * char_1.buffs.speed_mod) / playerSpeedDecay) <
+                ((char_2.speed * char_2.buffs.speed_mod) / enemySpeedDecay))
+            {
                 Ability attack = char_2.getAbility();
                 int damage = char_2.Attack(attack, char_1);
                 if (damage == 0)
@@ -68,16 +95,13 @@ namespace Main_Game
                 }
                 enemySpeedDecay *= 2;
                 playerSpeedDecay = 1;
-                beginTurn();
+                turn_delay.Begin();
             }
             else
             {
-                observer.addBattleText("You are able to attack");
                 isPlayersTurn = true;
             }
-
         }
-
 
         public void playerAttack(Ability attack)
         {
@@ -108,7 +132,7 @@ namespace Main_Game
             observer.updateAbilities(char_1);
             playerSpeedDecay *= 2;
             enemySpeedDecay = 1;
-            beginTurn();
+            turn_delay.Begin();
         }
 
         private void endBattle()
