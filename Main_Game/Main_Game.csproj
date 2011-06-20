@@ -399,6 +399,52 @@
   <ItemGroup>
     <Resource Include="Images\trolled.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Items\Scimitar.png" />
+    <Resource Include="Images\Items\StaffofWizardry.png" />
+    <Resource Include="Images\Items\SteelGreaves.png" />
+    <Resource Include="Images\Items\SteelToedBoots.png" />
+    <Resource Include="Images\Items\StuddedLeather.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Items\Longsword.png" />
+    <Resource Include="Images\Items\ManaPotion.png" />
+    <Resource Include="Images\Items\PlumedHelm.png" />
+    <Resource Include="Images\Items\Quarterstaff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Items\HealthPotion.png" />
+    <Resource Include="Images\Items\LeatherBoots.png" />
+    <Resource Include="Images\Items\LeatherGloves.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Items\Breastplate.png" />
+    <Resource Include="Images\Items\ChainGloves.png" />
+    <Resource Include="Images\Items\Claymore.png" />
+    <Resource Include="Images\Items\Flamberge.png" />
+    <Resource Include="Images\Items\FullHelm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\RogueIcon.png" />
+    <Resource Include="Images\WarriorIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\up.png" />
+    <Resource Include="Images\Dungeon\up_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\right.png" />
+    <Resource Include="Images\Dungeon\right_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\left.png" />
+    <Resource Include="Images\Dungeon\left_pressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dungeon\down.png" />
+    <Resource Include="Images\Dungeon\down_pressed.png" />
+    <Resource Include="Images\Dungeon\enemy.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

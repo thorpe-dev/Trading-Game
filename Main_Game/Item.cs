@@ -39,35 +39,35 @@ namespace Main_Game
             {
                 string prefix = Consumable.consumablePrefixes[i - 1];
                 healthPot = new Consumable((int)i, prefix + "healing potion", "Regenerates health", Consumable.healthPotionBaseValue * i,
-                                ConsumableType.health, (int)(Consumable.healthPotionBaseRegen * i), new Uri("Images/Items/rune-long.png", UriKind.Relative));
+                                ConsumableType.health, (int)(Consumable.healthPotionBaseRegen * i), new Uri("Images/Items/HealthPotion.png", UriKind.Relative));
                 ItemSet.addItem(healthPot);
                 manaPot = new Consumable((int)(i + Consumable.consumablePrefixes.LongCount()), prefix + "mana potion",
                                 "Regenerates mana", Consumable.manaPotionBaseValue * i,
-                                ConsumableType.mana, (int)(Consumable.manaPotionBaseRegen * i), new Uri("Images/Items/rune-long.png", UriKind.Relative));
+                                ConsumableType.mana, (int)(Consumable.manaPotionBaseRegen * i), new Uri("Images/Items/ManaPotion.png", UriKind.Relative));
                 ItemSet.addItem(manaPot);
             }
             Weapon.populateWeaponTypeEffects();
-            Weapon w = new Weapon(101, "Magic stick", "A magical staff", 50, WeaponType.STAFF, 1, new Uri("Images/Items/addy-scim.png", UriKind.Relative));
+            Weapon w = new Weapon(101, "Magic stick", "A magical staff", 50, WeaponType.STAFF, 1, new Uri("Images/Items/Quarterstaff.png", UriKind.Relative));
             ItemSet.addItem(w);
-            w = new Weapon(100, "Broadsword", "Large two handed sword", 50, WeaponType.TWOHANDEDSWORD, 1, new Uri("Images/Items/addy-mace.png", UriKind.Relative));
+            w = new Weapon(100, "Broadsword", "Large two handed sword", 50, WeaponType.TWOHANDEDSWORD, 1, new Uri("Images/Items/Claymore.png", UriKind.Relative));
             ItemSet.addItem(w);
-            w = new Weapon(102, "Shortsword", "A short blade", 50, WeaponType.ONEHANDEDSWORD, 1, new Uri("Images/Items/addy-baxe.png", UriKind.Relative));
+            w = new Weapon(102, "Shortsword", "A short blade", 50, WeaponType.ONEHANDEDSWORD, 1, new Uri("Images/Items/Longsword.png", UriKind.Relative));
             ItemSet.addItem(w);
             Armour a = new Armour(200, "Long robe", "A cotton robe", 50, ArmourType.CHEST,
-                                   new EquipmentEffect(0, 0, 10, 0, 0, 50), 1, new Uri("Images/Items/rune-lsword.png", UriKind.Relative));
+                                   new EquipmentEffect(0, 0, 10, 0, 0, 50), 1, new Uri("Images/Items/StuddedLeather.png", UriKind.Relative));
             ItemSet.addItem(a);
             a = new Armour(300, "Soft hood", "A nice hood", 30, ArmourType.HELM,
-                                   new EquipmentEffect(-2, 0, 5, 0, 0, 20), 1, new Uri("Images/Items/addy-scim.png", UriKind.Relative));
+                                   new EquipmentEffect(-2, 0, 5, 0, 0, 20), 1, new Uri("Images/Items/FullHelm.png", UriKind.Relative));
             ItemSet.addItem(a);
             a = new Armour(400, "Woven gloves", "Handknitted gloves", 20, ArmourType.GLOVES,
-                                  new EquipmentEffect(-1, 0, 4, 0, 0, 15), 1, new Uri("Images/Items/addy-scim.png", UriKind.Relative));
+                                  new EquipmentEffect(-1, 0, 4, 0, 0, 15), 1, new Uri("Images/Items/LeatherGloves.png", UriKind.Relative));
             ItemSet.addItem(a);
             a = new Armour(500, "Mystic treads", "Very reliable pair of shoes", 20, ArmourType.BOOTS,
-                                  new EquipmentEffect(-2, 1, 3, 0, 0, 15), 1, new Uri("Images/Items/addy-mace.png", UriKind.Relative));
+                                  new EquipmentEffect(-2, 1, 3, 0, 0, 15), 1, new Uri("Images/Items/LeatherBoots.png", UriKind.Relative));
             ItemSet.addItem(a);
 
             a = new Armour(600, "Damp britches", "These have seen better days", 20, ArmourType.LEGS,
-                                  new EquipmentEffect(-1, 0, 2, 0, 0, 10), 1, new Uri("Images/Items/addy-baxe.png", UriKind.Relative));
+                                  new EquipmentEffect(-1, 0, 2, 0, 0, 10), 1, new Uri("Images/Items/SteelGreaves.png", UriKind.Relative));
             ItemSet.addItem(a);
         }
 
