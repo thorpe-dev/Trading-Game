@@ -52,7 +52,7 @@ namespace Main_Game
                 ToolTip t = new ToolTip();
                 t.Background = new SolidColorBrush(Colors.Brown);
                 t.Content = a.name + "  Mana cost:" + a.manaCost + "\n" + a.description;
-                ToolTipService.SetToolTip(t, icon);
+                ToolTipService.SetToolTip(icon, t);
                 Grid.SetRow(icon, 0);
                 Grid.SetColumn(icon, n);
                 abilityGrid.Children.Add(icon);

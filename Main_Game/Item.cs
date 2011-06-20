@@ -47,27 +47,58 @@ namespace Main_Game
                 ItemSet.addItem(manaPot);
             }
             Weapon.populateWeaponTypeEffects();
-            Weapon w = new Weapon(101, "Magic stick", "A magical staff", 50, WeaponType.STAFF, 1, new Uri("Images/Items/Quarterstaff.png", UriKind.Relative));
+            Weapon w = new Weapon(101, "Quarterstaff", "A simple wooden staff", 50, WeaponType.QUARTERSTAFF, 1, 
+                                    new Uri("Images/Items/Quarterstaff.png", UriKind.Relative));
             ItemSet.addItem(w);
-            w = new Weapon(100, "Broadsword", "Large two handed sword", 50, WeaponType.TWOHANDEDSWORD, 1, new Uri("Images/Items/Claymore.png", UriKind.Relative));
+            w = new Weapon(100, "Longsword", "A medium length single handed blade", 50, WeaponType.LONGSWORD, 1, 
+                            new Uri("Images/Items/Longsword.png", UriKind.Relative));
             ItemSet.addItem(w);
-            w = new Weapon(102, "Shortsword", "A short blade", 50, WeaponType.ONEHANDEDSWORD, 1, new Uri("Images/Items/Longsword.png", UriKind.Relative));
+
+            w = new Weapon(102, "Claymore", "A basic two handed blade", 50, WeaponType.CLAYMORE, 1, new Uri("Images/Items/Claymore.png", UriKind.Relative));
             ItemSet.addItem(w);
-            Armour a = new Armour(200, "Long robe", "A cotton robe", 50, ArmourType.CHEST,
+
+            w = new Weapon(103, "Scimitar", "A curved one handed blade", 50, WeaponType.SCIMITAR, 1, new Uri("Images/Items/Scimitar.png", UriKind.Relative));
+            ItemSet.addItem(w);
+
+            w = new Weapon(104, "Flamberge", "A barbed two handed blade", 50, WeaponType.FLAMBERGE, 1, new Uri("Images/Items/Flamberge.png", UriKind.Relative));
+            ItemSet.addItem(w);
+
+            w = new Weapon(105, "Staff of Wizardry", "An enchanted battlestaff", 50, WeaponType.BATTLESTAFF, 1, new Uri("Images/Items/StaffofWizardry.png", UriKind.Relative));
+            ItemSet.addItem(w);
+
+
+            Armour a = new Armour(200, "Studded Leather", "A riveted leather jerkin", 50, ArmourType.CHEST,
                                    new EquipmentEffect(0, 0, 10, 0, 0, 50), 1, new Uri("Images/Items/StuddedLeather.png", UriKind.Relative));
             ItemSet.addItem(a);
-            a = new Armour(300, "Soft hood", "A nice hood", 30, ArmourType.HELM,
-                                   new EquipmentEffect(-2, 0, 5, 0, 0, 20), 1, new Uri("Images/Items/FullHelm.png", UriKind.Relative));
-            ItemSet.addItem(a);
-            a = new Armour(400, "Woven gloves", "Handknitted gloves", 20, ArmourType.GLOVES,
-                                  new EquipmentEffect(-1, 0, 4, 0, 0, 15), 1, new Uri("Images/Items/LeatherGloves.png", UriKind.Relative));
-            ItemSet.addItem(a);
-            a = new Armour(500, "Mystic treads", "Very reliable pair of shoes", 20, ArmourType.BOOTS,
-                                  new EquipmentEffect(-2, 1, 3, 0, 0, 15), 1, new Uri("Images/Items/LeatherBoots.png", UriKind.Relative));
+            a = new Armour(201, "Breastplate", "Steel chest covering", 50, ArmourType.CHEST,
+                                  new EquipmentEffect(15, 5, 5, 10, 20, 0), 1, new Uri("Images/Items/Breastplate.png", UriKind.Relative));
             ItemSet.addItem(a);
 
-            a = new Armour(600, "Damp britches", "These have seen better days", 20, ArmourType.LEGS,
-                                  new EquipmentEffect(-1, 0, 2, 0, 0, 10), 1, new Uri("Images/Items/SteelGreaves.png", UriKind.Relative));
+            a = new Armour(300, "Full Helm", "A visorless helmet", 30, ArmourType.HELM,
+                                   new EquipmentEffect(2, 0, 5, 0, 0, 20), 1, new Uri("Images/Items/FullHelm.png", UriKind.Relative));
+            ItemSet.addItem(a);
+
+            a = new Armour(301, "Plumed Helm", "A full face covering helmet", 40, ArmourType.HELM,
+                                   new EquipmentEffect(5, 0, 6, 2, 20, 0), 1, new Uri("Images/Items/PlumedHelm.png", UriKind.Relative));
+            ItemSet.addItem(a);
+
+            a = new Armour(400, "Leather Gloves", "Basic hand protection", 20, ArmourType.GLOVES,
+                                  new EquipmentEffect(1, 0, 4, 0, 0, 15), 1, new Uri("Images/Items/LeatherGloves.png", UriKind.Relative));
+            ItemSet.addItem(a);
+
+            a = new Armour(401, "Chain Gloves", "Chainmail gauntlets", 20, ArmourType.GLOVES,
+                                  new EquipmentEffect(4, 0, 2, 0, 0, 0), 1, new Uri("Images/Items/ChainGloves.png", UriKind.Relative));
+            ItemSet.addItem(a);
+
+            a = new Armour(500, "Leather Boots", "Soft pair of boots", 20, ArmourType.BOOTS,
+                                  new EquipmentEffect(2, 1, 3, 0, 0, 15), 1, new Uri("Images/Items/LeatherBoots.png", UriKind.Relative));
+            ItemSet.addItem(a);
+            a = new Armour(501, "Steel-toed Boots", "Pair of leather boots with steel toecaps", 20, ArmourType.BOOTS,
+                                  new EquipmentEffect(5, 2, 5, 0, 20, 10), 1, new Uri("Images/Items/SteelToedBoots.png", UriKind.Relative));
+            ItemSet.addItem(a);
+
+            a = new Armour(600, "Steel Greaves", "Steel leg protectors", 20, ArmourType.LEGS,
+                                  new EquipmentEffect(1, 0, 2, 0, 0, 10), 1, new Uri("Images/Items/SteelGreaves.png", UriKind.Relative));
             ItemSet.addItem(a);
         }
 
@@ -415,13 +446,22 @@ namespace Main_Game
         public static void populateWeaponTypeEffects()
         {
             EquipmentEffect staffEffect = new EquipmentEffect(0, 0, 10, 0, 0, 50);
-            weaponTypeEffects.Add(WeaponType.STAFF, staffEffect);
+            weaponTypeEffects.Add(WeaponType.QUARTERSTAFF, staffEffect);
 
-            EquipmentEffect oneHandedSword = new EquipmentEffect(5, 5, 0, 10, 0, 0);
-            weaponTypeEffects.Add(WeaponType.ONEHANDEDSWORD, oneHandedSword);
+            EquipmentEffect battleStaff = new EquipmentEffect(5, 5, 0, 10, 0, 0);
+            weaponTypeEffects.Add(WeaponType.BATTLESTAFF, battleStaff);
 
-            EquipmentEffect twoHandedSword = new EquipmentEffect(10, -5, 0, -5, 0, 0);
-            weaponTypeEffects.Add(WeaponType.TWOHANDEDSWORD, twoHandedSword);
+            EquipmentEffect twoHandedSword = new EquipmentEffect(15, 0, 0, 0, 0, 0);
+            weaponTypeEffects.Add(WeaponType.CLAYMORE, twoHandedSword);
+
+            EquipmentEffect flambergeEffect = new EquipmentEffect(20, 5, 0, 1, 20, 10);
+            weaponTypeEffects.Add(WeaponType.FLAMBERGE, flambergeEffect);
+
+            EquipmentEffect longswordEffect = new EquipmentEffect(15, 10, 0, 10, 0, 0);
+            weaponTypeEffects.Add(WeaponType.LONGSWORD, longswordEffect);
+
+            EquipmentEffect scimitarEffect = new EquipmentEffect(20, 15, 0, 15, 0, 0);
+            weaponTypeEffects.Add(WeaponType.SCIMITAR, scimitarEffect);
         }
 
         public override string getDescriptionText()
@@ -500,9 +540,12 @@ namespace Main_Game
 
     public enum WeaponType
     {
-        STAFF,
-        ONEHANDEDSWORD,
-        TWOHANDEDSWORD,
+        QUARTERSTAFF,
+        BATTLESTAFF,
+        CLAYMORE,
+        FLAMBERGE,
+        LONGSWORD,
+        SCIMITAR
     }
 
     public class Armour : Item

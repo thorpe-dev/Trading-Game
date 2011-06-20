@@ -139,8 +139,8 @@ namespace Main_Game
 
     public class Character : Entity
     {
-        public const int BASEHEALTH = 0;
-        public const int BASEMANA = 0;
+        public const int BASEHEALTH = 100;
+        public const int BASEMANA = 150;
         public const int INVENTORYSIZE = 20;
         public static Character currentCharacter { get; set; }
 
@@ -236,12 +236,11 @@ namespace Main_Game
 
         private static ICollection<ItemStack> initialItems()
         {
-            ICollection<ItemStack> startingInventory = new List<ItemStack>((int)ItemStack.MAXSTACKSIZE);
+            ICollection<ItemStack> startingInventory = new List<ItemStack>((int)INVENTORYSIZE);
             Consumable minorHealthPot = (Consumable)ItemSet.retrieveItem(1);
-            Item i = ItemSet.retrieveItem(100);
-            Weapon w = new Weapon(i.id, i as Weapon, 1);
-            startingInventory.Add(new ItemStack(minorHealthPot, 3));
-            startingInventory.Add(new ItemStack(w, 1));
+            Consumable minorManaPot = (Consumable)ItemSet.retrieveItem(4);
+            startingInventory.Add(new ItemStack(minorHealthPot, 1));
+            startingInventory.Add(new ItemStack(minorManaPot, 1));
             return startingInventory;
         }
 
@@ -271,7 +270,6 @@ namespace Main_Game
 
         private void characterUploaded(object sender, UploadStringCompletedEventArgs e)
         {
-            MessageBox.Show(e.Result);
         }
 
         private string formatAbilities(IDictionary<string, Ability> abilityList)
@@ -465,12 +463,12 @@ namespace Main_Game
 
         public static int calculateMaxHealth(int _strength)
         {
-            return BASEHEALTH + 20 * _strength;
+            return BASEHEALTH + 10 * _strength;
         }
 
         public static int calculateMaxMana(int _intelligence)
         {
-            return BASEMANA + 30 * _intelligence;
+            return BASEMANA + 15 * _intelligence;
         }
 
         public static int calculateExpToNextLevel(int level)

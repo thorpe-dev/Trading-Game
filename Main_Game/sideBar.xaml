@@ -4,209 +4,124 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" GotFocus="UserControl_GotFocus" LostFocus="UserControl_LostFocus"
-    IsTabStop="True">
+    IsTabStop="True" d:DesignWidth="198" HorizontalAlignment="Right">
 
 
-    <Grid Name="grdSideBar" Background="Sienna" MinHeight="550" Width="300">
-
+    <Grid Name="grdSideBar" Background="#FF524E4E" MinHeight="550" Width="192" HorizontalAlignment="Right">
+        <Rectangle Name="recEquipBG" Fill="Black" VerticalAlignment="Top" HorizontalAlignment="Left" Width="114" Height="114" Opacity="0.5" Margin="38,212,0,0" />
         <!--Character name, icon, HP/Magic-->
-
-        <Grid Name="grdCharPanel" Width="300" Height="120" VerticalAlignment="Top" Margin="0,8,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="75"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="8"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="5"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Name="txtCharName" Grid.ColumnSpan="7" HorizontalAlignment="Center" Text="Name" Margin="10,5,0,0" />
-            <TextBlock Name="txtLevel" Text="Level" Grid.Column="0" Grid.Row="2" Margin="10,0,0,0" />
-            <TextBlock Name="txtExp" Text="Exp to next level:" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Margin="10,0,0,0" />
-
-            <!--<Border Name="brdCharIcon" Background="White" BorderBrush="Black" BorderThickness="2" Height="70" Width="70"
-                    Grid.Row="1" Grid.Column="0" Grid.RowSpan="4">
-                <Image Name="imgCharIcon" Source="Images/Character/Gothitelle.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>-->
-            
-            <!--<TextBlock Name="txtHealth" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Health"/>
-            <TextBlock Name="txtMagic" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Magic"/>
-
-            <ProgressBar Name="prgCharHealth" Background="White" Foreground="Red" Grid.Row="1" Grid.Column="2"/>
-            <ProgressBar Name="prgCharMagic" Background="White" Foreground="Blue" Grid.Row="3" Grid.Column="2"/>
-
-            <TextBlock Name="txtHealthCurrent"
-                       Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Name="txtHealthSlash" Text="/"
-                       Grid.Row="1" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Name="txtHealthMax"
-                       Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Name="txtMagicCurrent"
-                       Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Name="txtMagicSlash" Text="/"
-                       Grid.Row="3" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Name="txtMagicMax"
-                       Grid.Row="3" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
-        </Grid>
-
         <!--Middle switchable block-->
-
-        <Grid Name="grdCharEquipStats" Width="270" Height="188" HorizontalAlignment="Center" >
+        <!--Inventory-->
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,343,0,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="158" />
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Name="txtGold" Text="Gold: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="56,0,0,0" />
+
+            <Border BorderBrush="Black" BorderThickness="3" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid Name="grdInventory" Background="Black" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="32"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Row="0" Grid.Column="0" MouseLeftButtonDown="inventory_MouseLeftButtonDown" MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="0" Grid.Column="1" MouseLeftButtonDown="inventory_MouseLeftButtonDown" MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="0" Grid.Column="2" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="0" Grid.Column="3" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="0" Grid.Column="4" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+                    <Image Grid.Row="1" Grid.Column="0" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="1" Grid.Column="1" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="1" Grid.Column="2" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="1" Grid.Column="3" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="1" Grid.Column="4" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+                    <Image Grid.Row="2" Grid.Column="0" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="2" Grid.Column="1" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="2" Grid.Column="2" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="2" Grid.Column="3" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="2" Grid.Column="4" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+                    <Image Grid.Row="3" Grid.Column="0" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="3" Grid.Column="1" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="3" Grid.Column="2" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="3" Grid.Column="3" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Grid.Row="3" Grid.Column="4" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="4" FontSize="8" Foreground="White"/>
+
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="4" FontSize="8" Foreground="White"/>
+
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="4" FontSize="8" Foreground="White"/>
+
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="3" FontSize="8" Foreground="White"/>
+                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="4" FontSize="8" Foreground="White"/>
+
+
+                </Grid>
+            </Border>
+        </Grid>
+        <TextBlock Height="40" Text="Strength:" Margin="58,122,0,0" HorizontalAlignment="Left" Width="80" VerticalAlignment="Top" />
+        <TextBlock Height="40" Text="Agility:" Margin="72,139,0,0" HorizontalAlignment="Left" Width="42" VerticalAlignment="Top" />
+        <TextBlock Height="40" Text="Intelligence:" Margin="42,158,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" />
+        <TextBlock Height="40" Text="Speed:" Margin="69,176,0,0" HorizontalAlignment="Left" Width="80" VerticalAlignment="Top" />
+        <TextBlock Name="txtStrengthVal" Text="0" Margin="115,122,0,0" HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" />
+        <TextBlock Height="19" Name="txtAgilityVal" Text="0" Margin="115,139,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="23" />
+        <TextBlock Height="22" Name="txtIntVal" Text="0" Margin="115,158,0,0" HorizontalAlignment="Left" Width="30" VerticalAlignment="Top" />
+        <TextBlock Height="19" Name="txtSpeedVal" Text="0" Margin="115,176,0,0" HorizontalAlignment="Left" Width="30" VerticalAlignment="Top" />
+        <TextBlock Name="txtCharName" HorizontalAlignment="Left" Text="Name" Margin="16,11,31,0" Width="246" Height="19" VerticalAlignment="Top" FontSize="13" />
+        <TextBlock Name="txtLevel" Text="Level" Margin="17,50,0,0" HorizontalAlignment="Left" Width="94" Height="22" VerticalAlignment="Top" FontSize="13" />
+        <TextBlock Name="txtExp" Text="Exp to next level:" Margin="19,78,0,0" HorizontalAlignment="Left" Width="149" Height="35" VerticalAlignment="Top" />
+        <TextBlock FontSize="13" Height="19" HorizontalAlignment="Left" Margin="16,30,31,0" Name="classBox" Text="Class" VerticalAlignment="Top" Width="246" />
+        <Grid Name="grdEquipped" Background="Black" Margin="42,216,0,0" Height="106" VerticalAlignment="Top" HorizontalAlignment="Left" Width="106">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="32" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="32" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="32" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="32" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="32" />
             </Grid.ColumnDefinitions>
-
-
-            <Rectangle Name="recEquipBG" Fill="SlateGray" VerticalAlignment="Center" HorizontalAlignment="Center"
-                       Width="158" Height="300" Opacity="0.5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
-            <Border HorizontalAlignment="Center" Name="brdEquipped" BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column ="0" Grid.ColumnSpan="2">
-                <Grid Name="grdEquipped" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="48"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="48"/>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="48"/>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="48"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Image Name="imgWeapon" Source="Images/Items/weapon.png" Height="48" Width="48" Tag="weapon"
-                               Grid.Row="2" Grid.Column="0" MouseLeftButtonDown="equip_MouseLeftButtonDown" />
-                    <Image Name="imgHelmet" Source="Images/Items/head.png" Height="48" Width="48" Tag="helm"
-                               Grid.Row="0" Grid.Column="2" MouseLeftButtonDown="equip_MouseLeftButtonDown" />
-                    <Image Name="imgChest" Source="Images/Items/armour.png" Height="48" Width="48" Tag="chest"
-                               Grid.Row="2" Grid.Column="2" MouseLeftButtonDown="equip_MouseLeftButtonDown" />
-                    <Image Name="imgLegs" Source="Images/Items/legs.png" Height="48" Width="48" Tag="legs"
-                               Grid.Row="4" Grid.Column="2" MouseLeftButtonDown="equip_MouseLeftButtonDown" />
-                    <Image Name="imgBoots" Source="Images/Items/boots.png" Height="48" Width="48" Tag="boots"
-                               Grid.Row="4" Grid.Column="4" MouseLeftButtonDown="equip_MouseLeftButtonDown" />
-                    <Image Name="imgGloves" Source="Images/Items/gloves.png" Height="48" Width="48" Tag="gloves"
-                               Grid.Row="4" Grid.Column="0" MouseLeftButtonDown="equip_MouseLeftButtonDown" />
-
-
-                </Grid>
-            </Border>
-
-
-            <!--Stats-->
-            <StackPanel Name="panStats" Grid.Row="1" Grid.Column="2">
-                <TextBlock Height="40" Text="Strength"/>
-                <TextBlock Height="40" Text="Agility"/>
-                <TextBlock Height="40" Text="Intelligence"/>
-                <TextBlock Height="40" Text="Speed"/>
-            </StackPanel>
-            <StackPanel Name="panStatValues" Grid.Row="1" Grid.Column="3">
-                <TextBlock Height="40" Name="txtStrengthVal" Text="0"/>
-                <TextBlock Height="40" Name="txtAgilityVal" Text="0"/>
-                <TextBlock Height="40" Name="txtIntVal" Text="0"/>
-                <TextBlock Height="40" Name="txtSpeedVal" Text="0"/>
-            </StackPanel>
-
-
-
-        </Grid>
-
-        <!--Inventory-->
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,15">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-
-
-            <TextBlock Name="txtGold" Text="Gold: " Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" />
-
-            <Border BorderBrush="Black" BorderThickness="3" Grid.Column="0" Grid.Row="1">
-                <Grid Name="grdInventory" Background="LightSalmon">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="32"/>
-                        <RowDefinition Height="32"/>
-                        <RowDefinition Height="32"/>
-                        <RowDefinition Height="32"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="32"/>
-                        <ColumnDefinition Width="32"/>
-                        <ColumnDefinition Width="32"/>
-                        <ColumnDefinition Width="32"/>
-                        <ColumnDefinition Width="32"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Image Grid.Row="0" Grid.Column="0" MouseLeftButtonDown="inventory_MouseLeftButtonDown" MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="0" Grid.Column="1" MouseLeftButtonDown="inventory_MouseLeftButtonDown" MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="0" Grid.Column="2" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="0" Grid.Column="3" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="0" Grid.Column="4" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-
-                    <Image Grid.Row="1" Grid.Column="0" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="1" Grid.Column="1" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="1" Grid.Column="2" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="1" Grid.Column="3" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="1" Grid.Column="4" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-
-                    <Image Grid.Row="2" Grid.Column="0" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="2" Grid.Column="1" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="2" Grid.Column="2" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="2" Grid.Column="3" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="2" Grid.Column="4" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-
-                    <Image Grid.Row="3" Grid.Column="0" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="3" Grid.Column="1" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="3" Grid.Column="2" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="3" Grid.Column="3" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-                    <Image Grid.Row="3" Grid.Column="4" MouseLeftButtonDown="inventory_MouseLeftButtonDown"  MouseRightButtonDown="inventory_MouseRightButtonDown" />
-
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Text="20" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1" Text="1" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="4" FontSize="8" />
-
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="4" FontSize="8" />
-
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="4" FontSize="8" />
-
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="3" FontSize="8" />
-                    <TextBlock Height="auto" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="4" FontSize="8" />
-
-
-                </Grid>
-            </Border>
+            <Image Name="imgWeapon" Source="/Main_Game;component/Images/Items/InventoryBackWeapon.png" Height="32" Width="32" Tag="weapon" Grid.Row="2" Grid.Column="0" MouseLeftButtonDown="equip_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Image Name="imgHelmet" Source="/Main_Game;component/Images/Items/InventoryBackHead.png" Height="32" Width="32" Tag="helm" Grid.Row="0" Grid.Column="2" MouseLeftButtonDown="equip_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Image Name="imgChest" Source="/Main_Game;component/Images/Items/InventoryBackChest.png" Height="32" Width="32" Tag="chest" Grid.Row="2" Grid.Column="2" MouseLeftButtonDown="equip_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Image Name="imgLegs" Source="/Main_Game;component/Images/Items/InventoryBackGreaves.png" Height="32" Width="32" Tag="legs" Grid.Row="4" Grid.Column="2" MouseLeftButtonDown="equip_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Image Name="imgBoots" Source="/Main_Game;component/Images/Items/InventoryBackBoots.png" Height="32" Width="32" Tag="boots" Grid.Row="4" Grid.Column="4" MouseLeftButtonDown="equip_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Image Name="imgGloves" Source="/Main_Game;component/Images/Items/InventoryBackGloves.png" Height="32" Width="32" Tag="gloves" Grid.Row="4" Grid.Column="0" MouseLeftButtonDown="equip_MouseLeftButtonDown" HorizontalAlignment="Left" VerticalAlignment="Top" />
         </Grid>
     </Grid>
 </UserControl>

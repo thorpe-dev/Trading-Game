@@ -4,21 +4,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignWidth="640" d:DesignHeight="480"
+    d:DesignWidth="478" d:DesignHeight="305"
     Name="scrnCharacter"
     xmlns:my="clr-namespace:Main_Game"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     
-    <Grid x:Name="LayoutRoot" Background="#FF524E4E">
-        <Button Content="Create character" Height="75" HorizontalAlignment="Left" Margin="408,12,0,0" Name="createCharButton" VerticalAlignment="Top" Width="220" Click="create_Click" IsEnabled="False" />
-        <TextBlock Height="137" HorizontalAlignment="Left" Margin="24,168,0,0" Name="CharacterBox" Text="" VerticalAlignment="Top" Width="200" FontSize="9" />
+    <Grid x:Name="LayoutRoot" Background="#FF101010" Height="307" Width="479">
+        <Button Content="Create character" Height="32" HorizontalAlignment="Left" Margin="241,180,0,0" Name="createCharButton" VerticalAlignment="Top" Width="104" Click="create_Click" IsEnabled="False" />
+        <TextBlock Height="168" HorizontalAlignment="Left" Margin="24,82,0,0" Name="CharacterBox" Text="" VerticalAlignment="Top" Width="200" FontSize="9" Foreground="White" />
         <Image Height="64" HorizontalAlignment="Left" Margin="24,12,0,0" Name="charImage" Stretch="Fill" VerticalAlignment="Top" Width="64" />
-        <Button Content="Enter world" Height="59" HorizontalAlignment="Left" Margin="24,409,0,0" Name="playCharButton" VerticalAlignment="Top" Width="200" Click="playCharButton_Click" IsEnabled="False" />
-        <Button Content="Delete character" HorizontalAlignment="Left" Margin="230,409,0,0" Name="deleteCharButton" Width="220" IsEnabled="False" Click="deleteCharButton_Click" Height="59" VerticalAlignment="Top" />
-        <ScrollViewer Height="92" HorizontalAlignment="Left" Margin="24,311,0,0" Name="abilityViewer" VerticalAlignment="Top" Width="209" VerticalScrollBarVisibility="Auto">
+        <Button Content="Enter world" Height="32" HorizontalAlignment="Left" Margin="24,256,0,0" Name="playCharButton" VerticalAlignment="Top" Width="117" Click="playCharButton_Click" IsEnabled="False" />
+        <Button Content="Delete character" HorizontalAlignment="Left" Margin="351,180,0,0" Name="deleteCharButton" Width="99" IsEnabled="False" Click="deleteCharButton_Click" Height="32" VerticalAlignment="Top" />
+        <ScrollViewer Height="92" HorizontalAlignment="Left" Margin="241,82,0,0" Name="abilityViewer" VerticalAlignment="Top" Width="209" VerticalScrollBarVisibility="Auto">
             <Grid Name="abilityGrid"></Grid>
         </ScrollViewer>
-        <sdk:Label Height="206" HorizontalAlignment="Left" Margin="312,144,0,0" Name="inventoryLabel" VerticalAlignment="Top" Width="192" Content=""/>
-        <Button Content="Logout" Height="59" HorizontalAlignment="Left" IsEnabled="False" Margin="463,412,0,0" Name="logoutBtn" VerticalAlignment="Top" Width="170" Click="logoutBtn_Click" />
+        <sdk:Label Height="24" HorizontalAlignment="Left" Margin="388,27,0,0" Name="inventoryLabel" VerticalAlignment="Top" Width="71" Content="" Visibility="Collapsed" />
+        <Button Content="Logout" Height="32" Margin="333,256,0,0" Name="logoutBtn" VerticalAlignment="Top" Click="logoutBtn_Click" HorizontalAlignment="Left" Width="117" />
+        <TextBlock Height="64" HorizontalAlignment="Left" Margin="106,12,0,0" Name="nameBox" Text="" VerticalAlignment="Top" Width="154" Foreground="White" FontSize="13" />
     </Grid>
 </UserControl>

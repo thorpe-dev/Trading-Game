@@ -174,9 +174,10 @@ namespace Main_Game
 
         private void updateCharPane(Character c)
         {
-            string details = String.Format("Name:{0} \nClass:{1} \nLevel:{2}\nHealth:{3}\nMana:{4}\nMoney:{5}\n" +
-                                            "Strength:{6} \nAgility:{7} \nIntelligence:{8}\nSpeed:{9}",
-                                            c.name, c.type.ToString(), c.level, c.maxHealth,
+            nameBox.Text = string.Format("{0}\n{1}", c.name, c.type.ToString());
+            string details = String.Format("Level: {0}\nHealth: {1}\nMana: {2}\nMoney: {3}\n" +
+                                            "Strength: {4} \nAgility: {5} \nIntelligence: {6}\nSpeed: {7}",
+                                            c.level, c.maxHealth,
                                             c.maxMana, c.money, c.strength, c.agility, c.intelligence, c.speed);
             CharacterBox.Text = details;
             Ability[] abilities = c.abilities.Values.ToArray();
@@ -199,7 +200,7 @@ namespace Main_Game
                 icon.Source = new BitmapImage(a.icon);
                 ToolTip t = new ToolTip();
                 t.Background = new SolidColorBrush(Colors.Brown);
-                t.Content = a.name + ":\n" + a.description;
+                t.Content = a.name + "  Mana cost:" + a.manaCost + "\n" + a.description;
                 ToolTipService.SetToolTip(icon, t);
                 Grid.SetRow(icon, i / 5);
                 Grid.SetColumn(icon, i % 5);
@@ -287,6 +288,7 @@ namespace Main_Game
                     CharacterBox.Text = "";
                     abilityGrid.Children.Clear();
                     inventoryLabel.Content = "";
+                    nameBox.Text = "";
                     deleteCharButton.IsEnabled = false;
                     playCharButton.IsEnabled = false;
                     createCharButton.IsEnabled = true;

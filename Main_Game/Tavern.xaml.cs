@@ -34,6 +34,7 @@ namespace Main_Game
                     + " experience points");
                 Character.currentCharacter.awardExp(reward);
             }
+            Character.currentCharacter.sendCharacterToDatabase();
             // Update the player's location
             Uri path = new Uri("dungeon_host_exit.php", UriKind.Relative);
             HttpConnection.httpGet(path, start_poll_tavern);

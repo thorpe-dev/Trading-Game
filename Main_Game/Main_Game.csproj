@@ -216,9 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\clam.png" />
-    <Resource Include="Images\energyarrow.png" />
     <Resource Include="Images\failsprite.png" />
-    <Resource Include="Images\fireball.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Dungeon\4Way.png" />
@@ -444,6 +442,29 @@
     <Resource Include="Images\Dungeon\down.png" />
     <Resource Include="Images\Dungeon\down_pressed.png" />
     <Resource Include="Images\Dungeon\enemy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Abilities\Attack.png" />
+    <Resource Include="Images\Abilities\BattleCry.png" />
+    <Resource Include="Images\Abilities\Butcher.png" />
+    <Resource Include="Images\Abilities\Concentration.png" />
+    <Resource Include="Images\Abilities\Dash.png" />
+    <Resource Include="Images\Abilities\DoubleStrike.png" />
+    <Resource Include="Images\Abilities\EarthShatter.png" />
+    <Resource Include="Images\Abilities\Fireball.png" />
+    <Resource Include="Images\Abilities\HealthRestore.png" />
+    <Resource Include="Images\Abilities\InsaneRage.png" />
+    <Resource Include="Images\Abilities\MeteorStorm.png" />
+    <Resource Include="Images\Abilities\Mystic Slash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Items\InventoryBack.png" />
+    <Resource Include="Images\Items\InventoryBackBoots.png" />
+    <Resource Include="Images\Items\InventoryBackChest.png" />
+    <Resource Include="Images\Items\InventoryBackGloves.png" />
+    <Resource Include="Images\Items\InventoryBackGreaves.png" />
+    <Resource Include="Images\Items\InventoryBackHead.png" />
+    <Resource Include="Images\Items\InventoryBackWeapon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

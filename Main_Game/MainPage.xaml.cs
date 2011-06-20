@@ -29,11 +29,13 @@ namespace Main_Game
 
         private void initialiseClasses()
         {
-            IDictionary<string, Ability> warriorAbilities = new Dictionary<string, Ability>();
-            warriorAbilities.Add("Maim", Ability.fetchAbility("Maim"));
-            ClassSet.createClass(ClassType.Warrior, new Class(new StatModifier(20, 15, 10, 15), new StatModifier(3, 2, 1, 1), ClassType.Warrior,
-                                                                "Im a Warrior", new Uri("Images/WarriorIcon.png", UriKind.Relative),
-                                                                warriorAbilities, null,
+            IDictionary<string, Ability> bruteAbilities = Ability.constructAbilitySet("Attack", "Double Strike", "Battle Cry", "Butcher",
+                                                                                      "Dash", "Insane Rage");
+            ClassSet.createClass(ClassType.Brute, new Class(new StatModifier(21, 10, 4, 8), new StatModifier(3, 2, 1, 1), ClassType.Brute,
+                                                                "Brutes embody primal rage. When angered, they will rarely calm down before all their enemies are reduced to red goo. Muscle-bound and stubborn as "
+                                                                + "mules, if a brute does not approve of something he will not express the fact diplomatically - encounters with brutes will often end quickly an violently.",
+                                                                new Uri("Images/WarriorIcon.png", UriKind.Relative),
+                                                                bruteAbilities, null,
                                                                 null,
                                                                 null,
                                                                 null,
@@ -41,12 +43,14 @@ namespace Main_Game
                                                                 null));
 
 
-            IDictionary<string, Ability> mageAbilities = new Dictionary<string, Ability>();
-            mageAbilities.Add("Fireball", Ability.fetchAbility("Fireball"));
-            mageAbilities.Add("Energy arrow", Ability.fetchAbility("Energy arrow"));
-            ClassSet.createClass(ClassType.Mage, new Class(new StatModifier(10, 100, 25, 5), new StatModifier(1, 1, 4, 1), ClassType.Mage,
-                                                                "Im a Mage", new Uri("Images/MageIcon.png", UriKind.Relative),
-                                                                mageAbilities, null,
+            IDictionary<string, Ability> sorcererAbilities = Ability.constructAbilitySet("Attack", "Fireball", "Concentration", "Earth Shatter",
+                                                                                     "Restore Health", "Meteor Storm");
+            ClassSet.createClass(ClassType.Sorcerer, new Class(new StatModifier(8, 10, 20, 6), new StatModifier(1, 1, 4, 1), ClassType.Sorcerer,
+                                                                "Sorcerers are scholars who have dedicated their live to the study of magic and the arcane arts. Unlike brutes, "
+                                                                + "mages are not content to simply destroy their foes - they wish to study, to learn and to improve. Enemies that die quick deaths "
+                                                                + "can be thankful that they will not become the subjects of a sorcerer's experiments.",
+                                                                new Uri("Images/MageIcon.png", UriKind.Relative),
+                                                                sorcererAbilities, null,
                                                                 null,
                                                                 null,
                                                                 null,
@@ -54,11 +58,14 @@ namespace Main_Game
                                                                 null));
 
 
-            IDictionary<string, Ability> rogueAbilities = new Dictionary<string, Ability>();
-            rogueAbilities.Add("Attack", Ability.fetchAbility("Attack"));
-            ClassSet.createClass(ClassType.Rogue, new Class(new StatModifier(15, 20, 5, 20), new StatModifier(2, 3, 1, 3), ClassType.Rogue,
-                                                                "Im a Rogue", new Uri("Images/RogueIcon.png", UriKind.Relative),
-                                                                 rogueAbilities, null,
+            IDictionary<string, Ability> bardAbilities = Ability.constructAbilitySet("Attack", "Double Strike", "Restore Health", "Earth Shatter",
+                                                                                    "Dash", "Mystic Slash");
+            ClassSet.createClass(ClassType.Bard, new Class(new StatModifier(10, 14, 5, 15), new StatModifier(1, 3, 1, 2), ClassType.Bard,
+                                                                "Bards mix the sorcerer's knowledge of the arcane with the brute's martial prowess. Able to employ both strength and subtlty when necessary, "
+                                                                + "bards are flexible and adaptably. Bards are rarely content to remain in one place for long, and many are subject to an intense wanderlust "
+                                                                + "which leads them into many adventures and, more often than not, back out of them again.", 
+                                                                 new Uri("Images/RogueIcon.png", UriKind.Relative),
+                                                                 bardAbilities, null,
                                                                  null,
                                                                  null,
                                                                  null,

@@ -83,6 +83,7 @@ namespace Main_Game
             if (only)
                 move_allowed = true;
             InitializeComponent();
+            Character.currentCharacter.restoreCharacter();
             if (first_player)
             {
                 // Initialise all arrays used
@@ -230,7 +231,7 @@ namespace Main_Game
                         double light = ((double)dungeons.ElementAt(0).light) / 100;
                         this.light_level = light;
                         this.reward = dungeons.ElementAt(0).reward;
-                        MessageBox.Show("instance: " + this.instance);
+                        //MessageBox.Show("instance: " + this.instance);
                         // Initialise all arrays used
                         initialise_arrays();
                         // Put borders around the maps
@@ -257,12 +258,12 @@ namespace Main_Game
                 }
                 catch (Exception e1)
                 {
-                    MessageBox.Show(e1.ToString());
+                   // MessageBox.Show(e1.ToString());
                 }
             }
             else
             {
-                MessageBox.Show("Could not recieve dungeon: " + e.Error.ToString());
+                //MessageBox.Show("Could not recieve dungeon: " + e.Error.ToString());
             }
         }
 
@@ -295,7 +296,7 @@ namespace Main_Game
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                //MessageBox.Show(ex.ToString());
             }
         }
 
@@ -340,7 +341,7 @@ namespace Main_Game
             }
             else
             {
-                MessageBox.Show("Could not recieve player locations: " + e.Error.ToString());
+                //MessageBox.Show("Could not recieve player locations: " + e.Error.ToString());
             }
         }
 
@@ -364,7 +365,7 @@ namespace Main_Game
                     XDocument doc = XDocument.Parse(e.Result);
                     if (doc.Element("instance") != null)
                     {
-                        MessageBox.Show("Instance: " + (int)doc.Element("instance"));
+                        //MessageBox.Show("Instance: " + (int)doc.Element("instance"));
                         this.instance = (int)doc.Element("instance");
                         // Update the player location on the server
                         enter_dungeon();
@@ -388,18 +389,18 @@ namespace Main_Game
                     }
                     else
                     {
-                        MessageBox.Show("FAIL!");
+                        //MessageBox.Show("FAIL!");
                     }
                 }
                 catch (Exception e1)
                 {
-                    MessageBox.Show("XML error when retrieving instance: " + e1.ToString());
-                    MessageBox.Show(e.Result);
+                    //MessageBox.Show("XML error when retrieving instance: " + e1.ToString());
+                    //MessageBox.Show(e.Result);
                 }
             }
             else
             {
-                MessageBox.Show("Could not send dungeon: " + e.Error.ToString());
+                //MessageBox.Show("Could not send dungeon: " + e.Error.ToString());
             }
         }
 
@@ -412,7 +413,7 @@ namespace Main_Game
             }
             else
             {
-                MessageBox.Show("Could not send dungeon: " + e.Error.ToString());
+                //MessageBox.Show("Could not send dungeon: " + e.Error.ToString());
             }
         }
 
@@ -475,7 +476,7 @@ namespace Main_Game
                             string parameters
                               = String.Format("instance={0}", this.instance);
                             HttpConnection.httpPost(path, parameters, dungeon_sent);
-                            MessageBox.Show("Dungeon Built");
+                            //MessageBox.Show("Dungeon Built");
                             move_allowed = true;
                         }
                         else
@@ -488,6 +489,7 @@ namespace Main_Game
                     }
                     else
                     {
+                        move_allowed = true;
                         events = events_temp;
                         map = map_temp;
                         // Tell the player where the start location is and set up their map
@@ -511,7 +513,7 @@ namespace Main_Game
                 }
                 catch (Exception e1)
                 {
-                    MessageBox.Show("Error in parsing dungeon: " + e1.ToString());
+                    //MessageBox.Show("Error in parsing dungeon: " + e1.ToString());
                 }
             }
             else
@@ -1005,7 +1007,7 @@ namespace Main_Game
             }
             else
             {
-                MessageBox.Show("Could not recieve encounter: " + e.Error.ToString());
+                //MessageBox.Show("Could not recieve encounter: " + e.Error.ToString());
             }
         }
 
@@ -1017,7 +1019,46 @@ namespace Main_Game
 
         public void handle_item()
         {
-            LootBox lootBox = new LootBox(ItemSet.retrieveItem(1));
+            ICollection<Creep> creeps = dungeon_theme.creep_table.Values;
+            ICollection<Item> itemSet = new List<Item>();
+            foreach (Creep c in creeps)
+            {
+                foreach (Item i in c.lootTable)
+                {
+                    if (!itemSet.Contains(i))
+                    {
+                        itemSet.Add(i);
+                    }
+                }
+            }
+            Random rnd = new Random();
+            int lootItem = rnd.Next(0, itemSet.Count);
+            Item loot = itemSet.ElementAt(lootItem);
+            if (loot is Weapon)
+            {
+                int lootRand = rnd.Next(1, (((int)Math.Pow(Equipment.NUMBEROFLEVELS, 2) + Equipment.NUMBEROFLEVELS) / 2) + 1);
+                int j = Equipment.NUMBEROFLEVELS;
+                int k = 1;
+                while (j < lootRand)
+                {
+                    j += (j - 1);
+                    k++;
+                }
+                loot = new Weapon(loot.id, loot as Weapon, k);
+            }
+            else if (loot is Armour)
+            {
+                int lootRand = rnd.Next(1, (((int)Math.Pow(Equipment.NUMBEROFLEVELS, 2) + Equipment.NUMBEROFLEVELS) / 2) + 1);
+                int j = Equipment.NUMBEROFLEVELS;
+                int k = 1;
+                while (j < lootRand)
+                {
+                    j += (j - 1);
+                    k++;
+                }
+                loot = new Armour(loot.id, loot as Armour, k);
+            }
+            LootBox lootBox = new LootBox(loot);
             lootBox.Show();
         }
 
@@ -1073,13 +1114,13 @@ namespace Main_Game
                     }
                     else
                     {
-                        MessageBox.Show("Error in parsing events: " + e1.ToString());
+                        //MessageBox.Show("Error in parsing events: " + e1.ToString());
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Could not recieve events: " + e.Error.ToString());
+                //MessageBox.Show("Could not recieve events: " + e.Error.ToString());
             }
         }
 
@@ -1352,13 +1393,13 @@ namespace Main_Game
 
                 // Populate creeps
                 IDictionary<string, Ability> minotaurAbilitySet = Ability.constructAbilitySet("Attack", "Bull Rush","Battle Roar");
-                ICollection<Item> minotaurLootSet = ItemSet.constructLootTable(1, 2, 100);
-                Creep c = new Creep("Minotaur", 30, 10, 0, 5, 200, 200, 50, 50, minotaurAbilitySet, minotaurLootSet, 100, 50, new Uri("Images/clam.png", UriKind.Relative));
+                ICollection<Item> minotaurLootSet = ItemSet.constructLootTable(2, 102, 105, 500, 501);
+                Creep c = new Creep("Minotaur", 30, 10, 0, 5, 300, 300, 50, 50, minotaurAbilitySet, minotaurLootSet, 100, 60, new Uri("Images/clam.png", UriKind.Relative));
                 creep_table.Add("Minotaur", c);
 
                 IDictionary<string, Ability> mummyAbilitySet = Ability.constructAbilitySet("Attack", "Regenerate", "Grave Chill");
-                ICollection<Item> mummyLootSet = ItemSet.constructLootTable(1, 2, 100);
-                c = new Creep("Mummy", 30, 10, 0, 5, 200, 200, 50, 50, mummyAbilitySet, mummyLootSet, 100, 50, new Uri("Images/clam.png", UriKind.Relative));
+                ICollection<Item> mummyLootSet = ItemSet.constructLootTable(5, 103, 401, 301);
+                c = new Creep("Mummy", 30, 10, 0, 5, 250, 250, 50, 50, mummyAbilitySet, mummyLootSet, 100, 50, new Uri("Images/clam.png", UriKind.Relative));
                 creep_table.Add("Mummy", c);
             }
             else if (theme == 1)
@@ -1443,19 +1484,19 @@ namespace Main_Game
 
                 // Populate creeps
                 IDictionary<string, Ability> goblinAbilitySet = Ability.constructAbilitySet("Attack", "War Cry");
-                ICollection<Item> goblinLootSet = ItemSet.constructLootTable(1, 2, 100);
-                Creep c = new Creep("Goblin", 30, 10, 0, 5, 200, 200, 50, 50, goblinAbilitySet, goblinLootSet, 100, 50, new Uri("Images/clam.png", UriKind.Relative));
+                ICollection<Item> goblinLootSet = ItemSet.constructLootTable(1, 2, 100, 101, 200, 301);
+                Creep c = new Creep("Goblin", 18, 13, 0, 9, 170, 170, 50, 50, goblinAbilitySet, goblinLootSet, 100, 30, new Uri("Images/clam.png", UriKind.Relative));
                 creep_table.Add("Goblin", c);
 
                 IDictionary<string, Ability> orcAbilitySet = Ability.constructAbilitySet("Attack", "War Cry", "Wild Charge");
-                ICollection<Item> orcLootSet = ItemSet.constructLootTable(1, 2, 100);
-                c = new Creep("Orc", 30, 10, 0, 5, 200, 200, 50, 50, orcAbilitySet, orcLootSet, 100, 50, new Uri("Images/clam.png", UriKind.Relative));
+                ICollection<Item> orcLootSet = ItemSet.constructLootTable(4, 5, 102, 400, 501, 600);
+                c = new Creep("Orc", 30, 10, 0, 7, 230, 230, 50, 50, orcAbilitySet, orcLootSet, 100, 40, new Uri("Images/clam.png", UriKind.Relative));
                 creep_table.Add("Orc", c);
 
             }
             else
             {
-                MessageBox.Show("Not a recognized theme!");
+                //MessageBox.Show("Not a recognized theme!");
             }
         }
     }

@@ -80,7 +80,7 @@ namespace Main_Game
                 // If it's an image
                 if (im != null)
                 {
-                    im.Source = new BitmapImage(new Uri("Images/Items/head.png", UriKind.Relative));
+                    im.Source = new BitmapImage(new Uri("Images/Items/InventoryBack.png", UriKind.Relative));
 
                     ims.Add(im);
                 }
@@ -182,32 +182,34 @@ namespace Main_Game
             {
                 case "weapon":
                     if (curCharacter.weapon.dequip(curCharacter, inBattle))
-                        imgWeapon.Source = new BitmapImage(new Uri("Images/Items/weapon.png", UriKind.Relative));
+                        imgWeapon.Source = new BitmapImage(new Uri("Images/Items/InventoryBackWeapon.png", UriKind.Relative));
                     break;
                 case "chest":
                     if (curCharacter.chest.dequip(curCharacter, inBattle))
-                        imgChest.Source = new BitmapImage(new Uri("Images/Items/armour.png", UriKind.Relative));
+                        imgChest.Source = new BitmapImage(new Uri("Images/Items/InventoryBackChest.png", UriKind.Relative));
                     break;
                 case "legs":
                     if (curCharacter.legs.dequip(curCharacter, inBattle))
-                        imgLegs.Source = new BitmapImage(new Uri("Images/Items/legs.png", UriKind.Relative));
+                        imgLegs.Source = new BitmapImage(new Uri("Images/Items/InventoryBackGreaves.png", UriKind.Relative));
                     break;
                 case "boots":
                     if (curCharacter.boots.dequip(curCharacter, inBattle))
-                        imgBoots.Source = new BitmapImage(new Uri("Images/Items/boots.png", UriKind.Relative));
+                        imgBoots.Source = new BitmapImage(new Uri("Images/Items/InventoryBackBoots.png", UriKind.Relative));
                     break;
                 case "gloves":
                     if (curCharacter.gloves.dequip(curCharacter, inBattle))
-                        imgGloves.Source = new BitmapImage(new Uri("Images/Items/gloves.png", UriKind.Relative));
+                        imgGloves.Source = new BitmapImage(new Uri("Images/Items/InventoryBackGloves.png", UriKind.Relative));
                     break;
                 case "helm":
                     if (curCharacter.helm.dequip(curCharacter, inBattle))
-                        imgHelmet.Source = new BitmapImage(new Uri("Images/Items/head.png", UriKind.Relative));
+                        imgHelmet.Source = new BitmapImage(new Uri("Images/Items/InventoryBackHead.png", UriKind.Relative));
                     break;
 
             }
             updateInventory();
             updateStats();
+            MainPage.currentSettingBar.alter_hp(curCharacter.maxHealth, curCharacter.currentHealth);
+            MainPage.currentSettingBar.alter_mana(curCharacter.maxMana, curCharacter.currentMana);
         }
 
         private void inventory_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -220,6 +222,8 @@ namespace Main_Game
             updateInventory();
             updateEquipment();
             updateStats();
+            MainPage.currentSettingBar.alter_hp(curCharacter.maxHealth, curCharacter.currentHealth);
+            MainPage.currentSettingBar.alter_mana(curCharacter.maxMana, curCharacter.currentMana);
         }
 
         public void updateStats()
@@ -236,6 +240,7 @@ namespace Main_Game
 
             txtLevel.Text = "Level " + curCharacter.level.ToString();
             txtExp.Text = "Exp to next level: " + curCharacter.expToNext.ToString();
+            classBox.Text = curCharacter.type.ToString();
             txtGold.Text = "Gold: " + curCharacter.money.ToString();
 
         }

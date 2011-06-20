@@ -118,6 +118,8 @@ namespace Main_Game
                 Ability a = (sender as Image).Tag as Ability;
                 if (battle.playerCanCast(a))
                     battle.playerAttack(a);
+                else
+                    battle.isPlayersTurn = true;
                     
             }
         }

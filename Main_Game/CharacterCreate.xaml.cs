@@ -18,7 +18,6 @@ namespace Main_Game
     {
         private Character _createdChar;
         private IDictionary<string, Ability> selectedAbilities;
-        private int abilitiesToSelect;
 
         public Character createdChar
         {
@@ -57,13 +56,14 @@ namespace Main_Game
                 b.IsEnabled = true;
                 return;
             }
-            if (abilitiesToSelect != 0)
+            if (selectedAbilities.Count != Ability.initialAbilityLimit)
             {
-                MessageBox.Show("Please select " + Ability.initialAbilityLimit + " abilities");
+                MessageBox.Show("Please select " + Ability.initialAbilityLimit + " ability");
                 b.IsEnabled = true;
                 return;
             }
             Class selectedClass = ClassSet.getClass((ClassType)Enum.Parse(typeof(ClassType), (string)classSelect.SelectedItem, false));
+            selectedAbilities.Add("Attack", Ability.fetchAbility("Attack"));
             Character newChar = Character.createNewCharacter(name, selectedClass, selectedAbilities);
             newChar.calculateStats();
             newChar.submitCharacter(characterTransferComplete);
@@ -78,63 +78,63 @@ namespace Main_Game
         private void classSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             abilityGrid.Children.Clear();
+            selectedAbilities.Clear();
             Class c = ClassSet.getClass((ClassType)Enum.Parse(typeof(ClassType), (string)classSelect.SelectedItem, false));
             StatModifier stats = c.initialMod;
             descBlock.Text = c.description;
-            string statString = String.Format("Strength: {0}\nAgility: {1}\nIntelligence: {2}", stats.strength, stats.agility,
-                                               stats.intelligence);
+            string statString = String.Format("Strength: {0}\nAgility: {1}\nIntelligence: {2}\nSpeed: {3}", stats.strength, stats.agility,
+                                               stats.intelligence, stats.speed);
             classImage.Source = new BitmapImage(c.imageSrc);
             statText.Text = statString;
             int n = 0;
             foreach (Ability a in c.abilities.Values)
             {
-                ColumnDefinition column = new ColumnDefinition();
-                column.Width = new GridLength(Ability.iconSize);
-                abilityGrid.ColumnDefinitions.Add(column);
-                Image icon = new Image();
-                icon.Tag = a;
-                icon.Source = new BitmapImage(a.icon);
-                icon.Opacity = 0.6;
-                icon.MouseLeftButtonDown += new MouseButtonEventHandler(selectAbility);
-                ToolTip t = new ToolTip();
-                t.Background = new SolidColorBrush(Colors.Brown);
-                t.Content = a.name + "  Mana cost:" + a.manaCost + "\n" + a.description;
-                ToolTipService.SetToolTip(icon, t);
-                Grid.SetRow(icon, 0);
-                Grid.SetColumn(icon, n);
-                abilityGrid.Children.Add(icon);
-                n++;
+                if (!a.name.Equals("Attack"))
+                {
+                    ColumnDefinition column = new ColumnDefinition();
+                    column.Width = new GridLength(Ability.iconSize);
+                    abilityGrid.ColumnDefinitions.Add(column);
+                    Image icon = new Image();
+                    icon.Tag = a;
+                    icon.Source = new BitmapImage(a.icon);
+                    icon.Opacity = 0.6;
+                    icon.MouseLeftButtonDown += new MouseButtonEventHandler(selectAbility);
+                    ToolTip t = new ToolTip();
+                    t.Background = new SolidColorBrush(Colors.Brown);
+                    t.Content = a.name + "  Mana cost:" + a.manaCost + "\n" + a.description;
+                    ToolTipService.SetToolTip(icon, t);
+                    Grid.SetRow(icon, 0);
+                    Grid.SetColumn(icon, n);
+                    abilityGrid.Children.Add(icon);
+                    n++;
+                }
+
             }
-            abilitiesToSelect = Ability.initialAbilityLimit;
-            choicesLabel.Content = abilitiesToSelect.ToString();
+            choicesLabel.Content = (Ability.initialAbilityLimit - selectedAbilities.Count).ToString();
         }
 
         private void selectAbility(Object sender, MouseEventArgs e)
         {
             Image icon = sender as Image;
-
-            if (icon.Opacity != 1)
+            Ability a = icon.Tag as Ability;
+            if (!selectedAbilities.Contains(new KeyValuePair<string, Ability>(a.name, a)))
             {
-                if (abilitiesToSelect <= Ability.initialAbilityLimit)
+                if (selectedAbilities.Count < Ability.initialAbilityLimit)
                 {
-                    abilitiesToSelect--;
                     icon.Opacity = 1;
-                    Ability a = icon.Tag as Ability;
                     selectedAbilities.Add(a.name, a);
                 }
             }
             else
             {
-                abilitiesToSelect++;
                 icon.Opacity = 0.6;
                 selectedAbilities.Remove(((Ability)icon.Tag).name);
             }
-            choicesLabel.Content = abilitiesToSelect.ToString();
+            choicesLabel.Content = (Ability.initialAbilityLimit - selectedAbilities.Count).ToString();
         }
 
         private void characterTransferComplete(Object sender, UploadStringCompletedEventArgs e)
         {
-            MessageBox.Show(e.Result);
             if (e.Error == null)
             {
                 XDocument doc = XDocument.Parse(e.Result);

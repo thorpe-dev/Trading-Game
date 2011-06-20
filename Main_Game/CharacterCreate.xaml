@@ -1,39 +1,37 @@
 ﻿<controls:ChildWindow x:Class="Main_Game.CharacterCreate"
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
-           Width="499" Height="450" 
-           Title="Character Creation"
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls" Title="Character Creation"
            xmlns:my="clr-namespace:Main_Game" 
            xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-            Background="Black" >
+            Background="Black" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="399" Width="499">
     <controls:ChildWindow.Resources>
         <my:StringClasses x:Key="StringClasses"/>
     </controls:ChildWindow.Resources>
 
-<Grid x:Name="LayoutRoot" Margin="2" Background="Black" Width="675">
+<Grid x:Name="LayoutRoot" Margin="2" Background="Black" Width="478" Height="363">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,376,204,12" />
-        <Button x:Name="CreateButton" Content="Create" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Left" Margin="310,376,0,12" />
-        <Image HorizontalAlignment="Left" Margin="21,12,0,335" Name="classImage" Stretch="Fill" Width="64" Height="64" />
+        <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Left" Margin="392,332,0,0" VerticalAlignment="Top" />
+        <Button x:Name="CreateButton" Content="Create" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Left" Margin="310,332,0,0" VerticalAlignment="Top" />
+        <Image HorizontalAlignment="Left" Margin="21,12,0,0" Name="classImage" Stretch="Fill" Width="64" Height="64" VerticalAlignment="Top" />
         <sdk:Label Height="20" HorizontalAlignment="Left" Margin="147,20,0,0" Name="nameLabel" VerticalAlignment="Top" Width="40" Content="Name:" Foreground="White" />
         <TextBox Height="22" HorizontalAlignment="Left" Margin="193,18,0,0" Name="nameBox" VerticalAlignment="Top" Width="169" Padding="2,0,2,1" />
-        <TextBlock Height="200" HorizontalAlignment="Left" Margin="21,91,0,0" Name="statText" Text="" VerticalAlignment="Top" Width="201" Foreground="White" />
+        <TextBlock Height="120" HorizontalAlignment="Left" Margin="21,91,0,0" Name="statText" Text="" VerticalAlignment="Top" Width="126" Foreground="White" />
         <ComboBox Height="20" HorizontalAlignment="Left" Margin="193,48,0,0" Name="classSelect" VerticalAlignment="Top" Width="169" ItemsSource="{Binding Mode=OneWay, Path=classes, Source={StaticResource StringClasses}}" SelectionChanged="classSelect_SelectionChanged" />
         <sdk:Label Content="Class:" Height="20" HorizontalAlignment="Left" Margin="150,50,0,0" Name="classLabel" VerticalAlignment="Top" Width="40" Foreground="White" />
-        <TextBlock Height="200" HorizontalAlignment="Right" Margin="0,91,213,0" Name="descBlock" Text="" VerticalAlignment="Top" Width="234" Foreground="White"></TextBlock>
-        <Grid Height="48" HorizontalAlignment="Left" Margin="21,322,0,0" Name="abilityGrid" VerticalAlignment="Top" Width="441">
+        <TextBlock Height="120" HorizontalAlignment="Left" Margin="163,91,0,0" Name="descBlock" Text="" VerticalAlignment="Top" Width="299" Foreground="White" TextWrapping="Wrap"></TextBlock>
+        <Grid Height="82" HorizontalAlignment="Left" Margin="21,242,0,0" Name="abilityGrid" VerticalAlignment="Top" Width="441">
             <Grid.RowDefinitions>
                 <RowDefinition Height="65" />
             </Grid.RowDefinitions>
         </Grid>
-        <sdk:Label Height="19" HorizontalAlignment="Left" Margin="28,306,0,0" Name="abilitySelectLabel" VerticalAlignment="Top" Width="128" Content="Ability selection:" Foreground="White" />
-        <sdk:Label Height="17" HorizontalAlignment="Left" Margin="301,305,0,0" Name="choiceRemainLabel" VerticalAlignment="Top" Width="109" Content="Choices remaining:" Foreground="White" />
-        <sdk:Label Height="22" HorizontalAlignment="Left" Margin="413,304,0,0" Name="choicesLabel" VerticalAlignment="Top" Width="28" Content="" Foreground="White" />
+        <sdk:Label Height="19" HorizontalAlignment="Left" Margin="28,226,0,0" Name="abilitySelectLabel" VerticalAlignment="Top" Width="128" Content="Ability selection:" Foreground="White" />
+        <sdk:Label Height="17" HorizontalAlignment="Left" Margin="301,225,0,0" Name="choiceRemainLabel" VerticalAlignment="Top" Width="109" Content="Choices remaining:" Foreground="White" />
+        <sdk:Label Height="22" HorizontalAlignment="Left" Margin="413,224,0,0" Name="choicesLabel" VerticalAlignment="Top" Width="28" Content="" Foreground="White" />
     </Grid>
 
 </controls:ChildWindow>

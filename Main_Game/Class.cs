@@ -125,8 +125,7 @@ namespace Main_Game
 
     public enum ClassType
     {
-        //Insert appropriate classes later
-        Warrior, Rogue, Mage
+        Brute, Bard, Sorcerer
     }
 
     public class StringClasses
