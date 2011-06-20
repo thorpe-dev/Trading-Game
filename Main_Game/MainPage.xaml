@@ -18,7 +18,7 @@
 
         <Grid Name="mainContent" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
         </Grid>
-        <Grid Name="settingBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
+        <Grid Name="settingBar" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Margin="0,424,0,0" Grid.RowSpan="2" Height="76">
         </Grid>
         <Grid Name="sideBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="1">
         </Grid>

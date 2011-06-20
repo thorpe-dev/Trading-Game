@@ -12,6 +12,6 @@
         <Rectangle Fill="#FF192400" Height="11" HorizontalAlignment="Left" Margin="435,43,0,0" Name="rectangle2" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="137" />
         <sdk:Label Height="21" HorizontalAlignment="Left" Margin="412,12,0,0" Name="label1" VerticalAlignment="Top" Width="34" Content="HP:" />
         <sdk:Label Content="Mana:" Height="21" HorizontalAlignment="Left" Margin="397,40,0,0" Name="label2" VerticalAlignment="Top" Width="34" />
-        <Image Height="64" HorizontalAlignment="Left" Margin="324,5,0,0" Name="img_portrait" Stretch="Fill" VerticalAlignment="Top" Width="64" Source="/Main_Game;component/Images/MageIcon.png" />
+        <Image Height="64" HorizontalAlignment="Left" Margin="324,5,0,0" Name="img_portrait" Stretch="Fill" VerticalAlignment="Top" Width="64" Source="/Main_Game;component/Images/WarriorIcon.png" />
     </Grid>
 </UserControl>

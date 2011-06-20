@@ -65,7 +65,7 @@ namespace Main_Game
         Random rnd = new Random();
         // Can the player move yet
         Storyboard slow;
-        bool move_allowed = true;
+        bool move_allowed = false;
 
 
         public MapScreen(bool first, bool only, int t, int s, int m, int it, int l, int r)
@@ -80,6 +80,8 @@ namespace Main_Game
             this.light_level = light;
             this.lightint = l;
             this.reward = r;
+            if (only)
+                move_allowed = true;
             InitializeComponent();
             if (first_player)
             {
@@ -267,6 +269,10 @@ namespace Main_Game
         public void enable_move(object sender, EventArgs e)
         {
             move_allowed = true;
+            img_up.Source = new BitmapImage(new Uri("Images/Dungeon/up.png", UriKind.Relative));
+            img_down.Source = new BitmapImage(new Uri("Images/Dungeon/down.png", UriKind.Relative));
+            img_left.Source = new BitmapImage(new Uri("Images/Dungeon/left.png", UriKind.Relative));
+            img_right.Source = new BitmapImage(new Uri("Images/Dungeon/right.png", UriKind.Relative));
         }
 
         public UIElement Element { get { return this; } }
@@ -450,7 +456,7 @@ namespace Main_Game
                             if (!(filled[i][j] == 1))
                             {
                                 recheck = true;
-                                MessageBox.Show("Unfilled: " + i + "," + j);
+                                //MessageBox.Show("Unfilled: " + i + "," + j);
                                 if (first_player)
                                 {
                                     Uri path = new Uri("dungeon_add_square.php", UriKind.Relative);
@@ -470,6 +476,7 @@ namespace Main_Game
                               = String.Format("instance={0}", this.instance);
                             HttpConnection.httpPost(path, parameters, dungeon_sent);
                             MessageBox.Show("Dungeon Built");
+                            move_allowed = true;
                         }
                         else
                         {
@@ -509,7 +516,11 @@ namespace Main_Game
             }
             else
             {
-                MessageBox.Show("Could not recieve dungeon: " + e.Error.ToString());
+                MessageBox.Show("Dungeon could not be sent to server. Returning to tavern...");
+                // Make sure they appear in the tavern 
+                Uri path = new Uri("enterWorld.php", UriKind.Relative);
+                HttpConnection.httpGet(path, check_success);
+                btn_exit_Click(null, null);
             }
         }
 
@@ -1000,7 +1011,7 @@ namespace Main_Game
 
         public void handle_combat()
         {
-            Creep creep = Battle.generateCreep(Creep.creepDictionary);
+            Creep creep = Battle.generateCreep(this.dungeon_theme.creep_table);
             ScreenManager.SetScreen(new BattleScreen(Character.currentCharacter, creep, this));
         }
 
@@ -1083,6 +1094,7 @@ namespace Main_Game
             if (can_move_north(map[player_row][player_col])
                 && events[player_row][player_col] < 3 && move_allowed)
             {
+                img_up.Source = new BitmapImage(new Uri("Images/Dungeon/up_pressed.png", UriKind.Relative));
                 player_row--;
                 update_current_values();
                 update_map(current_view);
@@ -1104,6 +1116,7 @@ namespace Main_Game
             if (can_move_south(map[player_row][player_col])
                 && events[player_row][player_col] < 3 && move_allowed)
             {
+                img_down.Source = new BitmapImage(new Uri("Images/Dungeon/down_pressed.png", UriKind.Relative));
                 player_row++;
                 update_current_values();
                 update_map(current_view);
@@ -1125,6 +1138,7 @@ namespace Main_Game
             if (can_move_west(map[player_row][player_col])
                 && events[player_row][player_col] < 3 && move_allowed)
             {
+                img_left.Source = new BitmapImage(new Uri("Images/Dungeon/left_pressed.png", UriKind.Relative));
                 player_col--;
                 update_current_values();
                 update_map(current_view);
@@ -1146,6 +1160,7 @@ namespace Main_Game
             if (can_move_east(map[player_row][player_col])
                 && events[player_row][player_col] < 3 && move_allowed)
             {
+                img_right.Source = new BitmapImage(new Uri("Images/Dungeon/right_pressed.png", UriKind.Relative));
                 player_col++;
                 update_current_values();
                 update_map(current_view);
@@ -1158,7 +1173,6 @@ namespace Main_Game
             }
             // Focus on the key detector
             Mission.Focus();
-            Thread.Sleep(1);
         }
 
         private void Mission_KeyDown(object sender, KeyEventArgs e)
@@ -1171,9 +1185,13 @@ namespace Main_Game
 
         private void btn_exit_Click(object sender, RoutedEventArgs e)
         {
-            // Delete the dungeon on the server
-            Uri path = new Uri("dungeon_host_exit.php", UriKind.Relative);
-            HttpConnection.httpGet(path, leave_dungeon);
+            if (move_allowed)
+            {
+                btn_exit.IsEnabled = false;
+                // Delete the dungeon on the server
+                Uri path = new Uri("dungeon_host_exit.php", UriKind.Relative);
+                HttpConnection.httpGet(path, leave_dungeon);
+            }
         }
 
         private void leave_dungeon(object sender, DownloadStringCompletedEventArgs e)
@@ -1209,6 +1227,8 @@ namespace Main_Game
         // Range of values for rnd to generate
         public int lower_bound;
         public int upper_bound;
+        // Dictionary of creeps to use
+        public IDictionary<string, Creep> creep_table = new Dictionary<string, Creep>();
 
         public DungeonTheme(int theme, Double light_level)
         {
@@ -1295,7 +1315,7 @@ namespace Main_Game
                 map_pieces[12] = new MapPiece(main_pic, mini_pic, false, true, true, true, true);
 
                 main_pic
-                    = new BitmapImage(new Uri("Images/Dungeon/SewerStraightHorizLit.png", UriKind.Relative));
+                    = new BitmapImage(new Uri("Images/Dungeon/SewerStraightHoriz.png", UriKind.Relative));
                 mini_pic
                     = new BitmapImage(new Uri("Images/Dungeon/StraightHoriz.png", UriKind.Relative));
                 map_pieces[13] = new MapPiece(main_pic, mini_pic, false, false, true, false, true);
@@ -1330,6 +1350,16 @@ namespace Main_Game
                     = new BitmapImage(new Uri("Images/Dungeon/Exit.png", UriKind.Relative));
                 map_pieces[18] = new MapPiece(main_pic, mini_pic, false, true, true, true, true);
 
+                // Populate creeps
+                IDictionary<string, Ability> minotaurAbilitySet = Ability.constructAbilitySet("Attack", "Bull Rush","Battle Roar");
+                ICollection<Item> minotaurLootSet = ItemSet.constructLootTable(1, 2, 100);
+                Creep c = new Creep("Minotaur", 30, 10, 0, 5, 200, 200, 50, 50, minotaurAbilitySet, minotaurLootSet, 100, 50, new Uri("Images/clam.png", UriKind.Relative));
+                creep_table.Add("Minotaur", c);
+
+                IDictionary<string, Ability> mummyAbilitySet = Ability.constructAbilitySet("Attack", "Regenerate", "Grave Chill");
+                ICollection<Item> mummyLootSet = ItemSet.constructLootTable(1, 2, 100);
+                c = new Creep("Mummy", 30, 10, 0, 5, 200, 200, 50, 50, mummyAbilitySet, mummyLootSet, 100, 50, new Uri("Images/clam.png", UriKind.Relative));
+                creep_table.Add("Mummy", c);
             }
             else if (theme == 1)
             {
@@ -1410,6 +1440,17 @@ namespace Main_Game
                 mini_pic
                     = new BitmapImage(new Uri("Images/Dungeon/Open.png", UriKind.Relative));
                 map_pieces[11] = new MapPiece(main_pic, mini_pic, false, true, true, true, true);
+
+                // Populate creeps
+                IDictionary<string, Ability> goblinAbilitySet = Ability.constructAbilitySet("Attack", "War Cry");
+                ICollection<Item> goblinLootSet = ItemSet.constructLootTable(1, 2, 100);
+                Creep c = new Creep("Goblin", 30, 10, 0, 5, 200, 200, 50, 50, goblinAbilitySet, goblinLootSet, 100, 50, new Uri("Images/clam.png", UriKind.Relative));
+                creep_table.Add("Goblin", c);
+
+                IDictionary<string, Ability> orcAbilitySet = Ability.constructAbilitySet("Attack", "War Cry", "Wild Charge");
+                ICollection<Item> orcLootSet = ItemSet.constructLootTable(1, 2, 100);
+                c = new Creep("Orc", 30, 10, 0, 5, 200, 200, 50, 50, orcAbilitySet, orcLootSet, 100, 50, new Uri("Images/clam.png", UriKind.Relative));
+                creep_table.Add("Orc", c);
 
             }
             else

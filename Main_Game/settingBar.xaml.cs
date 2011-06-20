@@ -67,6 +67,8 @@ namespace Main_Game
             hp_bar_reduce.Children.Add(mana_damage);
             mana_damage.From = bar_width;
 
+            img_portrait.Source = new BitmapImage(Character.currentCharacter.charClass.imageSrc);
+
         }
 
         public UIElement Element { get { return this; } }

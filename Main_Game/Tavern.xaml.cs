@@ -115,8 +115,10 @@ namespace Main_Game
                 if (quests[i].chosen)
                 {
                     Quest q = quests[i];
-                    ScreenManager.SetScreen(new MapScreen(true, only, q.theme,q.size,q.monsters,
-                        q.items,q.light_level,q.reward));
+                    MapScreen m = new MapScreen(true, only, q.theme, q.size, q.monsters,
+                        q.items, q.light_level, q.reward);
+                    ScreenManager.SetScreen(m);
+                    m.Focus();
                 }
             }
         }

@@ -251,9 +251,6 @@
     <Resource Include="Images\Dungeon\DeadEndWest.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Dungeon\enemy.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Dungeon\Exit.png" />
   </ItemGroup>
   <ItemGroup>

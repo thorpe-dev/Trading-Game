@@ -8,17 +8,17 @@
     xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input" 
     xmlns:data="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data">
 
-    <Grid x:Name="LayoutRoot" Height="393" Width="588" Background="Black">
-        <Rectangle Height="79" HorizontalAlignment="Left" Margin="25,237,0,0" Name="rectangle1" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="537" Fill="#FF57524C" />
-        <Button Content="Begin Quest" Height="32" HorizontalAlignment="Left" Margin="240,348,0,0" Name="btn_mission" VerticalAlignment="Top" Width="101" Click="btn_mission_Click" IsEnabled="False" />
+    <Grid x:Name="LayoutRoot" Height="411" Width="588" Background="Black">
+        <Rectangle Height="114" HorizontalAlignment="Left" Margin="25,237,0,0" Name="rectangle1" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="537" Fill="#FF57524C" />
+        <Button Content="Begin Quest" Height="32" HorizontalAlignment="Left" Margin="244,366,0,0" Name="btn_mission" VerticalAlignment="Top" Width="101" Click="btn_mission_Click" IsEnabled="False" />
         <ScrollViewer Height="150" HorizontalAlignment="Left" Margin="305,40,0,0" Name="scv_players" VerticalAlignment="Top" Width="257" Background="White" UseLayoutRounding="False" />
         <dataInput:Label Height="25" HorizontalAlignment="Left" Margin="25,20,0,0" Name="lbl_quests" VerticalAlignment="Top" Width="138" Content="Quests:" Foreground="White" />
         <dataInput:Label Content="Active Players:" Foreground="White" Height="25" HorizontalAlignment="Left" Margin="305,20,0,0" Name="label1" VerticalAlignment="Top" Width="138" />
         <ScrollViewer Background="White" Height="150" HorizontalAlignment="Left" Margin="25,40,0,0" Name="scv_quests" UseLayoutRounding="False" VerticalAlignment="Top" Width="257" />
-        <TextBlock Height="62" HorizontalAlignment="Left" Margin="33,245,0,0" Name="txt_description" Text="This is where quest descriptions go" VerticalAlignment="Top" Width="519" Foreground="Black" TextWrapping="Wrap" />
-        <Rectangle Height="75" HorizontalAlignment="Left" Margin="27,239,0,0" Name="rectangle2" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="533" />
+        <TextBlock Height="100" HorizontalAlignment="Left" Margin="33,245,0,0" Name="txt_description" Text="This is where quest descriptions go" VerticalAlignment="Top" Width="519" Foreground="Black" TextWrapping="Wrap" />
+        <Rectangle Height="110" HorizontalAlignment="Left" Margin="27,239,0,0" Name="rectangle2" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="533" />
         <TextBlock Height="21" HorizontalAlignment="Left" Margin="25,212,0,0" Name="txt_title" Text="Quest Title" VerticalAlignment="Top" Width="537" Foreground="White" TextAlignment="Center" />
-        <Button Content="Add Quests" Height="30" HorizontalAlignment="Left" Margin="50,345,0,0" Name="btn_add_quest" VerticalAlignment="Top" Width="79" Click="btn_add_quest_Click" Visibility="Collapsed" />
-        <dataInput:Label Height="35" HorizontalAlignment="Left" Margin="397,345,0,0" Name="lbl_poll_check" VerticalAlignment="Top" Width="95" Content="0" Foreground="Red" />
+        <Button Content="Add Quests" Height="30" HorizontalAlignment="Left" Margin="54,368,0,0" Name="btn_add_quest" VerticalAlignment="Top" Width="79" Click="btn_add_quest_Click" Visibility="Collapsed" />
+        <dataInput:Label Height="35" HorizontalAlignment="Left" Margin="407,366,0,0" Name="lbl_poll_check" VerticalAlignment="Top" Width="95" Content="0" Foreground="Red" Visibility="Collapsed" />
     </Grid>
 </UserControl>
