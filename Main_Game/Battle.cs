@@ -34,6 +34,7 @@ namespace Main_Game
             battleText = "";
             observer = obs;
             observer.addBattleText("Encountered a " + char_2.name);
+            MainPage.currentSideBar.inBattle = true;
         }
 
         public void beginTurn()
@@ -113,6 +114,7 @@ namespace Main_Game
 
         private void endBattle()
         {
+            MainPage.currentSideBar.inBattle = false;
             if (char_1.currentHealth == 0)
             {
 

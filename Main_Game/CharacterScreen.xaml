@@ -19,5 +19,6 @@
             <Grid Name="abilityGrid"></Grid>
         </ScrollViewer>
         <sdk:Label Height="206" HorizontalAlignment="Left" Margin="312,144,0,0" Name="inventoryLabel" VerticalAlignment="Top" Width="192" Content=""/>
+        <Button Content="Logout" Height="59" HorizontalAlignment="Left" IsEnabled="False" Margin="463,412,0,0" Name="logoutBtn" VerticalAlignment="Top" Width="170" Click="logoutBtn_Click" />
     </Grid>
 </UserControl>

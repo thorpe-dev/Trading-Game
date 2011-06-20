@@ -437,8 +437,12 @@ namespace Main_Game
                    "\tSpeed: " + effect.speedMod;
         }
 
-        public bool dequip(Character c)
+        public bool dequip(Character c, bool inBattle)
         {
+            if (inBattle)
+            {
+                return false;
+            }
             if (c.inventory.Count == Character.INVENTORYSIZE)
             {
                 return false;
@@ -549,8 +553,12 @@ namespace Main_Game
                     "\tSpeed: " + stats.speedMod;
         }
 
-        public bool dequip(Character c)
+        public bool dequip(Character c, bool inBattle)
         {
+            if (inBattle)
+            {
+                return false;
+            }
             if (c.inventory.Count == Character.INVENTORYSIZE)
             {
                 return false;

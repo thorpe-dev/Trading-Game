@@ -91,8 +91,9 @@ namespace Main_Game
 
             int hit = attacker.dice.roll();
             uint damage = 0;
-
-            if (hit == 1 || (this.manaCost > attacker.currentMana))
+            double agiDiff = defender.agility * defender.buffs.agility_mod - attacker.agility * attacker.buffs.agility_mod;
+            int hitBonus = (int)Math.Floor(agiDiff / 10);
+            if (hit <= 3 + hitBonus || (this.manaCost > attacker.currentMana))
                 return damage;
             else
             {
@@ -136,8 +137,9 @@ namespace Main_Game
         {
             int hit = attacker.dice.roll();
             uint damage = 0;
-
-            if (hit == 1 || (manaCost > attacker.currentMana))
+            double agiDiff = defender.agility * defender.buffs.agility_mod - attacker.agility * attacker.buffs.agility_mod;
+            int hitBonus = (int)Math.Floor(agiDiff / 10);
+            if (hit <= 3 + hitBonus || (manaCost > attacker.currentMana))
                 return damage;
             else
             {

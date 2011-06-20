@@ -181,27 +181,27 @@ namespace Main_Game
             switch (((Image)sender).Tag.ToString())
             {
                 case "weapon":
-                    if (curCharacter.weapon.dequip(curCharacter))
+                    if (curCharacter.weapon.dequip(curCharacter, inBattle))
                         imgWeapon.Source = new BitmapImage(new Uri("Images/Items/weapon.png", UriKind.Relative));
                     break;
                 case "chest":
-                    if (curCharacter.chest.dequip(curCharacter))
+                    if (curCharacter.chest.dequip(curCharacter, inBattle))
                         imgChest.Source = new BitmapImage(new Uri("Images/Items/armour.png", UriKind.Relative));
                     break;
                 case "legs":
-                    if (curCharacter.legs.dequip(curCharacter))
+                    if (curCharacter.legs.dequip(curCharacter, inBattle))
                         imgLegs.Source = new BitmapImage(new Uri("Images/Items/legs.png", UriKind.Relative));
                     break;
                 case "boots":
-                    if (curCharacter.boots.dequip(curCharacter))
+                    if (curCharacter.boots.dequip(curCharacter, inBattle))
                         imgBoots.Source = new BitmapImage(new Uri("Images/Items/boots.png", UriKind.Relative));
                     break;
                 case "gloves":
-                    if (curCharacter.gloves.dequip(curCharacter))
+                    if (curCharacter.gloves.dequip(curCharacter, inBattle))
                         imgGloves.Source = new BitmapImage(new Uri("Images/Items/gloves.png", UriKind.Relative));
                     break;
                 case "helm":
-                    if (curCharacter.helm.dequip(curCharacter))
+                    if (curCharacter.helm.dequip(curCharacter, inBattle))
                         imgHelmet.Source = new BitmapImage(new Uri("Images/Items/head.png", UriKind.Relative));
                     break;
 

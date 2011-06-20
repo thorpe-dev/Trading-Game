@@ -45,14 +45,22 @@ namespace Main_Game
         {
             if (e.Error == null)
             {
-                XDocument doc = XDocument.Parse(e.Result);
-                if (doc.Element("error") != null)
+                try
                 {
-                    MessageBox.Show("ERROR: " + (string)doc.Element("error"));
+                    XDocument doc = XDocument.Parse(e.Result);
+                    if (doc.Element("error") != null)
+                    {
+                        MessageBox.Show("ERROR: " + (string)doc.Element("error"));
+                    }
+                    else
+                    {
+                        MessageBox.Show("HELLO");
+                        ScreenManager.SetScreen(new CharacterScreen());
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ScreenManager.SetScreen(new CharacterScreen());
+                    MessageBox.Show(ex.Message);
                 }
             }
             else

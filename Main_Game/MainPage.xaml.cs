@@ -21,12 +21,53 @@ namespace Main_Game
         public MainPage()
         {
             InitializeComponent();
+            Ability.populateAllAbility();
+            ItemSet.constructItemBase();
+            Creep.populateCreeps();
+            initialiseClasses();
+        }
+
+        private void initialiseClasses()
+        {
+            IDictionary<string, Ability> warriorAbilities = new Dictionary<string, Ability>();
+            warriorAbilities.Add("Maim", Ability.fetchAbility("Maim"));
+            ClassSet.createClass(ClassType.Warrior, new Class(new StatModifier(20, 15, 10, 15), new StatModifier(3, 2, 1, 1), ClassType.Warrior,
+                                                                "Im a Warrior", new Uri("Images/robot.png", UriKind.Relative),
+                                                                warriorAbilities, null,
+                                                                null,
+                                                                null,
+                                                                null,
+                                                                null,
+                                                                null));
+
+
+            IDictionary<string, Ability> mageAbilities = new Dictionary<string, Ability>();
+            mageAbilities.Add("Fireball", Ability.fetchAbility("Fireball"));
+            mageAbilities.Add("Energy arrow", Ability.fetchAbility("Energy arrow"));
+            ClassSet.createClass(ClassType.Mage, new Class(new StatModifier(10, 100, 25, 5), new StatModifier(1, 1, 4, 1), ClassType.Mage,
+                                                                "Im a Mage", new Uri("Images/failsprite.png", UriKind.Relative),
+                                                                mageAbilities, null,
+                                                                null,
+                                                                null,
+                                                                null,
+                                                                null,
+                                                                null));
+
+
+            IDictionary<string, Ability> rogueAbilities = new Dictionary<string, Ability>();
+            rogueAbilities.Add("Attack", Ability.fetchAbility("Attack"));
+            ClassSet.createClass(ClassType.Rogue, new Class(new StatModifier(15, 20, 5, 20), new StatModifier(2, 3, 1, 3), ClassType.Rogue,
+                                                                "Im a Rogue", new Uri("Images/clam.png", UriKind.Relative),
+                                                                 rogueAbilities, null,
+                                                                 null,
+                                                                 null,
+                                                                 null,
+                                                                 null,
+                                                                 null));
         }
 
         public void SetScreen(IScreen screen)
         {
-           /* this.LayoutRoot.Children.Clear();
-            this.LayoutRoot.Children.Add(screen.Element);*/
             mainContent.Children.Clear();
             mainContent.Children.Add(screen.Element);
         }

@@ -194,14 +194,44 @@ namespace Main_Game
             StatModifier mod = _class.initialMod;
             int _maxHealth = calculateMaxHealth(mod.strength);
             int _maxMana = calculateMaxMana(mod.intelligence);
+            Weapon w = null;
+            Armour c = null;
+            Armour h = null;
+            Armour g = null;
+            Armour b = null;
+            Armour l = null;
+            if (_class.startingWeapon != null)
+            {
+                w = new Weapon(_class.startingWeapon.id, _class.startingWeapon, 1);
+            }
+            if (_class.startingChest != null)
+            {
+                c = new Armour(_class.startingChest.id, _class.startingChest, 1);
+            }
+            if (_class.startingHelm != null)
+            {
+                h = new Armour(_class.startingHelm.id, _class.startingHelm, 1);
+            }
+            if (_class.startingGloves != null)
+            {
+                g = new Armour(_class.startingGloves.id, _class.startingGloves, 1);
+            }
+            if (_class.startingBoots != null)
+            {
+                b = new Armour(_class.startingBoots.id, _class.startingBoots, 1);
+            }
+            if (_class.startingLegs != null)
+            {
+                l = new Armour(_class.startingLegs.id, _class.startingLegs, 1);
+            }
             return new Character(_name, _class, 1, calculateExpToNextLevel(1), _maxHealth, _maxHealth, _maxMana,
                                     _maxMana, 100, mod.strength, mod.agility, mod.intelligence, mod.speed, _abilities, initialItems(),
-                                    new Weapon(_class.startingWeapon.id, _class.startingWeapon, 1),
-                                    new Armour(_class.startingChest.id, _class.startingChest, 1),
-                                    new Armour(_class.startingHelm.id, _class.startingHelm, 1),
-                                    new Armour(_class.startingGloves.id, _class.startingGloves, 1),
-                                    new Armour(_class.startingBoots.id, _class.startingBoots, 1),
-                                    new Armour(_class.startingLegs.id, _class.startingLegs, 1));
+                                    w,
+                                    c,
+                                    h,
+                                    g,
+                                    b,
+                                    l);
         }
 
         private static ICollection<ItemStack> initialItems()
@@ -241,7 +271,7 @@ namespace Main_Game
 
         private void characterUploaded(object sender, UploadStringCompletedEventArgs e)
         {
-            //Perform stuff here
+            MessageBox.Show(e.Result);
         }
 
         private string formatAbilities(IDictionary<string, Ability> abilityList)
@@ -278,32 +308,44 @@ namespace Main_Game
 
         private string formatWeapon()
         {
-            return "&weaponid=" + weapon.id + "&weaponlevel=" + weapon.level;
+            if (weapon != null)
+                return "&weaponid=" + weapon.id + "&weaponlevel=" + weapon.level;
+            return "";
         }
 
         private string formatChest()
         {
-            return "&chestid=" + chest.id + "&chestlevel=" + chest.level;
+            if (chest != null)
+                return "&chestid=" + chest.id + "&chestlevel=" + chest.level;
+            return "";
         }
 
         private string formatHelm()
         {
-            return "&helmid=" + helm.id + "&helmlevel=" + helm.level;
+            if (helm != null)
+                return "&helmid=" + helm.id + "&helmlevel=" + helm.level;
+            return "";
         }
 
         private string formatGloves()
         {
-            return "&glovesid=" + gloves.id + "&gloveslevel=" + gloves.level;
+            if (gloves != null)
+                return "&glovesid=" + gloves.id + "&gloveslevel=" + gloves.level;
+            return "";
         }
 
         private string formatBoots()
         {
-            return "&bootsid=" + boots.id + "&bootslevel=" + boots.level;
+            if (boots != null)
+                return "&bootsid=" + boots.id + "&bootslevel=" + boots.level;
+            return "";
         }
 
         private string formatLegs()
         {
-            return "&legsid=" + legs.id + "&legslevel=" + legs.level;
+            if (legs != null)
+                return "&legsid=" + legs.id + "&legslevel=" + legs.level;
+            return "";
         }
 
         public void calculateStats()
@@ -380,7 +422,11 @@ namespace Main_Game
             speed = baseSpeed + itemSpeed;
 
             maxHealth = calculateMaxHealth(strength) + itemHealth;
+            if (currentHealth > maxHealth)
+                currentHealth = maxHealth;
             maxMana = calculateMaxMana(intelligence) + itemMana;
+            if (currentMana > maxMana)
+                currentMana = maxMana;
         }
 
         public void levelUp()

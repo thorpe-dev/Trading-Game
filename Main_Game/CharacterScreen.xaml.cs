@@ -22,57 +22,14 @@ namespace Main_Game
         public CharacterScreen()
         {
             InitializeComponent();
-            Ability.populateAllAbility();
-            ItemSet.constructItemBase();
-            Creep.populateCreeps();
-            initialiseClasses();
             HttpConnection.httpGet(new Uri("character.php", UriKind.Relative), new DownloadStringCompletedEventHandler(transferComplete));
         }
 
         public UIElement Element { get { return this; } }
 
-        private void initialiseClasses()
-        {
-            IDictionary<string, Ability> warriorAbilities = new Dictionary<string, Ability>();
-            warriorAbilities.Add("Maim", Ability.fetchAbility("Maim"));
-            ClassSet.createClass(ClassType.Warrior, new Class(new StatModifier(20, 15, 10, 15), new StatModifier(3, 2, 1, 1), ClassType.Warrior,
-                                                                "Im a Warrior", new Uri("Images/robot.png", UriKind.Relative),
-                                                                warriorAbilities, ItemSet.retrieveItem(100) as Weapon,
-                                                                ItemSet.retrieveItem(300) as Armour,
-                                                                ItemSet.retrieveItem(200) as Armour,
-                                                                ItemSet.retrieveItem(400) as Armour,
-                                                                ItemSet.retrieveItem(500) as Armour,
-                                                                ItemSet.retrieveItem(600) as Armour));
-
-
-            IDictionary<string, Ability> mageAbilities = new Dictionary<string, Ability>();
-            mageAbilities.Add("Fireball", Ability.fetchAbility("Fireball"));
-            mageAbilities.Add("Energy arrow", Ability.fetchAbility("Energy arrow"));
-            ClassSet.createClass(ClassType.Mage, new Class(new StatModifier(10, 10, 25, 5), new StatModifier(1, 1, 4, 1), ClassType.Mage,
-                                                                "Im a Mage", new Uri("Images/failsprite.png", UriKind.Relative),
-                                                                mageAbilities, ItemSet.retrieveItem(101) as Weapon,
-                                                                ItemSet.retrieveItem(300) as Armour,
-                                                                ItemSet.retrieveItem(200) as Armour,
-                                                                ItemSet.retrieveItem(400) as Armour,
-                                                                ItemSet.retrieveItem(500) as Armour,
-                                                                ItemSet.retrieveItem(600) as Armour));
-
-
-            IDictionary<string, Ability> rogueAbilities = new Dictionary<string, Ability>();
-            rogueAbilities.Add("Attack", Ability.fetchAbility("Attack"));
-            ClassSet.createClass(ClassType.Rogue, new Class(new StatModifier(15, 20, 5, 20), new StatModifier(2, 3, 1, 3), ClassType.Rogue,
-                                                                "Im a Rogue", new Uri("Images/clam.png", UriKind.Relative),
-                                                                 rogueAbilities, ItemSet.retrieveItem(102) as Weapon,
-                                                                 ItemSet.retrieveItem(300) as Armour,
-                                                                 ItemSet.retrieveItem(200) as Armour,
-                                                                 ItemSet.retrieveItem(400) as Armour,
-                                                                 ItemSet.retrieveItem(500) as Armour,
-                                                                 ItemSet.retrieveItem(600) as Armour));
-        }
 
         private void transferComplete(Object sender, DownloadStringCompletedEventArgs e)
         {
-            MessageBox.Show(e.Result);
             if (e.Error == null)
             {
                 XDocument doc = XDocument.Parse(e.Result);
@@ -343,6 +300,18 @@ namespace Main_Game
             {
                 MessageBox.Show("Error: " + e.Error.ToString());
             }
+        }
+
+        private void logoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            HttpConnection.httpGet(new Uri("logout.php", UriKind.Relative), logoutHandler);
+        }
+
+        private void logoutHandler(object sender, DownloadStringCompletedEventArgs e)
+        {
+            ScreenManager.SetScreen(new LoginScreen());
+            ScreenManager.SetSettingBar(null);
+            ScreenManager.SetSideBar(null);
         }
     }
 }

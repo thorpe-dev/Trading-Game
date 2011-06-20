@@ -105,6 +105,9 @@ namespace Main_Game
 
         private void logoutHandler(object sender, DownloadStringCompletedEventArgs e)
         {
+            ScreenManager.SetScreen(new LoginScreen());
+            ScreenManager.SetSettingBar(null);
+            ScreenManager.SetSideBar(null);
         }
     }
 }
