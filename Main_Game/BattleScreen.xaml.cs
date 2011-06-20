@@ -117,11 +117,5 @@ namespace Main_Game
         }
 
         public UIElement Element { get { return this; } }
-
-        private void leaveBtn_Click(object sender, RoutedEventArgs e)
-        {
-            Character.currentCharacter.restoreCharacter();
-            ScreenManager.SetScreen(new Tavern(false, 0));
-        }
     }
 }

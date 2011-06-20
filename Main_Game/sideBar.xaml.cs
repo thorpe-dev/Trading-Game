@@ -81,6 +81,7 @@ namespace Main_Game
                 if (im != null)
                 {
                     im.Source = new BitmapImage(new Uri("Images/Items/head.png", UriKind.Relative));
+
                     ims.Add(im);
                 }
                 // If it's a TextBlock
@@ -94,7 +95,12 @@ namespace Main_Game
 
             for (int x = 0; x < count; x++)
             {
-                ims[x].Source = new BitmapImage(its[x].item.icon);
+                Item i = its[x].item;
+                ims[x].Source = new BitmapImage(i.icon);
+                ToolTip tip = new ToolTip();
+                tip.Background = new SolidColorBrush(Colors.Brown);
+                tip.Content = i.getDescriptionText();
+                ToolTipService.SetToolTip(ims[x], tip);
                 if (its[x].stackSize > 1)
                     tbs[x].Text = its[x].stackSize.ToString();
                 else
@@ -110,17 +116,53 @@ namespace Main_Game
         private void updateEquipment()
         {
             if (curCharacter.weapon != null)
+            {
                 imgWeapon.Source = new BitmapImage(curCharacter.weapon.icon);
+                ToolTip tip = new ToolTip();
+                tip.Background = new SolidColorBrush(Colors.Brown);
+                tip.Content = curCharacter.weapon.getDescriptionText();
+                ToolTipService.SetToolTip(imgWeapon, tip);
+            }
             if (curCharacter.helm != null)
+            {
                 imgHelmet.Source = new BitmapImage(curCharacter.helm.icon);
+                ToolTip tip = new ToolTip();
+                tip.Background = new SolidColorBrush(Colors.Brown);
+                tip.Content = curCharacter.helm.getDescriptionText();
+                ToolTipService.SetToolTip(imgHelmet, tip);
+            }
             if (curCharacter.chest != null)
+            {
                 imgChest.Source = new BitmapImage(curCharacter.chest.icon);
+                ToolTip tip = new ToolTip();
+                tip.Background = new SolidColorBrush(Colors.Brown);
+                tip.Content = curCharacter.chest.getDescriptionText();
+                ToolTipService.SetToolTip(imgChest, tip);
+            }
             if (curCharacter.legs != null)
+            {
                 imgLegs.Source = new BitmapImage(curCharacter.legs.icon);
+                ToolTip tip = new ToolTip();
+                tip.Background = new SolidColorBrush(Colors.Brown);
+                tip.Content = curCharacter.legs.getDescriptionText();
+                ToolTipService.SetToolTip(imgLegs, tip);
+            }
             if (curCharacter.boots != null)
+            {
                 imgBoots.Source = new BitmapImage(curCharacter.boots.icon);
+                ToolTip tip = new ToolTip();
+                tip.Background = new SolidColorBrush(Colors.Brown);
+                tip.Content = curCharacter.boots.getDescriptionText();
+                ToolTipService.SetToolTip(imgBoots, tip);
+            }
             if (curCharacter.gloves != null)
+            {
                 imgGloves.Source = new BitmapImage(curCharacter.gloves.icon);
+                ToolTip tip = new ToolTip();
+                tip.Background = new SolidColorBrush(Colors.Brown);
+                tip.Content = curCharacter.gloves.getDescriptionText();
+                ToolTipService.SetToolTip(imgGloves, tip);
+            }
         }
 
         private void UserControl_GotFocus(object sender, RoutedEventArgs e)
@@ -180,7 +222,7 @@ namespace Main_Game
             updateStats();
         }
 
-        private void updateStats()
+        public void updateStats()
         {
             curCharacter.calculateStats();
             txtStrengthVal.Text = curCharacter.strength.ToString();

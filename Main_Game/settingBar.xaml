@@ -6,7 +6,7 @@
     mc:Ignorable="d" Height="75" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" d:DesignWidth="792">
     
     <Grid x:Name="LayoutRoot" Background="#FF524E4E" Height="76" VerticalAlignment="Stretch">
-        <Button Content="Logout" Height="25" Name="logoutBtn" VerticalAlignment="Top" Margin="24,23,0,0" HorizontalAlignment="Left" Width="94" />
+        <Button Content="Logout" Height="25" Name="logoutBtn" VerticalAlignment="Top" Margin="24,23,0,0" HorizontalAlignment="Left" Width="94" Click="logoutBtn_Click" />
         <Image Height="32" Margin="0,0,23,21" Name="img_messages" Stretch="Fill" VerticalAlignment="Bottom" Source="/Main_Game;component/Images/mail.png" MouseLeftButtonDown="img_messages_MouseLeftButtonDown" HorizontalAlignment="Right" Width="32" />
         <Rectangle Height="11" HorizontalAlignment="Left" Margin="435,15,0,0" Name="rectangle1" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="137" Fill="#FF192400" />
         <Rectangle Fill="#FF192400" Height="11" HorizontalAlignment="Left" Margin="435,43,0,0" Name="rectangle2" Stroke="Black" StrokeThickness="1" VerticalAlignment="Top" Width="137" />

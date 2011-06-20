@@ -16,6 +16,7 @@ namespace Main_Game
     public abstract class Ability
     {
         public const int initialAbilityLimit = 2;
+        public const int levelAbilityLimit = 1;
         public const int iconSize = 40;
 
         public static IDictionary<string, Ability> allAbilities = new Dictionary<string, Ability>();
@@ -38,16 +39,16 @@ namespace Main_Game
         {
             allAbilities.Add("Fireball", new MagicAbility("Fireball", "Burns the enemy for massive damage", 50,
                                         new Uri("Images/fireball.png", UriKind.Relative),
-                                        new Effect(), 40));
+                                        new Effect(), 1.6));
             allAbilities.Add("Energy arrow", new MagicAbility("Energy arrow", "Ouch", 30,
                                         new Uri("Images/energyarrow.png", UriKind.Relative),
-                                        new Effect(), 30));
+                                        new Effect(), 1.4));
             allAbilities.Add("Attack", new AttackAbility("Attack", "Attacks with equipped weapon", 0,
                                         new Uri("Images/attack.png", UriKind.Relative),
-                                        new Effect(), 30));
+                                        new Effect(), 1.2));
             allAbilities.Add("Maim", new AttackAbility("Maim", "Injures the enemy with all your might", 10,
                                         new Uri("Images/maim.png", UriKind.Relative),
-                                        new Effect(), 40));
+                                        new Effect(), 1.5));
             allAbilities.Add("Grow", new SelfAbility("Grow", "Grows in size and gains strength", 20, 
                                         new Uri("Images/grow.png", UriKind.Relative),
                                         new Effect(0, 1.3, 1, 1, 1)));
@@ -97,7 +98,7 @@ namespace Main_Game
             {
                 attacker.currentMana -= manaCost;
                 defender.applyEffect(abilityEffect);
-                damage = (uint)Math.Floor(p_attackbonus + (double)attacker.strength * attacker.buffs.strength_mod);
+                damage = (uint)Math.Floor(p_attackbonus * (double)attacker.strength * attacker.buffs.strength_mod);
                 if (hit == 20)
                     damage *= 2;
 
@@ -117,10 +118,10 @@ namespace Main_Game
         public override uint attack(Entity attacker, Entity defender)
         {
             if (manaCost <= attacker.currentMana)
+            {
                 attacker.applyEffect(abilityEffect);
-
-            /* Will always return the same value */
-            attacker.currentMana -= manaCost;
+                attacker.currentMana -= manaCost;
+            }
             return 0;
         }
     }
@@ -128,7 +129,7 @@ namespace Main_Game
     public class MagicAbility : AttackAbility
     {
 
-        public MagicAbility(string _name, string _description, int _manacost, Uri _icon, Effect _abilityEffect, uint _attackBonus)
+        public MagicAbility(string _name, string _description, int _manacost, Uri _icon, Effect _abilityEffect, double _attackBonus)
             : base(_name, _description, _manacost, _icon, _abilityEffect, _attackBonus) { }
 
         public override uint attack(Entity attacker, Entity defender)
@@ -142,7 +143,7 @@ namespace Main_Game
             {
                 defender.applyEffect(abilityEffect);
                 attacker.currentMana -= manaCost;
-                damage = (uint)Math.Floor(p_attackbonus + (double)attacker.intelligence * attacker.buffs.intelligence_mod);
+                damage = (uint)Math.Floor(p_attackbonus * (double)attacker.intelligence * attacker.buffs.intelligence_mod);
                 if (hit == 20)
                     damage *= 2;
 

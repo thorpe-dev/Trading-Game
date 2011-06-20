@@ -33,6 +33,7 @@ namespace Main_Game
         {
             loot = _loot;
             lootIcon.Source = new BitmapImage(loot.icon);
+            /*
             string descString = _loot.name + "\n" +
                                 _loot.description + "\n";
             if (_loot is Consumable)
@@ -62,8 +63,8 @@ namespace Main_Game
                               "\tAgility: " + a.stats.agilityMod + "\n" +
                               "\tIntelligence: " + a.stats.intelligenceMod + "\n" +
                               "\tSpeed: " + a.stats.speedMod;
-            }
-            descLabel.Text = descString;
+            }*/
+            descLabel.Text = loot.getDescriptionText();
         }
 
         private void lootBtn_Click(object sender, RoutedEventArgs e)
@@ -72,7 +73,9 @@ namespace Main_Game
             if (looted)
             {
                 fullLabel.Content = "";
-                lootBtn.IsEnabled = false;
+                DialogResult = true;
+                if (returnScreen != null)
+                    ScreenManager.SetScreen(returnScreen);
             }
             else
                 fullLabel.Content = "Your inventory is full";

@@ -96,5 +96,15 @@ namespace Main_Game
             alter_hp(c.maxHealth, c.currentHealth);
             alter_mana(c.maxMana, c.currentMana);
         }
+
+        private void logoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Character.currentCharacter.sendCharacterToDatabase();
+            HttpConnection.httpGet(new Uri("logout.php", UriKind.Relative), logoutHandler);
+        }
+
+        private void logoutHandler(object sender, DownloadStringCompletedEventArgs e)
+        {
+        }
     }
 }

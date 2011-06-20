@@ -35,6 +35,5 @@
                 </Grid.RowDefinitions>
             </Grid>
         </ScrollViewer>
-        <Button Content="Leave" Grid.Column="2" Height="42" HorizontalAlignment="Left" Margin="41,27,0,0" Name="leaveBtn" VerticalAlignment="Top" Width="150" Visibility="Collapsed" Click="leaveBtn_Click" />
     </Grid>
 </UserControl>

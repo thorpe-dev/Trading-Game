@@ -118,7 +118,8 @@ namespace Main_Game
 
                 char_1.resetStats();
                 char_2.refreshCreep();
-                observer.leaveBtn.Visibility = Visibility.Visible;
+                DeathWindow death = new DeathWindow();
+                death.Show();
                 return;
             }
             else
@@ -134,6 +135,7 @@ namespace Main_Game
                     expToNext = char_1.expToNext;
                 }
                 char_1.expToNext -= expValue;
+                MainPage.currentSideBar.updateStats();
                 Random rnd = new Random();
                 int lootTableSize = char_2.lootTable.Count;
                 int lootRand = rnd.Next(1, (((int)Math.Pow(lootTableSize, 2) + lootTableSize) / 2) + 1);

@@ -217,15 +217,31 @@ namespace Main_Game
 
         public void submitCharacter(UploadStringCompletedEventHandler characterUploaded)
         {
-            string charFormatString = String.Format("name={0}&classid={1}&lvl=1&exptonext={2}&maxhealth={3}&currenthealth={3}&" +
-                                                    "maxmana={4}&currentmana={4}&money={5}&strength={6}&agility={7}&intelligence={8}&" +
+            string charFormatString = String.Format("name={0}&classid={1}&lvl=1&exptonext={2}&maxhealth={3}&" +
+                                                    "maxmana={4}&money={5}&strength={6}&agility={7}&intelligence={8}&" +
                                                     "speed={9}",
                                                     name, (int)type, expToNext, maxHealth,
                                                     maxMana, money, strength, agility, intelligence, speed);
             charFormatString += formatAbilities(abilities) + formatItems(inventory) + formatWeapon() + formatChest() + formatHelm()
                                 + formatGloves() + formatBoots() + formatLegs();
-            MessageBox.Show(charFormatString);
             HttpConnection.httpPost(new Uri("characterCreate.php", UriKind.Relative), charFormatString, characterUploaded);
+        }
+
+        public void sendCharacterToDatabase()
+        {
+            string charFormatString = String.Format("name={0}&classid={1}&level={2}&exptonext={3}&maxhealth={4}&" +
+                                                       "maxmana={5}&money={6}&strength={7}&agility={8}&intelligence={9}&" +
+                                                       "speed={10}",
+                                                       name, (int)type, level, expToNext, maxHealth, maxMana, money, strength,
+                                                       agility, intelligence, speed);
+            charFormatString += formatAbilities(abilities) + formatItems(inventory) + formatWeapon() + formatChest() + formatHelm()
+                               + formatGloves() + formatBoots() + formatLegs();
+            HttpConnection.httpPost(new Uri("characterUpload.php", UriKind.Relative), charFormatString, characterUploaded);
+        }
+
+        private void characterUploaded(object sender, UploadStringCompletedEventArgs e)
+        {
+            //Perform stuff here
         }
 
         private string formatAbilities(IDictionary<string, Ability> abilityList)
@@ -292,10 +308,10 @@ namespace Main_Game
 
         public void calculateStats()
         {
-            int baseStrength = charClass.initialMod.strength + (level-1) * charClass.levelMod.strength;
-            int baseInt = charClass.initialMod.intelligence + (level-1) * charClass.levelMod.intelligence;
-            int baseAgi = charClass.initialMod.agility + (level-1) * charClass.levelMod.agility;
-            int baseSpeed = charClass.initialMod.speed + (level-1) * charClass.levelMod.speed;
+            int baseStrength = charClass.initialMod.strength + (level - 1) * charClass.levelMod.strength;
+            int baseInt = charClass.initialMod.intelligence + (level - 1) * charClass.levelMod.intelligence;
+            int baseAgi = charClass.initialMod.agility + (level - 1) * charClass.levelMod.agility;
+            int baseSpeed = charClass.initialMod.speed + (level - 1) * charClass.levelMod.speed;
 
             int itemStrength = 0;
             int itemAgility = 0;
@@ -364,9 +380,7 @@ namespace Main_Game
             speed = baseSpeed + itemSpeed;
 
             maxHealth = calculateMaxHealth(strength) + itemHealth;
-            currentHealth = maxHealth;
             maxMana = calculateMaxMana(intelligence) + itemMana;
-            currentMana = maxMana;
         }
 
         public void levelUp()
@@ -375,6 +389,8 @@ namespace Main_Game
             calculateStats();
             restoreCharacter();
             expToNext = calculateExpToNextLevel(level);
+            LevelWindow levelBox = new LevelWindow(this);
+            levelBox.Show();
         }
 
         public void awardExp(int expAmount)
@@ -386,14 +402,14 @@ namespace Main_Game
                 levelUp();
             }
             expToNext -= expValue;
+            MainPage.currentSideBar.updateStats();
         }
 
         public void restoreCharacter()
         {
             currentHealth = maxHealth;
             currentMana = maxMana;
-            MainPage.currentSettingBar.alter_hp(maxHealth, maxHealth);
-            MainPage.currentSettingBar.alter_mana(maxMana, maxMana);
+            MainPage.currentSettingBar.updateBars(this);
         }
 
         public override Ability getAbility()

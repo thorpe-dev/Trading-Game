@@ -307,6 +307,8 @@ namespace Main_Game
         {
             return (stack.item.name.Equals(name) && stack.stackSize < ItemStack.MAXSTACKSIZE);
         }
+
+        public abstract string getDescriptionText();
     }
 
     public class Consumable : Item
@@ -331,6 +333,13 @@ namespace Main_Game
             amountRegenerated = _amountRegenerated;
             stackable = true;
             icon = _icon;
+        }
+
+        public override string getDescriptionText()
+        {
+            return name + "\n" +
+                   description + "\n" +
+                   "Regenerates " + amountRegenerated + " " + Enum.GetName(typeof(ConsumableType), type);
         }
 
         public void consume(Character c)
@@ -413,6 +422,19 @@ namespace Main_Game
 
             EquipmentEffect twoHandedSword = new EquipmentEffect(10, -5, 0, -5, 0, 0);
             weaponTypeEffects.Add(WeaponType.TWOHANDEDSWORD, twoHandedSword);
+        }
+
+        public override string getDescriptionText()
+        {
+            return name + "\n" +
+                   description + "\n" +
+                   "Stat bonuses:\n" +
+                   "\tHealth: " + effect.healthMod + "\n" +
+                   "\tMana: " + effect.manaMod + "\n" +
+                   "\tStrength: " + effect.strengthMod + "\n" +
+                   "\tAgility: " + effect.agilityMod + "\n" +
+                   "\tIntelligence: " + effect.intelligenceMod + "\n" +
+                   "\tSpeed: " + effect.speedMod;
         }
 
         public bool dequip(Character c)
@@ -512,6 +534,19 @@ namespace Main_Game
             stats = new EquipmentEffect(armour.stats);
             stats.modifyEffect(1 + (_level-1) * ItemSet.levelMultipler);
             level = _level;
+        }
+
+        public override string getDescriptionText()
+        {
+            return name + "\n" +
+                   description + "\n" +
+                   "Stat bonuses:\n" +
+                   "\tHealth: " + stats.healthMod + "\n" +
+                   "\tMana: " + stats.manaMod + "\n" +
+                   "\tStrength: " + stats.strengthMod + "\n" +
+                   "\tAgility: " + stats.agilityMod + "\n" +
+                    "\tIntelligence: " + stats.intelligenceMod + "\n" +
+                    "\tSpeed: " + stats.speedMod;
         }
 
         public bool dequip(Character c)
